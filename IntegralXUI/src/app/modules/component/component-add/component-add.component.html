@@ -6,7 +6,6 @@
                 <a class="" (click)="backToComponent()">
                     <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;"
                         title="Back to systems"></i>
-                  
                 </a>
             </div>
             <hr class="mt-0">
@@ -143,7 +142,7 @@
                                             <label for="plantId" class="form-label">Plant ID:</label>
                                             <select id="plantId" formControlName="plantId"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Plant --</option>
                                                 <option *ngFor="let item of ddlplants" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -156,7 +155,7 @@
                                             <label for="areaId" class="form-label">Area ID:</label>
                                             <select id="areaId" formControlName="areaId"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Area --</option>
                                                 <option *ngFor="let item of ddlareas" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -169,7 +168,7 @@
                                             <label for="unitId" class="form-label">Unit ID:</label>
                                             <select id="unitId" formControlName="unitId"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Unit --</option>
                                                 <option *ngFor="let item of ddlunits" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -182,7 +181,7 @@
                                             <label for="systemId" class="form-label">System ID:</label>
                                             <select id="systemId" formControlName="systemId"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select System --</option>
                                                 <option *ngFor="let item of ddlsystems" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -195,7 +194,7 @@
                                             <label for="circuitId" class="form-label">Circuit ID:</label>
                                             <select id="circuitId" formControlName="circuitId"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Circuit --</option>
                                                 <option *ngFor="let item of ddlcircuits" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -208,7 +207,7 @@
                                             <label for="corrosionLoopId" class="form-label">Corrosion Loop ID:</label>
                                             <select id="corrosionLoopId" formControlName="corrosionLoopId"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Corrosion Loop --</option>
                                                 <option *ngFor="let item of ddlcorrosionLoops" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -221,7 +220,7 @@
                                             <label for="equipmentId" class="form-label">Equipment ID:</label>
                                             <select id="equipmentId" formControlName="equipmentId"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Equipment --</option>
                                                 <option *ngFor="let item of ddlequipments" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -304,7 +303,7 @@
                                             <label for="designCode" class="form-label">Design Code:</label>
                                             <select id="designCode" formControlName="designCode"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Design Code --</option>
                                                 <option *ngFor="let item of ddlcomponentDesignCode" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -317,7 +316,7 @@
                                             <label for="editionAddendum" class="form-label">Edition & Addendum:</label>
                                             <select id="editionAddendum" formControlName="editionAddendum"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Edition/Addendum --</option>
                                                 <option *ngFor="let item of ddlcomponentEditionAddendum" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -418,7 +417,7 @@
                                             <select id="complianceCertification"
                                                 formControlName="complianceCertification"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Geometry --</option>
                                                 <option *ngFor="let item of ddlcomponentComplianceCertification"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
@@ -457,7 +456,7 @@
                                             <label for="geometry" class="form-label">Geometry:</label>
                                             <select id="geometry" formControlName="geometry"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Orientation --</option>
                                                 <option *ngFor="let item of ddlcomponentGeometry" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -519,7 +518,7 @@
                                             <label for="orientation" class="form-label">Orientation:</label>
                                             <select id="orientation" formControlName="orientation"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Fluid Phase --</option>
                                                 <option *ngFor="let item of ddlcomponentOrientation" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -630,7 +629,7 @@
                                             <label for="fluidPhase" class="form-label">Fluid Phase:</label>
                                             <select id="fluidPhase" formControlName="fluidPhase"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Fluid Phase --</option>
                                                 <option *ngFor="let item of ddlcomponentFluidPhase" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -699,7 +698,7 @@
                                             <label for="corrosivity" class="form-label">Corrosivity:</label>
                                             <select id="corrosivity" formControlName="corrosivity"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected>corrosivity</option>
+                                                <option value="" disabled selected>-- Select Corrosivity --</option>
                                                 <option *ngFor="let item of ddlcomponentCorrosivity" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -722,7 +721,7 @@
                                                 Environment:</label>
                                             <select id="processEnvironment" formControlName="processEnvironment"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Toxic Mixture --</option>
                                                 <option *ngFor="let item of ddlcomponentProcessEnvironment"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
@@ -735,7 +734,7 @@
                                             <label for="toxicMixture" class="form-label">Toxic Mixture:</label>
                                             <select id="toxicMixture" formControlName="toxicMixture"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Toxic Fluid --</option>
                                                 <option *ngFor="let item of ddlcomponentToxicMixture" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -748,7 +747,7 @@
                                             <label for="toxicFluid" class="form-label">Toxic Fluid:</label>
                                             <select id="toxicFluid" formControlName="toxicFluid"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Flammability --</option>
                                                 <option *ngFor="let item of ddlcomponentToxicFluid" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -761,7 +760,7 @@
                                             <label for="flammability" class="form-label">Flammability:</label>
                                             <select id="flammability" formControlName="flammability"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Criticality --</option>
                                                 <option *ngFor="let item of ddlcomponentFlammability" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -784,7 +783,7 @@
                                             <label for="criticality" class="form-label">Criticality:</label>
                                             <select id="criticality" formControlName="criticality"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Fire/Explosion Risk --</option>
                                                 <option *ngFor="let item of ddlcomponentCriticality" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -809,7 +808,7 @@
                                             <select id="seismicZoneClassification"
                                                 formControlName="seismicZoneClassification"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Toxic Risk --</option>
                                                 <option *ngFor="let item of ddlcomponentSeismicZoneClassification"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
@@ -823,7 +822,7 @@
                                                 Risk:</label>
                                             <select id="fireExplosionRisk" formControlName="fireExplosionRisk"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Heat Treatment --</option>
                                                 <option *ngFor="let item of ddlcomponentFireExplosionRisk" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
@@ -836,7 +835,7 @@
                                             <label for="toxicRisk" class="form-label">Toxic Risk:</label>
                                             <select id="toxicRisk" formControlName="toxicRisk"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Heat Treatment Type --</option>
                                                 <option *ngFor="let item of ddlcomponentToxicRisk" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -913,7 +912,7 @@
                                             <label for="heatTreatment" class="form-label">Heat Treatment:</label>
                                             <select id="heatTreatment" formControlName="heatTreatment"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Manufacturer --</option>
                                                 <option *ngFor="let item of ddlcomponentHeatTreatment" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
@@ -927,7 +926,7 @@
                                                 Type:</label>
                                             <select id="heatTreatmentType" formControlName="heatTreatmentType"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Model --</option>
                                                 <option *ngFor="let item of ddlcomponentHeatTreatmentType" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
@@ -940,7 +939,7 @@
                                             <label for="impactTest" class="form-label">Impact Test:</label>
                                             <select id="impactTest" formControlName="impactTest"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
+                                                <option value="" disabled selected>-- Select Location --</option>
                                                 <option *ngFor="let item of ddlcomponentImpactTest" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
