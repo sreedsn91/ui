@@ -64,7 +64,7 @@
                                                 Category:</label>
                                             <select id="componentCategory" formControlName="componentCategory"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected>Select Category</option>
+                                                    <option value="" disabled selected>-- Select Category --</option>
                                                 <option *ngFor="let item of ddlcomponentCategory" [value]="item.id">
                                                     {{ item.name }}
                                                 </option>
@@ -78,7 +78,7 @@
                                             <label for="componentType" class="form-label">Component Type:</label>
                                             <select id="componentType" formControlName="componentType"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected>Select Type</option>
+                                                    <option value="" disabled selected>-- Select Type --</option>
                                                 <option *ngFor="let item of ddlcomponentType" [value]="item.id">
                                                     {{ item.name }}
                                                 </option>
@@ -112,7 +112,7 @@
                                                 Status:</label>
                                             <select id="operationalStatus" formControlName="operationalStatus"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected>Select Status</option>
+                                                    <option value="" disabled selected>-- Select Status --</option>
                                                 <option *ngFor="let item of ddlcomponentOperationalStatus"
                                                     [value]="item.id">
                                                     {{ item.name }}
