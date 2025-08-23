@@ -1,0 +1,304 @@
+<header class="header">
+  <!-- First Row: Logo, Search Bar, and Icons -->
+  <div class="top-row d-flex justify-content-between align-items-center p-2">
+
+    <!-- Left Side: Logo & App Name -->
+    <div class="d-flex align-items-center">
+      <div class="">
+        <a [routerLink]="['/dashboard']" class="b-brand">
+
+          <span class="b-title"> <i style="color: #000;
+            font-size: larger;
+            font-weight: bold;"><b>Integral</b></i></span>
+          <div class="b-bg" style="background: linear-gradient(-135deg, #066afe 0%, #066afe 100%);
+           border-radius: 0px !important; 
+          width: 26px;
+          height: 25px;
+          display: inline-flex;
+          margin-left: 3px;
+          align-items: center;
+          justify-content: center;">
+            <i style="color: #fff;
+            font-size: x-large;
+            font-weight: bold;
+            padding-right: 1px;
+            padding-bottom: 1px;"><b>X</b></i>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Center: Search Bar -->
+    <div class="search-container position-relative">
+      <div class="search-bar">
+        <span class="search-icon"><i class="bi bi-search"></i></span>
+        <input 
+        id="searchTxt"
+          type="text" 
+          class="form-control" 
+          placeholder="Search menu..." 
+          [(ngModel)]="searchText"
+          (input)="onSearchChange()"
+          (focus)="showDropdown = true"
+          (blur)="hideDropdownAfterDelay()" />
+      </div>
+    
+      <!-- Dropdown List -->
+      <ul class="dropdown-menu dropdown-menu-search show w-50" *ngIf="showDropdown && filteredMenuItems.length > 0">
+        <li *ngFor="let menu of filteredMenuItems" (mousedown)="navigateTo(menu.url)">
+          <a class="dropdown-item">{{ menu.title }}</a>
+        </li>
+      </ul>
+    </div>
+    <!-- Right Side: Icons -->
+    <div class="d-flex align-items-center">
+      <i class="bi  feather icon-shuffle mx-2"  title="Hierarchy" (click)="showJsonData()"></i> <!-- Settings Icon -->  
+      
+      <!-- Bootstrap Modal -->
+<!-- Bootstrap Modal -->
+<div class="modal fade" #jsonModal tabindex="-1" aria-labelledby="jsonModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="jsonModalLabel">Hierarchy </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-body-content">
+          <!-- Tree View Section -->
+          <div class="tree-view">
+            <ul class="list-unstyled">
+             <li *ngFor="let plant of jsonData">
+  <div class="tree-node" [attr.id]="'plant-' + plant.plantId">
+    <span class="tree-arrow" (click)="toggle(plant)" [class.expanded]="plant.isExpanded">▶</span>
+    <span class="tree-label" (click)="navigateToDetails('plant', plant.plantId)">
+      🏭 <strong>{{ plant.plantName }}</strong>
+    </span>
+  </div>
+
+  <ul *ngIf="plant.isExpanded" class="ms-3">
+    <!-- AREA NODES -->
+    <li *ngFor="let area of plant.areas">
+      <div class="tree-node" [attr.id]="'area-' + area.areaId">
+        <span class="tree-arrow" (click)="toggle(area)" [class.expanded]="area.isExpanded">▶</span>
+        <span class="tree-label" (click)="navigateToDetails('area', area.areaId)">
+          📍 {{ area.areaName }}
+        </span>
+      </div>
+
+      <ul *ngIf="area.isExpanded" class="ms-3">
+        <!-- UNIT NODES -->
+        <li *ngFor="let unit of area.units">
+          <div class="tree-node" [attr.id]="'unit-' + unit.unitId">
+            <span class="tree-arrow" (click)="toggle(unit)" [class.expanded]="unit.isExpanded">▶</span>
+            <span class="tree-label" (click)="navigateToDetails('unit', unit.unitId)">
+              📦 {{ unit.unitName }}
+            </span>
+          </div>
+
+          <ul *ngIf="unit.isExpanded" class="ms-3">
+            <!-- SYSTEM NODES -->
+            <li *ngFor="let system of unit.systems">
+              <div class="tree-node" [attr.id]="'system-' + system.systemId">
+                <span class="tree-arrow" (click)="toggle(system)" [class.expanded]="system.isExpanded">▶</span>
+                <span class="tree-label" (click)="navigateToDetails('system', system.systemId)">
+                  🖥️ {{ system.systemName }}
+                </span>
+              </div>
+
+              <ul *ngIf="system.isExpanded" class="ms-3">
+                <!-- CIRCUITS -->
+                <li *ngFor="let circuit of system.circuit">
+                  <div class="tree-node" [attr.id]="'circuit-' + circuit.circuitId">
+                    <span class="tree-arrow" (click)="toggle(circuit)" [class.expanded]="circuit.isExpanded">▶</span>
+                    <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+                      ⚡ {{ circuit.circuitName }}
+                    </span>
+                  </div>
+
+                  <ul *ngIf="circuit.isExpanded" class="ms-3">
+                    <li *ngFor="let eq of circuit.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+                      <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                        ⚗️ {{ eq.equipmentName }}
+                      </span>
+                    </li>
+                  </ul>
+                </li>
+
+                <!-- Equipment directly under system -->
+                <li *ngFor="let eq of system.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+                  <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                    ⚗️ {{ eq.equipmentName }}
+                  </span>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Circuits under Unit -->
+            <li *ngFor="let circuit of unit.circuit" [attr.id]="'circuit-' + circuit.circuitId">
+              <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+                ⚡ {{ circuit.circuitName }}
+              </span>
+            </li>
+
+            <!-- Equipment under Unit -->
+            <li *ngFor="let eq of unit.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+              <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                ⚗️ {{ eq.equipmentName }}
+              </span>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Systems, Circuits, Equipment in Area -->
+        <li *ngFor="let system of area.systems" [attr.id]="'system-' + system.systemId">
+          <span class="tree-label" (click)="navigateToDetails('system', system.systemId)">
+            🖥️ {{ system.systemName }}
+          </span>
+        </li>
+
+        <li *ngFor="let circuit of area.circuit" [attr.id]="'circuit-' + circuit.circuitId">
+          <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+            ⚡ {{ circuit.circuitName }}
+          </span>
+        </li>
+
+        <li *ngFor="let eq of area.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+          <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+            ⚗️ {{ eq.equipmentName }}
+          </span>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Units, Systems, Circuits, Equipment under Plant -->
+    <li *ngFor="let unit of plant.units" [attr.id]="'unit-' + unit.unitId">
+      <span class="tree-label" (click)="navigateToDetails('unit', unit.unitId)">
+        📦 {{ unit.unitName }}
+      </span>
+    </li>
+
+    <li *ngFor="let system of plant.systems" [attr.id]="'system-' + system.systemId">
+      <span class="tree-label" (click)="navigateToDetails('system', system.systemId)">
+        🖥️ {{ system.systemName }}
+      </span>
+    </li>
+
+    <li *ngFor="let circuit of plant.circuit" [attr.id]="'circuit-' + circuit.circuitId">
+      <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+        ⚡ {{ circuit.circuitName }}
+      </span>
+    </li>
+
+    <li *ngFor="let eq of plant.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+      <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+        ⚗️ {{ eq.equipmentName }}
+      </span>
+    </li>
+  </ul>
+</li>
+
+            </ul>
+          </div>
+
+          <!-- Legend Section -->
+          <div class="icon-legend">
+            <ul>
+              <li><span>🏭</span> <span class="label-text">Plant</span></li>
+              <li><span>📍</span> <span class="label-text">Area</span></li>
+              <li><span>📦</span> <span class="label-text">Unit</span></li>
+              <li><span>🖥️</span> <span class="label-text">System</span></li>
+              <li><span>⚡</span> <span class="label-text">Circuit</span></li>
+              <li><span>⚗️</span> <span class="label-text">Equipment</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
+
+      
+
+        <i class="feather mx-2" (click)="toggleFullScreen()" [ngClass]="isFullScreen ? 'icon-minimize' : 'icon-maximize'" title="Fullscreen"></i>
+    
+      <i class="bi  feather icon-settings mx-2" (click)="logout()" ></i> <!-- Settings Icon -->
+
+
+      <!-- <i class="bi feather icon-bell mx-2"></i> Options Icon -->
+      <i class="bi feather icon-log-out mx-2" (click)="logout()" ></i> <!-- Options Icon -->
+      <!-- User Dropdown -->
+     
+      <div class="dropdown">
+        <img  [src]="((img && img !== 'null')) ? img : 'assets/user.jpg'"  alt="User" class="user-img mx-2 dropdown-toggle" id="userDropdown"
+          data-bs-toggle="dropdown" />
+        <ul class="dropdown-menu dropdown-menu-end" style="width: 200px;" aria-labelledby="userDropdown">
+          <li>Hi, <b>{{usernName}}</b> </li> <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li><a class="dropdown-item" (click)="viewProfile()">Profile</a></li>
+          <!-- <li><a class="dropdown-item" href="#">Settings</a></li> -->
+          <li><a class="dropdown-item"(click)="changePassword()">Change Password</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
+      <div class="dropdown" *ngIf="(logo && logo !== 'null' && logo !== '')">
+        <img  [src]="(logo)"  alt="User" class="user-img mx-2 dropdown-toggle" style="border-radius: 0px !important;" id="userDropdown"
+        />
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Row: Navigation Menu -->
+  <nav class="nav-bar secondRow navbar navbar-expand navbar-dark" style="padding: 0px !important;max-height:30px;">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"  style="max-height:30px;">
+          <li class="nav-item" *ngFor="let item of navigations" style="max-height:30px;">
+           <a class="nav-link" [routerLink]="item.url" routerLinkActive="active" style="max-height:32px;    padding: 7px 3px 3px 3px;margin-right: 20px;">
+  <i class="bi" style="margin-right: 2px;" [ngClass]="'feather icon-' + item.icon"></i>{{ item.title }}
+</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <app-breadcrumb />
+</header>
+
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+       
+        <hr style="    color: inherit;
+        border: 0;
+        margin: 0px !important;
+        border-top: var(--bs-border-width) solid;
+        opacity: 0.15;">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <app-loading></app-loading>
+            <router-outlet />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pc-menu-overlay" (click)="closeMenu()" (keydown)="handleKeyDown($event)" tabindex="0"></div>
+</div>

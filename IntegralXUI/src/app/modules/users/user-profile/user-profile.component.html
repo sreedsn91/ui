@@ -1,0 +1,99 @@
+<div class="">
+    <div class="card">
+        <div class="card-body mt-2">
+            <!-- <div class="d-flex justify-content-between align-items-center">
+                <h3 class="m-0">User Details</h3>
+            </div>
+            <hr class="mt-0"> -->
+
+            <form [formGroup]="userForm" >
+                <input id="id" formControlName="id" type="hidden" />
+
+                <div class="row">
+                    <!-- Basic Information (Column 1) -->
+                    <div class="col-md-3">
+                        <h5>Basic Information</h5>
+                        <hr>
+                        <div class="mb-2 field-containernw">
+                            <label for="firstName" class="form-label">First Name:</label>
+                            <input id="firstName" formControlName="firstName" class="form-control form-control-nb" placeholder="Enter first name" />
+                            <div *ngIf="userForm.controls['firstName'].invalid && userForm.controls['firstName'].touched" class="text-danger">
+                                First Name is required.
+                            </div>
+                        </div>
+
+                        <div class="mb-2 field-containernw">
+                            <label for="lastName" class="form-label">Last Name:</label>
+                            <input id="lastName" formControlName="lastName" class="form-control form-control-nb" placeholder="Enter last name" />
+                        </div>
+
+                        <div class="mb-2 field-containernw">
+                            <label for="userId" class="form-label">Employee Number:</label>
+                            <input id="userId" formControlName="userId" class="form-control form-control-nb" placeholder="Enter employee number" />
+                        </div>
+
+                        <div class="mb-2 field-containernw">
+                            <label for="roleId" class="form-label">Role:</label>
+                            <select id="roleId" formControlName="roleId" class="form-select form-control form-control-nb">
+                                <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+                            </select>
+                            <div *ngIf="userForm.controls['roleId'].invalid && userForm.controls['roleId'].touched" class="text-danger">
+                                Role selection is required.
+                            </div>
+                        </div>
+                        <div class="mb-2 field-containernw" style="max-height: 500px;">
+                            <label for="details" class="form-label">Details:</label>
+                            <textarea id="details" formControlName="details" class="form-control form-control-nb" placeholder="Enter details"></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- Contact Information (Column 2) -->
+                    <div class="col-md-3">
+                        <h5>Contact Information</h5>
+                        <hr>
+                        <div class="mb-2 field-containernw">
+                            <label for="email" class="form-label">Email:</label>
+                            <input id="email" formControlName="email" type="email" class="form-control form-control-nb" placeholder="Enter email" />
+                            <div *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched" class="text-danger">
+                                Enter a valid email address.
+                            </div>
+                        </div>
+
+                        <div class="mb-2 field-containernw">
+                            <label for="contactNumber" class="form-label">Contact Number:</label>
+                            <input id="contactNumber" formControlName="contactNumber" class="form-control form-control-nb" placeholder="Enter contact number" />
+                            <div *ngIf="userForm.controls['contactNumber'].invalid && userForm.controls['contactNumber'].touched" class="text-danger">
+                                Contact number is required.
+                            </div>
+                        </div>
+                    </div>
+                 
+
+                    <!-- Login Information (Column 3) -->
+                  
+                    <div class="col-md-3">
+                        <h5>Profile Picture</h5>
+                        <hr>
+                        <div class="mb-2 field-containernw pt-2">
+                            <label for="logo" class="form-label">Upload:</label>
+                            <input id="logo" type="file" class="form-control form-control-nb" style="padding: 2px !important;" (change)="onFileSelect($event)" />
+                        </div>
+                        <div class="mb-3">
+                            <img *ngIf="logoPreview" [src]="logoPreview" class="mt-2" width="200">
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-1">
+                        <i alt="User" class="styleicon feather icon-edit" (click)="goToEdit()" style="font-size: x-large;"   id="userDropdown"
+                        data-bs-toggle="dropdown" ></i>
+                    </div> -->
+                </div>
+<hr>
+                <!-- Profile Picture Upload (Full Width) -->
+              
+                <!-- Submit Button -->
+               
+            </form>
+        </div>
+    </div>
+</div>

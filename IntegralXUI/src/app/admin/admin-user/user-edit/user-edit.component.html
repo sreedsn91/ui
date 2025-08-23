@@ -1,0 +1,229 @@
+<div class="">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <!-- Left Side: Heading -->
+        <h3 class="m-0">Client Details</h3>
+
+        <!-- Right Side: Buttons -->
+        <div class="toolbar">
+          <a class="" (click)="backToUsers()">
+            <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;" title="Back to users"></i>
+          </a>
+          <!-- <button class="btn btn-primary addnew" title="Back to Clients" (click)="backToUsers()"><i
+                            class="feather feather icon-arrow-left" style="font-size: x-large;"></i></button> -->
+        </div>
+      </div>
+      <hr class="hrntm">
+      <input id="id" formControlName="id" class="form-control form-control-sm small-input" hidden />
+      <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+
+        <div class="row row-gap">
+          <!-- First Name -->
+          <div class="col-sm-3 field-container">
+            <label for="firstName" class="form-label">First name: <span class="text-danger">*</span></label>
+            <div class="input-container">
+              <input id="firstName" formControlName="firstName" class="form-control form-control-nb"
+                placeholder="Enter first name" />
+            </div>
+            <div *ngIf="userForm.controls['firstName'].invalid && userForm.controls['firstName'].touched"
+              class="text-danger">
+              First name is required.
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="col-sm-3 field-container">
+            <label for="lastName" class="form-label">Last name:</label>
+            <div class="input-container">
+              <input id="lastName" formControlName="lastName" class="form-control form-control-nb"
+                placeholder="Enter last name" />
+            </div>
+          </div>
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3"></div>
+          <!-- Email -->
+          <div class="col-sm-3 field-container">
+            <label for="email" class="form-label">Email:<span class="text-danger">*</span></label>
+            <div class="input-container">
+              <input type="email" id="email" formControlName="email" class="form-control form-control-nb"
+                placeholder="Enter email" />
+            </div>
+            <div *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched" class="text-danger">
+              <div *ngIf="userForm.controls['email'].errors?.['email']">
+                Eamil is required.
+              </div>
+              <div *ngIf="userForm.controls['email'].errors?.['emailExists']">
+                Email already exist.
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- Contact Number -->
+          <div class="col-sm-3 field-container">
+            <label for="contactNumber" class="form-label label-wrap">Contact Number:<span class="text-danger">*</span></label>
+            <div class="input-container">
+              <input type="text" id="contactNumber" formControlName="contactNumber" class="form-control form-control-nb"
+                placeholder="Enter contact number" />
+            </div>
+            <div *ngIf="userForm.controls['contactNumber'].invalid && userForm.controls['contactNumber'].touched"
+              class="text-danger">
+              <div *ngIf="userForm.controls['contactNumber'].errors?.['required']">
+                Contact number is required.
+              </div>
+              <div *ngIf="userForm.controls['contactNumber'].errors?.['contactExists']">
+                Contact number already exist.
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3"></div>
+          <div class="col-sm-3"></div>
+          <!-- Role -->
+          <div class="col-sm-3 field-container">
+            <label for="role" class="form-label">Role:</label>
+            <div class="input-container">
+              <input type="text" id="role" formControlName="role" class="form-control form-control-nb" min="1" />
+            </div>
+          </div>
+
+
+
+          <!-- Client -->
+          <div class="col-sm-3 field-container">
+            <label for="clientId" class="form-label">Client:<span class="text-danger">*</span></label>
+            <div class="input-container">
+              <select id="clientId" class="form-control form-control-nb" formControlName="clientId"
+                (change)="onClientChange($event)">
+                <option *ngFor="let client of clients" [value]="client.id">{{ client.name }}</option>
+              </select>
+            </div>
+            <div *ngIf="userForm.controls['clientId'].invalid && userForm.controls['clientId'].touched"
+              class="text-danger">
+              *
+            </div>
+          </div>
+
+          <div class="col-sm-12 p-0">
+            <br>
+          </div>
+
+          <div class="col-sm-12 p-0">
+            <p class="text-muted text-truncate">Login credentials</p>
+            <hr>
+          </div>
+
+          <!-- User ID -->
+          <div class="col-sm-3 field-container">
+            <label for="userName" class="form-label">User ID:<span class="text-danger">*</span></label>
+            <div class="input-container">
+              <input type="text" id="userName" class="form-control form-control-nb" formControlName="userName">
+            </div>
+            <div *ngIf="userForm.controls['userName'].invalid && userForm.controls['userName'].touched"
+            class="text-danger">
+            <div *ngIf="userForm.controls['userName'].errors?.['required']">
+              Username is required.
+            </div>
+            <div *ngIf="userForm.controls['userName'].errors?.['userNameExists']">
+              Username already exist.
+            </div>
+          </div>
+          </div>
+      
+
+          <!-- Password -->
+          <div class="col-sm-3 field-container">
+            <label for="password" class="form-label">Password:<span class="text-danger">*</span></label>
+            <div class="input-container">
+              <input type="text" id="password" class="form-control form-control-nb" formControlName="password">
+            </div>
+            <div *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched"
+              class="text-danger">
+              Invalid password
+            </div>
+          </div>
+
+          <div class="col-sm-12 d-flex m-0 p-1 mt-3">
+            <label for="isLocked" class="form-label">Restricted mode :</label>
+            <div class="input-container p-0 form-switch module-item">
+              <input type="checkbox" id="isLocked" formControlName="isLocked" class="form-check-input"
+                style="margin-left: 4px;" title="Send the credentials to the user" (change)="onModeChange($event)">
+            </div>
+          </div>
+
+          <div class="col-sm-12 d-flex m-0 p-1 mt-3">
+            <label for="sendNotification" class="form-label">Notify User :</label>
+            <div class="input-container p-0 form-switch module-item">
+              <input type="checkbox" class="form-check-input" style="margin-left: 4px;"
+                title="Send the credentials to the user" (change)="nofify($event)">
+            </div>
+          </div>
+
+          <div class="col-sm-12 p-0">
+            <hr>
+          </div>
+        </div>
+
+
+        <div *ngIf="passwordchanged">
+          <button type="button" [disabled]="passwordchanged" class="btn btn-primary">Update</button>
+          <button type="button" [disabled]="passwordchanged" class="btn btn-danger">Delete</button>
+        </div>
+        <div *ngIf="!passwordchanged">
+          <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">Update</button>
+          <button type="button" [disabled]="userForm.invalid" (click)="onDelete()"
+            class="btn btn-danger">Delete</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" class="form-control" formControlName="name">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="form-control" formControlName="email">
+    </div>
+
+    <div class="form-group">
+      <label for="role">Role</label>
+      <input type="text" id="role"  class="form-control" formControlName="role">
+    </div>
+
+    <div class="form-group">
+      <label for="contactNumber">Contact Number</label>
+      <input type="text" id="contactNumber" class="form-control" formControlName="contactNumber">
+    </div>
+
+    <div class="form-group">
+      <label for="clientSelect">Select Client</label>
+      <select id="clientSelect" class="form-control" formControlName="clientId" (change)="onClientChange($event)">
+        <option *ngFor="let client of clients" [value]="client.name">{{ client.name }}</option>
+      </select>
+    </div>
+
+   
+    <div class="form-group">
+        <label for="contactNumber">UserId</label>
+        <input type="text" id="userid" class="form-control" formControlName="userid">
+      </div>
+
+      <div class="form-group">
+        <label for="contactNumber">Password</label>
+        <input type="text" id="password" class="form-control" formControlName="password">
+      </div>
+  
+      <div class="mb-3">
+        <input type="checkbox" id="sendNotification" formControlName="sendNotification" (change)="onCheckboxChange($event)">
+        <label for="sendNotification">Send Notification to user </label>
+      </div>
+    <button type="submit" class="btn btn-success mt-3">Save</button>
+    <button type="button" class="btn btn-secondary mt-3 ml-2" (click)="cancel()">Cancel</button>
+  </form> -->

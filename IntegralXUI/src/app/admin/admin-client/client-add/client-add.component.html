@@ -1,0 +1,167 @@
+<div class="">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Left Side: Heading -->
+                <h3 class="m-0">New Client</h3>
+
+                <!-- Right Side: Buttons -->
+                <div class="toolbar">
+                    <!-- <button class="btn btn-primary addnew" title="Back to Clients" (click)="backToClient()"><i
+                            class="feather feather icon-arrow-left" style="font-size: x-large;"></i></button> -->
+                            
+                            <a class="" (click)="backToClient()">
+                              <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;" title="Back to users"></i> 
+                            </a>
+                </div>
+            </div>
+            <hr class="hrntm">
+            <input id="id" formControlName="id" class="form-control form-control-sm small-input" hidden />
+            <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="p-2">
+                <div class="row row-gap"> 
+                      <!-- Name -->
+                      <div class="col-sm-3 field-container">
+                        <label for="name" class="form-label">Name:  <span class="text-danger">*</span></label>
+                        <div class="input-container">
+                          <input id="name" formControlName="name" class="form-control form-control-nb" placeholder="Enter name" />
+                        </div>
+                        <div *ngIf="clientForm.controls['name'].invalid && clientForm.controls['name'].touched" class="text-danger">
+                          <div *ngIf="clientForm.controls['name'].errors?.['name']">
+                            Name is required.
+                          </div>
+                          <div *ngIf="clientForm.controls['name'].errors?.['nameExists']">
+                            Name already exist.
+                          </div>
+                        </div>
+                      </div>
+                     
+                      <!-- Email -->
+                      <div class="col-sm-3 field-container">
+                        <label for="email" class="form-label">Email:  <span class="text-danger">*</span></label>
+                        <div class="input-container">
+                          <input type="email" id="email" formControlName="email" class="form-control form-control-nb"
+                            placeholder="Enter email" />
+                        </div>
+                        <div *ngIf="clientForm.controls['email'].invalid && clientForm.controls['email'].touched" class="text-danger">
+                          <div *ngIf="clientForm.controls['email'].errors?.['email']">
+                            Eamil is required.
+                          </div>
+                          <div *ngIf="clientForm.controls['email'].errors?.['emailExists']">
+                            Email already exist.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3"></div><div class="col-sm-3"></div>
+                      
+                      <!-- Website -->
+                      <div class="col-sm-3 field-container">
+                        <label for="website" class="form-label">Website:  <span class="text-danger">*</span></label>
+                        <div class="input-container">
+                          <input type="text" id="website" formControlName="website" class="form-control form-control-nb"
+                            placeholder="Enter website" />
+                        </div>
+                        <div *ngIf="clientForm.controls['website'].invalid && clientForm.controls['website'].touched"
+                          class="text-danger">
+                          Website is required.
+                        </div>
+                      </div>
+
+                      <!-- Total Users -->
+                      <div class="col-sm-3 field-container">
+                        <label for="totalUsers" class="form-label">Users:  <span class="text-danger">*</span></label>
+                        <div class="input-container">
+                          <input type="number" id="totalUsers" formControlName="totalUsers" class="form-control form-control-nb"
+                            min="1" />
+                        </div>
+                        <div
+                          *ngIf="clientForm.controls['totalUsers'].invalid && clientForm.controls['totalUsers'].touched"
+                          class="text-danger">
+                          Users must be at least 1.
+                        </div>
+                      </div>
+                      <div class="col-sm-3"></div><div class="col-sm-3"></div>
+                      <!-- Purchase Date: -->
+                      <div class="col-sm-3 field-container">
+                        <label for="purchaseDate" class="form-label">Purchase Date:  <span class="text-danger">*</span></label>
+                        <div class="input-container">
+                          <input type="date" id="purchaseDate" formControlName="purchaseDate" class="form-control form-control-nb"
+                            min="1" />
+                        </div>
+                        <div
+                          *ngIf="clientForm.controls['purchaseDate'].invalid && clientForm.controls['purchaseDate'].touched"
+                          class="text-danger">
+                          *
+                        </div>
+                      </div>
+
+                    
+                      <div class="col-sm-3 field-container">
+                        <label for="expiryDate" class="form-label">Expiry Date:</label>
+                        <div class="input-container">
+                          <input type="date" id="expiryDate" formControlName="expiryDate" class="form-control form-control-nb"
+                            min="1" />
+                        </div>
+                        <div
+                          *ngIf="clientForm.controls['expiryDate'].invalid && clientForm.controls['expiryDate'].touched"
+                          class="text-danger">
+                          *
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="col-sm-3"></div><div class="col-sm-3"></div>
+                      </div>
+                      <div class="col-sm-6 field-containerfull">
+                        <label for="details" class="me-2 form-label">Details:</label>
+                        <div class="input-container">
+                          <textarea id="details" formControlName="details"
+                            class="form-control form-control-nb"></textarea>
+                        </div>
+                      </div>
+                      
+                    <div class="col-sm-12 p-0">
+                        <p class="text-muted text-truncate">Modules</p>
+                        <hr>
+                        <div class="mb-3">
+                            <div class="module-selection-container">
+                                <div *ngFor="let module of modules" class="form-check form-switch module-item">
+                                    <input type="checkbox" class="form-check-input" [checked]="module.selected"
+                                        (change)="onModuleChange($event, module.id)">
+                                    <label class="form-check-label">{{ module.name }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-12 p-0">
+                        <p class="text-muted text-truncate">Dcouments</p>
+                        <hr>
+                    </div>
+                    <div class="col-sm-3 p-0">
+                        
+                        <!-- Upload Logo -->
+                        <div class="mb-3">
+                            <label class="form-label">Upload Client Logo</label>
+                            <input type="file" class="form-control" (change)="onFileSelect($event, 'logo')"
+                                accept="image/*">
+                            <img *ngIf="logoPreview" [src]="logoPreview" class="mt-2" width="100">
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3 p-0">
+                      
+                        <div class="mb-3">
+                            <label class="form-label">Upload Client Documents</label>
+                            <input type="file" class="form-control" (change)="onFileSelect($event, 'documents')"
+                                multiple accept=".pdf,.doc,.docx">
+                            <ul *ngIf="uploadedDocuments.length > 0" class="mt-2">
+                                <li *ngFor="let doc of uploadedDocuments">{{ doc.name }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button type="submit" [disabled]="clientForm.invalid" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

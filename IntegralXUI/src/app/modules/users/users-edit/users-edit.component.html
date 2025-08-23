@@ -1,0 +1,259 @@
+<div class="rowp">
+  <!-- [ tabs ] start -->
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="">
+          <!-- Tabs Navigation with Right-Aligned Button -->
+          <div class="d-flex align-items-center">
+            <!-- Nav Tabs (Left Side) -->
+            <ul class="nav nav-tabs flex-grow-1" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button"
+                  role="tab" aria-controls="tab1" aria-selected="true">
+                  Summary
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button"
+                  role="tab" aria-controls="tab2" aria-selected="false">
+                  Data
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button"
+                  role="tab" aria-controls="tab3" aria-selected="false">
+                  Reference
+                </button>
+              </li>
+            </ul>
+
+            <!-- Right-Aligned Button -->
+            <div class="toolbar">
+
+              <a class="" (click)="backToUsers()">
+                <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;" title="Back to users"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content">
+            <div class="tab-pane fade show active mt-3" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+              <div class="">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h3>User Charts</h3>
+                    <!-- <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
+                        [labels]="chartOptions.labels" [colors]="chartOptions.colors">
+                      </apx-chart> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+
+              <div class="">
+                <div class="card">
+                  <div class="card-body mt-2">
+                    <!-- <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="m-0">User Details</h3>
+                            </div>
+                            <hr class="mt-0"> -->
+
+                    <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+                      <input id="id" formControlName="id" type="hidden" />
+
+                      <div class="row">
+                        <!-- Basic Information (Column 1) -->
+                        <div class="col-md-3">
+                          <h5>Basic Information</h5>
+                          <hr>
+                          <div class="mb-2 field-containernw">
+                            <label for="firstName" class="form-label">First Name: <span  class="text-danger">*</span></label>
+                            <input id="firstName" formControlName="firstName" class="form-control form-control-nb"
+                              placeholder="Enter first name" />
+                            <div *ngIf="userForm.controls['firstName'].invalid" class="text-danger">
+                              First Name is required.
+                            </div>
+                          </div>
+
+                          <div class="mb-2 field-containernw">
+                            <label for="lastName" class="form-label">Last Name:</label>
+                            <input id="lastName" formControlName="lastName" class="form-control form-control-nb"
+                              placeholder="Enter last name" />
+                          </div>
+
+                          <div class="mb-2 field-containernw">
+                            <label for="userId" class="form-label">Employee Number:</label>
+                            <input id="userId" formControlName="userId" class="form-control form-control-nb"
+                              placeholder="Enter employee number" />
+                          </div>
+
+                          <div *ngIf="!admin" class="mb-2 field-containernw">
+                            <label for="roleId" class="form-label">Role: <span class="text-danger">*</span></label>
+                            <select id="roleId" formControlName="roleId"
+                              class="form-select form-control form-control-nb">
+                              <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+                            </select>
+                            <div *ngIf="userForm.controls['roleId'].invalid " class="text-danger">
+                              Role selection is required.
+                            </div>
+                          </div>
+
+                          <div *ngIf="admin" class="mb-2 field-containernw">
+                            <label for="roleId" class="form-label">Role: <span class="text-danger">*</span></label>
+                            <select id="roleId" disabled class="form-select form-control form-control-nb"
+                              [value]="userForm.controls['roleId'].value"
+                              title="System-generated user. The role cannot be changed.">
+                              <option *ngFor="let role of roles" [value]="role.id">
+                                {{ role.name }}
+                              </option>
+                            </select>
+
+                          </div>
+
+
+                          <div class="mb-2 field-containernw" style="max-height: 500px;">
+                            <label for="details" class="form-label">Details:</label>
+                            <textarea id="details" formControlName="details" class="form-control form-control-nb"
+                              placeholder="Enter details"></textarea>
+                          </div>
+                          <div class="field-containernw">
+                            <label for="isActive" class="form-label">Active:</label>
+                            <div class="input-container form-switch pt-2">
+                              <input id="isActive" class="form-check-input" type="checkbox"
+                                formControlName="isActive" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Contact Information (Column 2) -->
+                        <div class="col-md-3">
+                          <h5>Contact Information</h5>
+                          <hr>
+                          <div class="mb-2 field-containernw">
+                            <label for="email" class="form-label">Email: <span class="text-danger">*</span></label>
+                            <input id="email" formControlName="email" type="email" class="form-control form-control-nb"
+                              placeholder="Enter email" />
+                            <div *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched"
+                              class="text-danger">
+                              <div *ngIf="userForm.controls['email'].errors?.['required']">
+                                Email is required.
+                              </div>
+                              <div *ngIf="userForm.controls['email'].errors?.['email']">
+                                Invalid email.
+                              </div>
+                              <div *ngIf="userForm.controls['email'].errors?.['emailExists']">
+                                Email already exist.
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="mb-2 field-containernw">
+                            <label for="contactNumber" class="form-label">Contact Number: <span
+                                class="text-danger">*</span></label>
+                            <input id="contactNumber" formControlName="contactNumber"
+                              class="form-control form-control-nb" placeholder="Enter contact number" />
+                            <div
+                              *ngIf="userForm.controls['contactNumber'].invalid && userForm.controls['contactNumber'].touched"
+                              class="text-danger">
+                              <div *ngIf="userForm.controls['contactNumber'].errors?.['required']">
+                                Contact number is required.
+                              </div>
+                              <div *ngIf="userForm.controls['contactNumber'].errors?.['contactExists']">
+                                Contact number already exist.
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <!-- Login Information (Column 3) -->
+                        <div class="col-md-3" *ngIf="currentUser ==this.childValue">
+                          <h5>Login Information</h5>
+                          <hr>
+                          <div class="mb-2 field-containernw">
+                            <label for="userName" class="form-label">Username: <span
+                                class="text-danger">*</span></label>
+                            <input id="userName" formControlName="userName" class="form-control form-control-nb"
+                              placeholder="Enter username" />
+                            <div *ngIf="userForm.controls['userName'].invalid && userForm.controls['userName'].touched"
+                              class="text-danger">
+                              <div *ngIf="userForm.controls['userName'].errors?.['required']">
+                                Username is required.
+                              </div>
+                              <div *ngIf="userForm.controls['userName'].errors?.['userNameExists']">
+                                Username already exist.
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="mb-2 field-containernw">
+                            <label for="password" class="form-label">Password: <span
+                                class="text-danger">*</span></label>
+                            <input id="password" type="password" formControlName="password"
+                              class="form-control form-control-nb" placeholder="Enter password" />
+                            <div *ngIf="userForm.controls['password'].invalid " class="text-danger">
+                              Password is required (Min: 6 chars).
+                            </div>
+                          </div>
+
+                          <div class="mb-2 field-containernw">
+                            <label for="ConfirmPassword" class="form-label">Confirm Password:</label>
+                            <input id="ConfirmPassword" type="password" formControlName="ConfirmPassword"
+                              class="form-control form-control-nb" placeholder="Confirm password" />
+                            <div *ngIf="userForm.controls['ConfirmPassword'].invalid" class="text-danger">
+                              <span *ngIf="userForm.controls['ConfirmPassword'].errors?.['required']">Confirm Password
+                                is required.</span>
+                              <span *ngIf="userForm.controls['ConfirmPassword'].errors?.['mustMatch']">Passwords do not
+                                match.</span>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="col-md-3">
+                          <h5>Profile Picture</h5>
+                          <hr>
+                          <div class="mb-2 field-containernw pt-2">
+                            <label for="logo" class="form-label">Upload:</label>
+                            <input id="logo" type="file" class="form-control form-control-nb"
+                              style="padding: 2px !important;" (change)="onFileSelect($event)" />
+                          </div>
+                          <div class="mb-3">
+                            <img *ngIf="logoPreview" [src]="logoPreview" class="mt-2" width="200">
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <!-- Profile Picture Upload (Full Width) -->
+
+                      <!-- Submit Button -->
+                      <div class="row mt-4">
+                        <div class="col-md-12 d-flex justify-content-center align-items-center">
+                          <div *ngIf="this.canEdit"> <button type="submit" class="btn btn-primary">Update</button>
+                          </div>
+                          <div *ngIf="!this.canEdit"> <button type="button" disabled
+                              class="btn btn-primary">Update</button> </div>
+                          <div *ngIf="this.canDelete"> <button type="button" *ngIf="this.canDelete"
+                              class="btn btn-danger" (click)="DeleteUser()">Delete</button></div>
+                          <div *ngIf="!this.canDelete"> <button type="button" disabled *ngIf="this.canDelete"
+                              class="btn btn-danger">Delete</button></div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+              <p>Content for Tab 3</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

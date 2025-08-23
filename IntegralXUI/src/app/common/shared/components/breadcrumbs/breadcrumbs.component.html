@@ -1,0 +1,44 @@
+@for (breadcrumb of navigationList; track breadcrumb; let last = $last) {
+  @if (last && breadcrumb.breadcrumbs !== false) {
+    <div class="page-header" style="background-color: #a8c0e4;
+    box-shadow: 0px 2px 0px 8px #a8c0e4;">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              @for (breadcrumb of navigationList; track breadcrumb; let last = $last) {
+                @if (last) {
+                  <!-- <h5 class="m-b-10">
+                    {{ breadcrumb.title }}
+                  </h5> -->
+                }
+              }
+            </div>
+            <ul class="breadcrumb" style="margin: 2px;">
+              <li class="breadcrumb-item">
+                @if (type === 'theme2') {
+                  <a [routerLink]="['/dashboard/']"><i class="feather icon-home"></i></a>
+                }
+                @if (type === 'theme1') {
+                  <a [routerLink]="['/dashboard/']">{{ 'Home' }}</a>
+                }
+              </li>
+              @for (breadcrumb of navigationList; track breadcrumb) {
+                @if (breadcrumb.url !== false) {
+                  <li class="breadcrumb-item">
+                    <a [routerLink]="breadcrumb.url">{{ breadcrumb.title }}</a>
+                  </li>
+                }
+                @if (breadcrumb.url === false && breadcrumb.type !== 'group') {
+                  <li class="breadcrumb-item">
+                    <a  [routerLink]="breadcrumb.title.toLocaleLowerCase()">{{ breadcrumb.title }}</a>
+                  </li>
+                }
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+}

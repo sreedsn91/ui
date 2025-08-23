@@ -1,0 +1,81 @@
+<div class="card">
+    <div class="card-body">
+        <div class="toolbar d-flex justify-content-between align-items-center">
+            <h3 class="mb-3">Add Role</h3>
+            <a (click)="backToRoles()">
+                <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;" title="Back to Roles"></i>
+            </a>
+        </div>
+        <form [formGroup]="roleForm" (ngSubmit)="saveRole()">
+            <!-- Role Details -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-6">
+
+                        <div class="mb-2 field-containernw">
+                            <label for="name" class="form-label">Role name: <span  class="text-danger">*</span></label>
+                            <input id="name" type="text" formControlName="name" class="form-control form-control-nb"
+                                placeholder="Enter role name" />
+                           
+                            <div *ngIf="roleForm.controls['name'].invalid && roleForm.controls['name'].touched"
+                                class="text-danger">
+                                <div *ngIf="roleForm.controls['name'].errors?.['required']">
+                                    Role is required.
+                                </div>
+                                <div *ngIf="roleForm.controls['name'].errors?.['roleNameExists']">
+                                    Role already exist.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 field-containernw" style="max-height: 200px;">
+                            <label for="details" class="form-label">Role details:</label>
+                            <textarea id="details" type="text" formControlName="details"
+                                class="form-control form-control-nb" placeholder="Enter role details"></textarea>
+
+                        </div>
+
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <!-- Modules and Access Control -->
+            <div class="d-flex">
+                <h4>Access Controls</h4>
+                <div class="form-check  form-switch">
+                    <input type="checkbox" class="form-check-input m-2" title="select all"
+                        (change)="onSelectAllChange($event)" [checked]="selectAll" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div formArrayName="accessControlls" class="row">
+                    <div *ngFor="let control of accessControls.controls; let i = index" [formGroupName]="i"
+                        class="col-md-2">
+                        <div class="">
+                            <h5><strong>{{ control.value.moduleName }}</strong></h5>
+                            <div class="form-check  form-switch pt-2">
+                                <input hidden formControlName="moduleId">
+                                <input type="checkbox" class="form-check-input" formControlName="canAdd"
+                                    (change)="onCheckboxChange()"> Add
+                            </div>
+                            <div class="form-check  form-switch pt-2">
+                                <input type="checkbox" class="form-check-input" formControlName="canEdit"
+                                    (change)="onCheckboxChange()"> Edit
+                            </div>
+                            <div class="form-check  form-switch pt-2">
+                                <input type="checkbox" class="form-check-input" formControlName="canDelete"
+                                    (change)="onCheckboxChange()"> Delete
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <button type="submit" [disabled]="roleForm.invalid" class="btn btn-primary mt-3">
+                Save Role
+            </button>
+        </form>
+    </div>
+</div>

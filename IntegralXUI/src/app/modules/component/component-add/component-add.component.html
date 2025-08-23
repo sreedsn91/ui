@@ -1,0 +1,324 @@
+<div>
+    <div class="card">
+        <div class="card-body ">
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <h3 class="m-0">New Corrosion Loop</h3>
+                <a class="" (click)="backToComponent()">
+                    <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;"
+                        title="Back to systems"></i>
+                </a>
+            </div>
+            <hr class="mt-0">
+            <form [formGroup]="componentForm" (ngSubmit)="saveComponent()">
+                <div class="floating-button-panel text-center">
+
+                    <div *ngIf="!this.expand"> <button class="btn-commonIcon" (click)="expandAll()"
+                            title="Expand all sections"> <i class="bi feather  icon-maximize-2"></i> </button> </div>
+                    <div *ngIf="this.expand"> <button class="btn-commonIcon" (click)="collapseAll()"
+                            title="Collapse all sections"> <i class="bi feather icon-minimize-2"></i> </button> </div>
+
+                    <div *ngIf="this.canAdd"> <button type="submit" [disabled]="componentForm.invalid" title="Save data"
+                            class="btn-saveIcon"> <i class="bi  feather icon-save"></i></button> </div>
+                    <div *ngIf="!this.canAdd"> <button disabled class="btn-saveIcon" title="Save data-disabled"> <i
+                                class="bi  feather icon-save"></i></button> </div>
+                </div>
+
+                <div class="row">
+
+                    <!-- General -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showGeneral')">
+                                General Information
+                                <span class="arrow" [class.open]="showGeneral"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showGeneral">
+                                
+                                <div class="row">
+                                       <!-- Component ID (Manual Entry) -->
+
+<div class="col-md-4">
+  <div class="m-1 field-containernwsm">
+    <label for="componentId" class="form-label">Component ID:</label>
+    <input type="text" id="componentId" formControlName="componentId"
+           class="form-control form-control-nb" placeholder="Enter Component ID" />
+  </div>
+</div>
+
+<!-- Component Description (Manual Entry) -->
+<div class="col-md-4">
+  <div class="m-1 field-containernwsm">
+    <label for="componentDescription" class="form-label">Component Description:</label>
+    <input type="text" id="componentDescription" formControlName="componentDescription"
+           class="form-control form-control-nb" placeholder="Enter Component Description" />
+  </div>
+</div>
+
+<!-- Component Category (Dropdown) -->
+<div class="col-md-4">
+  <div class="m-1 field-containernwsm">
+    <label for="componentCategory" class="form-label">Component Category:</label>
+    <select id="componentCategory" formControlName="componentCategory"
+            class="form-select form-control-nb">
+      <option value="0" disabled selected>Select Category</option>
+      <option *ngFor="let item of componentCategory" [value]="item.id">
+        {{ item.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<!-- Component Type (Dropdown) -->
+<div class="col-md-4">
+  <div class="m-1 field-containernwsm">
+    <label for="componentType" class="form-label">Component Type:</label>
+    <select id="componentType" formControlName="componentType"
+            class="form-select form-control-nb">
+      <option value="0" disabled selected>Select Type</option>
+      <option *ngFor="let item of componentType" [value]="item.id">
+        {{ item.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<!-- Commissioning Date (Date Picker) -->
+<div class="col-md-4">
+  <div class="mb-2 field-containernw">
+    <label for="commissioningDate">Commissioning Date:</label>
+    <input type="date" id="commissioningDate" formControlName="commissioningDate"
+           class="form-control form-control-nb" />
+  </div>
+</div>
+
+<!-- Built Date (Date Picker) -->
+<div class="col-md-4">
+  <div class="mb-2 field-containernw">
+    <label for="builtDate">Built Date:</label>
+    <input type="date" id="builtDate" formControlName="builtDate"
+           class="form-control form-control-nb" />
+  </div>
+</div>
+
+<!-- Operational Status (Dropdown) -->
+<div class="col-md-4">
+  <div class="m-1 field-containernwsm">
+    <label for="operationalStatus" class="form-label">Operational Status:</label>
+    <select id="operationalStatus" formControlName="operationalStatus"
+            class="form-select form-control-nb">
+      <option value="0" disabled selected>Select Status</option>
+      <option *ngFor="let item of componentOperationalStatus" [value]="item.id">
+        {{ item.name }}
+      </option>
+    </select>
+  </div>
+</div>
+                                </div>
+                             
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showLocation')">
+                                Location
+                                <span class="arrow" [class.open]="showLocation"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showLocation"></div>
+                        </div>
+                    </div>
+
+                    <!-- Design -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showDesign')">
+                                Design
+                                <span class="arrow" [class.open]="showDesign"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showDesign"></div>
+                        </div>
+                    </div>
+
+                    <!-- Geometry -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showGeometry')">
+                                Geometry
+                                <span class="arrow" [class.open]="showGeometry"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showGeometry"></div>
+                        </div>
+                    </div>
+
+                    <!-- Operation and Process -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showOperation')">
+                                Operation and Process
+                                <span class="arrow" [class.open]="showOperation"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showOperation"></div>
+                        </div>
+                    </div>
+
+                    <!-- Fabrication -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showFabrication')">
+                                Fabrication
+                                <span class="arrow" [class.open]="showFabrication"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showFabrication"></div>
+                        </div>
+                    </div>
+
+                    <!-- Material -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showMaterial')">
+                                Material
+                                <span class="arrow" [class.open]="showMaterial"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showMaterial"></div>
+                        </div>
+                    </div>
+
+                    <!-- External -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showExternal')">
+                                External
+                                <span class="arrow" [class.open]="showExternal"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showExternal"></div>
+                        </div>
+                    </div>
+
+                    <!-- Deadleg -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showDeadleg')">
+                                Deadleg
+                                <span class="arrow" [class.open]="showDeadleg"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showDeadleg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Safety and Process Control -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showSafety')">
+                                Safety and Process Control
+                                <span class="arrow" [class.open]="showSafety"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showSafety"></div>
+                        </div>
+                    </div>
+
+                    <!-- Integrity & Inspection -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showIntegrity')">
+                                Integrity & Inspection
+                                <span class="arrow" [class.open]="showIntegrity"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showIntegrity"></div>
+                        </div>
+                    </div>
+
+                    <!-- Inspection Schedule -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showInspectionSchedule')">
+                                Inspection Schedule
+                                <span class="arrow" [class.open]="showInspectionSchedule"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showInspectionSchedule"></div>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance Schedule -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showMaintenanceSchedule')">
+                                Maintenance Schedule
+                                <span class="arrow" [class.open]="showMaintenanceSchedule"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showMaintenanceSchedule"></div>
+                        </div>
+                    </div>
+
+                    <!-- Integration & Metadata -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showMetadata')">
+                                Integration & Metadata
+                                <span class="arrow" [class.open]="showMetadata"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showMetadata"></div>
+                        </div>
+                    </div>
+
+                    <!-- Record Audit Information -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showAudit')">
+                                Record Audit Information
+                                <span class="arrow" [class.open]="showAudit"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showAudit"></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                                                            <div class="accordion-header"
+                                                                (click)="toggle('showDocument')">
+                                                                Documents
+                                                                <span class="arrow" [class.open]="showDocument"></span>
+                                                            </div>
+                                                            <div class="accordion-wrapper" [class.open]="showDocument">
+                                                                <div class="row">
+                                                                    <div class="mb-2 field-containernw">
+                                                                        <label for="documents" class="form-label">Select
+                                                                            Files:</label>
+                                                                        <input id="documents" type="file" multiple
+                                                                            class="form-control form-control-nb"
+                                                                            style="margin: -6px -6px;"
+                                                                            (change)="onFileSelect($event)" />
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <ul *ngIf="documentPreviews.length > 0"
+                                                                            class="list-group"
+                                                                            style="border-radius: 0px;">
+                                                                            <li *ngFor="let file of documentPreviews; let i = index"
+                                                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                <span>{{ file.name }}</span>
+                                                                                <div>
+                                                                                    <button
+                                                                                        class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                                                                        (click)="downloadFile(file)">
+                                                                                        <i
+                                                                                            class="feather icon-download"></i>
+                                                                                    </button>
+                                                                                    <button
+                                                                                        class="btn btn-sm btn-outline-danger docbutton"
+                                                                                        (click)="deleteFile(i)">
+                                                                                        <i
+                                                                                            class="feather icon-trash"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                </div>
+        </form>
+    </div>
+</div>
+</div>

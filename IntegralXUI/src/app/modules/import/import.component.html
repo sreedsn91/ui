@@ -1,0 +1,38 @@
+<form [formGroup]="excelForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+  <!-- Type dropdown -->
+   <div class="mb-2 field-containernw">
+    <label for="typeId">Select Type</label>
+    <select class="form-control form-control-nb" formControlName="typeId">
+      <option value="0">-- Select Type --</option>
+      <option value="1">Plant</option>
+<option value="2">Area</option>
+<option value="3">Unit</option>
+<option value="4">System</option>
+<option value="5">Circuit</option>
+<option value="6">Equipment</option>
+    </select>
+  </div>
+  <div *ngIf="excelForm.get('typeId')?.value == 6" class="mb-2 field-containernw">
+  <label for="equipmentSubCategory">Equipment Sub-Category</label>
+  <select class="form-control form-control-nb" formControlName="equipmentSubCategory">
+      <option value="">-- Select Sub-Category --</option>
+      <option value="1">Plant</option>
+      <option value="2">Area</option>
+      <option value="3">Unit</option>
+  </select>
+</div>
+
+  <!-- Hidden client ID -->
+  <input type="hidden" formControlName="clientId" />
+
+  <!-- File upload -->
+  <div class="mb-2 field-containernw">
+    <label for="fileExcel">Upload Excel</label>
+    <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" class="form-control form-control-nb" required />
+  </div>
+
+  <!-- Submit -->
+  <button type="submit" class="btn btn-primary">
+    Submit
+  </button>
+</form>

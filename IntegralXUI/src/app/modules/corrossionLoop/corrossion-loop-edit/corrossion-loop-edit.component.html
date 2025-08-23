@@ -1,0 +1,229 @@
+<div>
+    <div class="card">
+        <div class="card-body "  *ngIf="dataLoaded">
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <h3 class="m-0">New Corrosion Loop</h3>
+                <a class="" (click)="backToCL()">
+                    <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;"
+                        title="Back to systems"></i>
+                </a>
+            </div>
+            <hr class="mt-0">
+            <form [formGroup]="clForm" (ngSubmit)="saveCL()">
+                <div class="floating-button-panel text-center">
+ <div *ngIf="!this.expand"> <button class="btn-commonIcon"
+                                                        (click)="expandAll()" title="Expand all sections"> <i
+                                                            class="bi feather  icon-maximize-2"></i> </button> </div>
+                                                <div *ngIf="this.expand"> <button class="btn-commonIcon"
+                                                        (click)="collapseAll()" title="Collapse all sections"> <i
+                                                            class="bi feather icon-minimize-2"></i> </button> </div>
+
+                                                <div *ngIf="this.canEdit"> <button type="submit"
+                                                        [disabled]="clForm.invalid" title="Save data"
+                                                        class="btn-saveIcon"> <i
+                                                            class="bi  feather icon-save"></i></button> </div>
+                                                <div *ngIf="!this.canEdit"> <button type="submit" disabled
+                                                        class="btn-saveIcon" title="Save data-disabled"> <i
+                                                            class="bi  feather icon-save"></i></button> </div>
+                                                <div *ngIf="this.canDelete"> <button type="button"
+                                                        *ngIf="this.canDelete" class="btn-deleteIcon"
+                                                        (click)="DeleteCl()"> <i
+                                                            class="bi  feather icon-trash"></i></button></div>
+                                                <div *ngIf="!this.canDelete"> <button type="button" disabled
+                                                        *ngIf="this.canDelete" class="btn-deleteIcon"> <i
+                                                            class="bi  feather icon-trash"></i></button></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showGeneral')">
+                                General Information
+                                <span class="arrow" [class.open]="showGeneral"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showGeneral">
+                                <div class="row">
+
+                                    <!-- Name -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="name" class="form-label">Name:</label>
+                                            <input type="text" id="name" formControlName="name"
+                                                class="form-control form-control-nb" placeholder="Enter name" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Equipment Description -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="description" class="form-label">Description:</label>
+                                            <input type="text" id="description" formControlName="description"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter equipment description" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="plantID" class="form-label">Plant ID: <span
+                                                    class="text-danger">*</span></label>
+                                            <select id="plantID" formControlName="plantID"
+                                                class="form-control form-control-nb">
+
+                                                <option *ngFor="let plant of plants" [value]="plant.id">{{ plant.name }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="clForm.controls['plantID'].invalid && clForm.controls['plantID'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="clForm.controls['plantID'].errors?.['required']">
+                                                    Plant
+                                                    ID is
+                                                    required.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Area ID (Dropdown) -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="areaID" class="form-label">Area ID:</label>
+                                            <select id="areaID" formControlName="areaID"
+                                                class="form-control form-control-nb">
+
+                                                <option value="0" disabled selected> </option>
+                                                <option *ngFor="let area of areas" [value]="area.id">{{ area.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Unit ID (Dropdown) -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="unitID" class="form-label">Unit ID:</label>
+                                            <select id="unitID" formControlName="unitID"
+                                                class="form-control form-control-nb">
+
+                                                <option value="0" disabled selected> </option>
+                                                <option *ngFor="let unit of units" [value]="unit.id">{{ unit.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- System ID (Dropdown) -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="systemID" class="form-label">System ID:</label>
+                                            <select id="systemID" formControlName="systemID"
+                                                class="form-control form-control-nb">
+
+                                                <option value="0" disabled selected> </option>
+                                                <option *ngFor="let system of systems" [value]="system.id">{{
+                                                    system.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="rBICircuitId" class="form-label">RBI Circuit ID:</label>
+                                            <input type="text" id="rBICircuitId" formControlName="rBICircuitId"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter RBI Circuit ID" />
+                                        </div>
+                                    </div>
+
+                                       <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="corrosionLoopDrawing" class="form-label">CorrosionLoop Drawing:</label>
+                                            <input type="text" id="corrosionLoopDrawing" formControlName="corrosionLoopDrawing"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter corrosion loop Drawing" />
+                                        </div>
+                                    </div>
+
+                                       <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="corrosionLoopFrom" class="form-label">CorrosionLoop From:</label>
+                                            <input type="text" id="corrosionLoopFrom" formControlName="corrosionLoopFrom"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter corrosion loop From" />
+                                        </div>
+                                    </div>
+
+                                       <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="corrosionLoopTo" class="form-label">CorrosionLoop To:</label>
+                                            <input type="text" id="corrosionLoopTo" formControlName="corrosionLoopTo"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter corrosion loop To" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                       <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showDocument')">
+                                Documents
+                                <span class="arrow" [class.open]="showDocument"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showDocument">
+                                <div class="row">
+                                    <div class="mb-2 field-containernw">
+                                        <label for="documents" class="form-label">Select Files:</label>
+                                        <input id="documents" type="file" multiple class="form-control form-control-nb"
+                                            style="margin: -6px -6px;" (change)="onFileSelect($event)" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <ul *ngIf="documentPreviews.length > 0" class="list-group"
+                                            style="border-radius: 0px;">
+                                            <li *ngFor="let file of documentPreviews; let i = index"
+                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>{{ file.name }}</span>
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                                        (click)="downloadFile(file)">
+                                                        <i class="feather icon-download"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger docbutton"
+                                                        (click)="deleteFile(i)">
+                                                        <i class="feather icon-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                         <ul *ngIf="documents.length > 0" class="list-group"
+                                                                        style="border-radius: 0px;">
+                                                                        <li *ngFor="let doc of documents; let i = index"
+                                                                            class="list-group-item d-flex justify-content-between align-items-center">
+                                                                            <span>{{ doc.docName }}</span>
+                                                                            <div>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                                                                    (click)="downloadFileExisting(doc.id!, doc.docName);$event.preventDefault();$event.preventDefault();">
+                                                                                    <i class="feather icon-download"></i>
+                                                                                </button>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-outline-danger docbutton"
+                                                                                    (click)="deleteFileExisting(doc.id!);$event.preventDefault();">
+                                                                                    <i class="feather icon-trash"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

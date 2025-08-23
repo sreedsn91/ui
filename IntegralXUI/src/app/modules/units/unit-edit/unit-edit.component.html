@@ -1,0 +1,857 @@
+<div class="rowp">
+    <!-- [ tabs ] start -->
+
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="">
+                    <!-- Tabs Navigation with Right-Aligned Button -->
+                    <div class="d-flex align-items-center">
+                        <!-- Nav Tabs (Left Side) -->
+                        <ul class="nav nav-tabs flex-grow-1" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab"
+                                    data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1"
+                                    aria-selected="true">
+                                    Summary
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2"
+                                    type="button" role="tab" aria-controls="tab2" aria-selected="false">
+                                    Data
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3"
+                                    type="button" role="tab" aria-controls="tab3" aria-selected="false">
+                                    Reference
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- Right-Aligned Button -->
+                        <div class="toolbar">
+
+                            <a class="" (click)="backToUnit()">
+                                <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;"
+                                    title="Back to units"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active mt-3" id="tab1" role="tabpanel"
+                            aria-labelledby="tab1-tab">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h3>Unit Charts</h3>
+                                        <!-- <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
+                          [labels]="chartOptions.labels" [colors]="chartOptions.colors">
+                        </apx-chart> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+
+                            <div class="">
+                                <div class="card">
+                                    <div class="card-body mt-2">
+                                        <!-- <div class="d-flex justify-content-between align-items-center">
+                                  <h3 class="m-0">User Details</h3>
+                              </div>
+                              <hr class="mt-0"> -->
+                                        <form [formGroup]="unitForm" (ngSubmit)="saveUnit()">
+                                            <input id="id" formControlName="id" hidden />
+  <div class="floating-button-panel text-center">
+
+                                                <div *ngIf="!this.expand"> <button class="btn-commonIcon"
+                                                        (click)="expandAll()" title="Expand all sections"> <i
+                                                            class="bi feather  icon-maximize-2"></i> </button> </div>
+                                                <div *ngIf="this.expand"> <button class="btn-commonIcon"
+                                                        (click)="collapseAll()" title="Collapse all sections"> <i
+                                                            class="bi feather icon-minimize-2"></i> </button> </div>
+
+                                                <div *ngIf="this.canEdit"> <button type="submit"
+                                                        [disabled]="unitForm.invalid" title="Save data"
+                                                        class="btn-saveIcon"> <i
+                                                            class="bi  feather icon-save"></i></button> </div>
+                                                <div *ngIf="!this.canEdit"> <button type="submit" disabled
+                                                        class="btn-saveIcon" title="Save data-disabled"> <i
+                                                            class="bi  feather icon-save"></i></button> </div>
+                                                <div *ngIf="this.canDelete"> <button type="button"
+                                                        *ngIf="this.canDelete" class="btn-deleteIcon"
+                                                        (click)="DeleteUnit()"> <i
+                                                            class="bi  feather icon-trash"></i></button></div>
+                                                <div *ngIf="!this.canDelete"> <button type="button" disabled
+                                                        *ngIf="this.canDelete" class="btn-deleteIcon"> <i
+                                                            class="bi  feather icon-trash"></i></button></div>
+                                            </div>
+                                             <div class="row">
+                    <!-- General Information -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showGeneral')">
+                                General Information
+                                <span class="arrow" [class.open]="showGeneral"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showGeneral">
+                                <div class="row">
+                                    <!-- Add your fields for General Information here -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="name" class="form-label">Name: <span
+                                                    class="text-danger">*</span></label>
+                                            <input id="name" formControlName="name" class="form-control form-control-nb"
+                                                placeholder="Enter unit name" />
+                                            <div *ngIf="unitForm.controls['name'].invalid && unitForm.controls['name'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="unitForm.controls['name'].errors?.['required']">Name is
+                                                    required.</div>
+                                                <div *ngIf="unitForm.controls['name'].errors?.['nameExists']">Name
+                                                    already exists.</div>
+                                            </div>
+                                        </div>
+
+                                    </div><div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="description" class="form-label">Description: <span
+                                                    class="text-danger">*</span></label>
+                                            <input id="description" formControlName="description"
+                                                class="form-control form-control-nb" placeholder="Enter description" />
+                                            <div *ngIf="unitForm.controls['description'].invalid && unitForm.controls['description'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="unitForm.controls['description'].errors?.['required']">
+                                                    Description is required.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="plantId" class="form-label">Plant:</label>
+                                            <select id="plantId" formControlName="plantId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let t of plants" [value]="t.id">{{ t.name }}</option>
+                                            </select>
+                                            <div *ngIf="unitForm.controls['plantId'].invalid && unitForm.controls['plantId'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="unitForm.controls['plantId'].errors?.['required']">Plant is
+                                                    required.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="areaId" class="form-label">Area: <span
+                                                    class="text-danger">*</span></label>
+                                            <select id="areaId" formControlName="areaId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let t of areas" [value]="t.id">{{ t.name }}</option>
+                                            </select>
+                                            <div *ngIf="unitForm.controls['areaId'].invalid && unitForm.controls['areaId'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="unitForm.controls['areaId'].errors?.['required']">Area is
+                                                    required.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="location" class="form-label">Location:</label>
+                                            <input id="location" formControlName="location"
+                                                class="form-control form-control-nb" placeholder="Enter location" />
+                                            <div *ngIf="unitForm.controls['location'].invalid && unitForm.controls['location'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="unitForm.controls['location'].errors?.['required']">Location
+                                                    is required.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="locationGpsCoordinates" class="form-label">GPS
+                                                Coordinates:</label>
+                                            <input id="locationGpsCoordinates" formControlName="locationGpsCoordinates"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter GPS coordinates" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="facilityName" class="form-label">Facility Name:</label>
+                                            <input id="facilityName" formControlName="facilityName"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter facility name" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="ownerOrOperator" class="form-label">Owner/Operator:</label>
+                                            <input id="ownerOrOperator" formControlName="ownerOrOperator"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter owner or operator name" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="commissioningDate" class="form-label">Commissioning
+                                                Date:</label>
+                                            <input type="date" id="commissioningDate"
+                                                formControlName="commissioningDate"
+                                                class="form-control form-control-nb" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="builtDate" class="form-label">Built Date:</label>
+                                            <input type="date" id="builtDate" formControlName="builtDate"
+                                                class="form-control form-control-nb" />
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="Id" class="form-label">Type:</label>
+                                            <select id="typeId" formControlName="typeId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let t of unitTypes" [value]="t.id">{{ t.name }}</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="categoryId" class="form-label">Category:</label>
+                                            <select id="categoryId" formControlName="categoryId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let c of unitCategories" [value]="c.id">{{ c.name }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf=" unitForm.controls['categoryId'].invalid &&  unitForm.controls['categoryId'].touched"
+                                                class="text-danger">
+                                                <div *ngIf=" unitForm.controls['categoryId'].errors?.['required']">
+                                                    Category is required.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="statusId" class="form-label">Status:</label>
+                                            <select id="statusId" formControlName="statusId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let s of unitStatuses" [value]="s.id">{{ s.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Design and Construction Data -->
+                    <div class="col-md-8">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showDesign')">
+                                Design and Construction Data
+                                <span class="arrow" [class.open]="showDesign"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showDesign">
+                                <div class="row">
+                                    <!-- Add your fields for Design and Construction Data here -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="designLife" class="form-label">Design Life:</label>
+                                            <input type="number" id="designLife" formControlName="designLife"
+                                                class="form-control form-control-nb" placeholder="Enter design life" />
+                                            <div *ngIf=" unitForm.controls['designLife'].invalid &&  unitForm.controls['designLife'].touched"
+                                                class="text-danger">
+                                                <div *ngIf=" unitForm.controls['designLife'].errors?.['min']">Design
+                                                    life must be a
+                                                    positive number.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="designCodesStandardId" class="form-label">Design Codes &
+                                                Standard:</label>
+                                            <select id="designCodesStandardId" formControlName="designCodesStandardId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of designCodesStandards" [value]="item.id">{{
+                                                    item.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="processTypeId" class="form-label">Process Type:</label>
+                                            <select id="processTypeId" formControlName="processTypeId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of processTypes" [value]="item.id">{{ item.name
+                                                    }}</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="primaryFeedstockId" class="form-label">Primary
+                                                Feedstock:</label>
+                                            <select id="primaryFeedstockId" formControlName="primaryFeedstockId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of primaryFeedstocks" [value]="item.id">{{
+                                                    item.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="primaryProducts" class="form-label">Primary Products:</label>
+                                            <input id="primaryProducts" formControlName="primaryProducts"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter primary products" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="capacity" class="form-label">Capacity:</label>
+                                            <input type="number" id="capacity" formControlName="capacity"
+                                                class="form-control form-control-nb" placeholder="Enter capacity" />
+                                            <div *ngIf="  unitForm.controls['capacity'].invalid &&   unitForm.controls['capacity'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="  unitForm.controls['capacity'].errors?.['min']">Invalid
+                                                    capacity.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="marginPerDay" class="form-label">Margin Per Day:</label>
+                                            <input type="number" id="marginPerDay" formControlName="marginPerDay"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter margin per day" />
+                                            <div *ngIf="  unitForm.controls['marginPerDay'].invalid &&   unitForm.controls['marginPerDay'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="  unitForm.controls['marginPerDay'].errors?.['min']">Invalid
+                                                    margin per day </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="numberOfProcessingUnits" class="form-label">Number of Processing
+                                                Units:</label>
+                                            <input type="number" id="numberOfProcessingUnits"
+                                                formControlName="numberOfProcessingUnits"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter number of processing units" />
+                                            <div *ngIf="  unitForm.controls['numberOfProcessingUnits'].invalid &&   unitForm.controls['numberOfProcessingUnits'].touched"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="  unitForm.controls['numberOfProcessingUnits'].errors?.['min']">
+                                                    Invalid processing unit</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="hazardClassificationId" class="form-label">Hazard
+                                                Classification:</label>
+                                            <select id="hazardClassificationId" formControlName="hazardClassificationId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of hazardClassifications" [value]="item.id">{{
+                                                    item.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maintenance & Reliability -->
+                    <div class="col-md-4">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showMaintenance')">
+                                Maintenance & Reliability
+                                <span class="arrow" [class.open]="showMaintenance"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showMaintenance">
+                                <div class="row">
+                                    <!-- Add your fields for Maintenance & Reliability here -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernw">
+                                            <label for="currentMaintenanceStrategyId" class="form-label">Current
+                                                Maintenance
+                                                Strategy:</label>
+                                            <select id="currentMaintenanceStrategyId"
+                                                formControlName="currentMaintenanceStrategyId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of maintenanceStrategies" [value]="item.id">{{
+                                                    item.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernw">
+                                            <label for="shutdownTurnaroundFrequency" class="form-label">Shutdown
+                                                Turnaround
+                                                Frequency:</label>
+                                            <input type="number" id="shutdownTurnaroundFrequency"
+                                                formControlName="shutdownTurnaroundFrequency"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter shutdown turnaround frequency" />
+                                            <div *ngIf="  unitForm.controls['shutdownTurnaroundFrequency'].invalid &&   unitForm.controls['shutdownTurnaroundFrequency'].touched"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="  unitForm.controls['shutdownTurnaroundFrequency'].errors?.['min']">
+                                                    invalid shutdown turnaround.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="lastMajorOverhaulDate" class="form-label">Last Major Overhaul
+                                                Date:</label>
+                                            <input type="date" id="lastMajorOverhaulDate"
+                                                formControlName="lastMajorOverhaulDate"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter last major overhaul date" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="nextMajorOverhaulDate" class="form-label">Next Major Overhaul
+                                                Date:</label>
+                                            <input type="date" id="nextMajorOverhaulDate"
+                                                formControlName="nextMajorOverhaulDate"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter next major overhaul date" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="reliabilityMetricsId" class="form-label">Reliability
+                                                Metrics:</label>
+                                            <select id="reliabilityMetricsId" formControlName="reliabilityMetricsId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of reliabilityMetrics" [value]="item.id">{{
+                                                    item.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <!-- Environmental & Operating Conditions -->
+                    <div class="col-md-8">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showEnvironment')">
+                                Environmental & Operating Conditions
+                                <span class="arrow" [class.open]="showEnvironment"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showEnvironment">
+                                <div class="row">
+                                    <!-- Add your fields for Environmental & Operating Conditions here -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="operatingTemperatureRange" class="form-label">Operating
+                                                Temperature
+                                                Range:</label>
+                                            <input type="number" id="operatingTemperatureRange"
+                                                formControlName="operatingTemperatureRange"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter operating temperature range" />
+                                            <div *ngIf="  unitForm.controls['operatingTemperatureRange'].invalid &&   unitForm.controls['operatingTemperatureRange'].touched"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="  unitForm.controls['operatingTemperatureRange'].errors?.['min']">
+                                                    invalid operating temperature.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="operatingPressureRange" class="form-label">Operating Pressure
+                                                Range:</label>
+                                            <input type="number" id="operatingPressureRange"
+                                                formControlName="operatingPressureRange"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter operating pressure range" />
+                                            <div *ngIf="  unitForm.controls['operatingPressureRange'].invalid &&   unitForm.controls['operatingPressureRange'].touched"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="  unitForm.controls['operatingPressureRange'].errors?.['min']">
+                                                    invalid operating pressure range.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="corrosiveEnvironments" class="form-label">Corrosive
+                                                Environments:</label>
+                                            <input id="corrosiveEnvironments" formControlName="corrosiveEnvironments"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter corrosive environments" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="humidityLevel" class="form-label">Humidity Level:</label>
+                                            <input id="humidityLevel" formControlName="humidityLevel"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter humidity level" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="seismicZoneClassification" class="form-label">Seismic Zone
+                                                Classification:</label>
+                                            <input type="text" id="seismicZoneClassification"
+                                                formControlName="seismicZoneClassification"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter seismic zone classification" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="weatherConditions" class="form-label">Weather
+                                                Conditions:</label>
+                                            <input type="text" id="weatherConditions"
+                                                formControlName="weatherConditions" class="form-control form-control-nb"
+                                                placeholder="Enter weather conditions" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="fireExplosionRiskId" class="form-label">Fire Explosion
+                                                Risk:</label>
+                                            <select id="fireExplosionRiskId" formControlName="fireExplosionRiskId"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of fireExplosionRisks" [value]="item.id">{{
+                                                    item.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="totalPopulation" class="form-label">Total Population:</label>
+                                            <input type="number" id="totalPopulation" formControlName="totalPopulation"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter total population" />
+                                            <div *ngIf="  unitForm.controls['totalPopulation'].invalid &&   unitForm.controls['totalPopulation'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="  unitForm.controls['totalPopulation'].errors?.['min']">
+                                                    Invalid total population.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="populationDensity" class="form-label">Population
+                                                Density:</label>
+                                            <input type="number" id="populationDensity"
+                                                formControlName="populationDensity" class="form-control form-control-nb"
+                                                placeholder="Enter population density" />
+                                            <div *ngIf="  unitForm.controls['populationDensity'].invalid &&   unitForm.controls['populationDensity'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="  unitForm.controls['populationDensity'].errors?.['min']">
+                                                    Invalid population density.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regulatory & Compliance -->
+                    <div class="col-md-4">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showRegulatory')">
+                                Regulatory & Compliance
+                                <span class="arrow" [class.open]="showRegulatory"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showRegulatory">
+                                <div class="row">
+                                    <!-- Add your fields for Regulatory & Compliance here -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="governingRegulatoryBody" class="form-label">Governing Regulatory
+                                                Body:</label>
+                                            <input type="text" id="governingRegulatoryBody"
+                                                formControlName="governingRegulatoryBody"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter governing regulatory body" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="safetyEnvironmentalPermits" class="form-label">Safety &
+                                                Environmental
+                                                Permits:</label>
+                                            <input type="text" id="safetyEnvironmentalPermits"
+                                                formControlName="safetyEnvironmentalPermits"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter safety & environmental permits" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="complianceCertifications" class="form-label">Compliance
+                                                Certifications:</label>
+                                            <input type="text" id="complianceCertifications"
+                                                formControlName="complianceCertifications"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter compliance certifications" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="incidentHistory" class="form-label">Incident History:</label>
+                                            <input type="text" id="incidentHistory" formControlName="incidentHistory"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter incident history" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integration & Metadata -->
+                    <div class="col-md-8">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showIntegration')">
+                                Integration & Metadata
+                                <span class="arrow" [class.open]="showIntegration"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showIntegration">
+                                <div class="row">
+                                    <!-- Add your fields for Integration & Metadata here -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="eRPorCMMSPlantCode" class="form-label">ERP/CMMS Plant
+                                                Code:</label>
+                                            <input type="text" id="eRPorCMMSPlantCode"
+                                                formControlName="eRPorCMMSPlantCode"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter ERP/CMMS Plant Code" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="eRPorCMMSSystem" class="form-label">ERP/CMMS System:</label>
+                                            <input type="text" id="eRPorCMMSSystem" formControlName="eRPorCMMSSystem"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter ERP/CMMS System" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="functionalLocation" class="form-label">Functional
+                                                Location:</label>
+                                            <input type="text" id="functionalLocation"
+                                                formControlName="functionalLocation"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter Functional Location" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalSystemID" class="form-label">External System ID:</label>
+                                            <input type="text" id="externalSystemID" formControlName="externalSystemID"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter External System ID" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="syncStatus" class="form-label">Sync
+                                                Status:</label>
+                                            <input type="text" id="syncStatus" formControlName="syncStatus"
+                                                class="form-control form-control-nb" placeholder="Enter Sync Status" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+
+                    <!-- Audit Information -->
+  <div class="col-md-4">
+    <div class="accordion-item">
+      <div class="accordion-header" (click)="toggle('showAudit')">
+        Audit Information
+        <span class="arrow" [class.open]="showAudit"></span>
+      </div>
+      <div class="accordion-wrapper" [class.open]="showAudit">
+        <div class="row">
+         <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                <label for="addedByName" class="form-label">Created By:</label>
+                <input type="text" id="addedByName" [disabled]="true"
+                    formControlName="addedByName"
+                    class="form-control form-control-nb" />
+            </div>
+            </div><div class="col-md-6"> <div class="m-1 field-containernwsm">
+                <label for="addedOnDate" class="form-label">Created
+                    Date:</label>
+                <input type="text" id="addedOnDate" [disabled]="true"
+                    formControlName="addedOnDate"
+                    class="form-control form-control-nb" />
+            </div>
+            </div><div class="col-md-6"> <div class="m-1 field-containernwsm">
+                <label for="modifiedByName" class="form-label">Last Modified
+                    By:</label>
+                <input type="text" id="modifiedByName" [disabled]="true"
+                    formControlName="modifiedByName"
+                    class="form-control form-control-nb" />
+            </div>
+            </div><div class="col-md-6"> <div class="m-1 field-containernwsm">
+                <label for="modifiedOnDate" class="form-label">Last Modified
+                    Date:</label>
+                <input type="text" id="modifiedOnDate" [disabled]="true"
+                    formControlName="modifiedOnDate"
+                    class="form-control form-control-nb" />
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Documents -->
+                    <div class="col-md-12">
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showDocuments')">
+                                Documents
+                                <span class="arrow" [class.open]="showDocuments"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showDocuments">
+                                <div class="row">
+                                    <!-- Add your fields for Documents here -->
+                                    <div class="col-md-6">
+                                          <div class="mb-2 field-containernw">
+                                                        <label for="documents" class="form-label">Select Files:</label>
+                                                        <input id="documents" type="file" multiple
+                                                            class="form-control form-control-nb"
+                                                            style="margin: -6px -6px;"
+                                                            (change)="onFileSelect($event)" />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <ul *ngIf="documentPreviews.length > 0" class="list-group"
+                                                            style="border-radius: 0px;">
+                                                            <li *ngFor="let file of documentPreviews; let i = index"
+                                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                                <span>{{ file.name }}</span>
+                                                                <div>
+                                                                    <button
+                                                                        class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                                                        (click)="downloadFile(file);$event.preventDefault();">
+                                                                        <i class="feather icon-download"></i>
+                                                                    </button>
+                                                                    <button
+                                                                        class="btn btn-sm btn-outline-danger docbutton"
+                                                                        (click)="deleteFile(i);$event.preventDefault();">
+                                                                        <i class="feather icon-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <ul *ngIf="documents.length > 0" class="list-group"
+                                                            style="border-radius: 0px;">
+                                                            <li *ngFor="let doc of documents; let i = index"
+                                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                                <span>{{ doc.docName }}</span>
+                                                                <div>
+                                                                    <button
+                                                                        class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                                                        (click)="downloadFileExisting(doc.id!, doc.docName);$event.preventDefault();$event.preventDefault();">
+                                                                        <i class="feather icon-download"></i>
+                                                                    </button>
+                                                                    <button
+                                                                        class="btn btn-sm btn-outline-danger docbutton"
+                                                                        (click)="deleteFileExisting(doc.id!);$event.preventDefault();">
+                                                                        <i class="feather icon-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                          
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                            <p>Content for Tab 3</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+/* Sticky Header */
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* First Row: Logo, Search Bar, Icons */
+.top-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Logo */
+.logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.app-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Search Bar */
+.search-bar {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 5px 35px; /* Space for icon */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  font-size: 16px;
+  color: #888;
+}
+
+/* User Dropdown */
+.user-img {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Navigation Bar */
+.nav-bar {
+  background: #fff;;
+}
+
+.navbar-nav .nav-link {
+  color:rgb(94 94 94);
+  padding: 10px 15px;
+  // transition: transform 1s ease-in-out;
+  // transition: font-weight 1s ease-in-out;
+height: 38px;
+}
+
+.navbar-nav .nav-link.active {
+  transform: scale(1.05);
+ border-bottom: 3px solid #066afe !important;
+ font-weight: 700; 
+ box-shadow: none !important;
+}
+.navbar-nav .nav-link:hover {
+  transform: scale(1.02);
+  background: rgb(207 207 207 / 43%);
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .top-row {
+    flex-direction: row;
+    text-align: center;
+  }
+  
+  .search-bar {
+    margin: 10px 0;
+    max-width: 50%;
+  }
+}
+@media (max-width: 576px) {
+  .b-title {
+    display: none;
+  }
+    
+  .search-bar {
+    display: none;
+  }
+  .secondRow {
+    background-color:  #ffffff5c !important;
+  }
+}
+@media (max-width: 400px) {
+  .b-title {
+    display: none;
+  }
+  .secondRow {
+    background-color:  #066afe5c !important;
+  }
+}
+
+@media (max-width: 992px) {
+
+}
+.dropdown-menu-search
+{
+  
+  /* padding: 20px 0; */
+  margin-top: 7px !important;
+}
+
