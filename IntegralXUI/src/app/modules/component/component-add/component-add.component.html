@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body ">
             <div class="d-flex justify-content-between align-items-center mt-2">
-                <h3 class="m-0">New Corrosion Loop</h3>
+                <h3 class="m-0">New Component</h3>
                 <a class="" (click)="backToComponent()">
                     <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;"
                         title="Back to systems"></i>
@@ -26,7 +26,7 @@
                 <div class="row">
 
                     <!-- General -->
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showGeneral')">
                                 General Information
@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <!-- Component ID (Manual Entry) -->
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="componentId" class="form-label">Component ID:</label>
                                             <input type="text" id="componentId" formControlName="componentId"
@@ -46,7 +46,7 @@
                                     </div>
 
                                     <!-- Component Description (Manual Entry) -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="componentDescription" class="form-label">Component
                                                 Description:</label>
@@ -58,14 +58,14 @@
                                     </div>
 
                                     <!-- Component Category (Dropdown) -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="componentCategory" class="form-label">Component
                                                 Category:</label>
                                             <select id="componentCategory" formControlName="componentCategory"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected>Select Category</option>
-                                                <option *ngFor="let item of componentCategory" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentCategory" [value]="item.id">
                                                     {{ item.name }}
                                                 </option>
                                             </select>
@@ -73,13 +73,13 @@
                                     </div>
 
                                     <!-- Component Type (Dropdown) -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="componentType" class="form-label">Component Type:</label>
                                             <select id="componentType" formControlName="componentType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected>Select Type</option>
-                                                <option *ngFor="let item of componentType" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentType" [value]="item.id">
                                                     {{ item.name }}
                                                 </option>
                                             </select>
@@ -87,7 +87,7 @@
                                     </div>
 
                                     <!-- Commissioning Date (Date Picker) -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-2 field-containernw">
                                             <label for="commissioningDate">Commissioning Date:</label>
                                             <input type="date" id="commissioningDate"
@@ -97,7 +97,7 @@
                                     </div>
 
                                     <!-- Built Date (Date Picker) -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-2 field-containernw">
                                             <label for="builtDate">Built Date:</label>
                                             <input type="date" id="builtDate" formControlName="builtDate"
@@ -106,14 +106,14 @@
                                     </div>
 
                                     <!-- Operational Status (Dropdown) -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="operationalStatus" class="form-label">Operational
                                                 Status:</label>
                                             <select id="operationalStatus" formControlName="operationalStatus"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected>Select Status</option>
-                                                <option *ngFor="let item of componentOperationalStatus"
+                                                <option *ngFor="let item of ddlcomponentOperationalStatus"
                                                     [value]="item.id">
                                                     {{ item.name }}
                                                 </option>
@@ -128,7 +128,7 @@
                     </div>
 
                     <!-- Location -->
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showLocation')">
                                 Location
@@ -137,98 +137,98 @@
                             <div class="accordion-wrapper" [class.open]="showLocation">
                                 <div class="row">
                                     <!-- Plant ID Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="plantId" class="form-label">Plant ID:</label>
                                             <select id="plantId" formControlName="plantId"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of plantIdOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlplants" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Area ID Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="areaId" class="form-label">Area ID:</label>
                                             <select id="areaId" formControlName="areaId"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of areaIdOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlareas" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Unit ID Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="unitId" class="form-label">Unit ID:</label>
                                             <select id="unitId" formControlName="unitId"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of unitIdOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlunits" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- System ID Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="systemId" class="form-label">System ID:</label>
                                             <select id="systemId" formControlName="systemId"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of systemIdOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlsystems" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Circuit ID Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="circuitId" class="form-label">Circuit ID:</label>
                                             <select id="circuitId" formControlName="circuitId"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of circuitIdOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcircuits" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Corrosion Loop ID Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="corrosionLoopId" class="form-label">Corrosion Loop ID:</label>
                                             <select id="corrosionLoopId" formControlName="corrosionLoopId"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of corrosionLoopIdOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcorrosionLoops" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Equipment ID Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="equipmentId" class="form-label">Equipment ID:</label>
                                             <select id="equipmentId" formControlName="equipmentId"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of equipmentIdOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlequipments" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Specific Location Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="specificLocation" class="form-label">Specific Location:</label>
                                             <input type="text" id="specificLocation" formControlName="specificLocation"
@@ -238,7 +238,7 @@
                                     </div>
 
                                     <!-- Equipment From Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="equipmentFrom" class="form-label">Equipment From:</label>
                                             <input type="text" id="equipmentFrom" formControlName="equipmentFrom"
@@ -248,7 +248,7 @@
                                     </div>
 
                                     <!-- Equipment To Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="equipmentTo" class="form-label">Equipment To:</label>
                                             <input type="text" id="equipmentTo" formControlName="equipmentTo"
@@ -257,7 +257,7 @@
                                     </div>
 
                                     <!-- PFD Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="pfd" class="form-label">PFD:</label>
                                             <input type="text" id="pfd" formControlName="pfd"
@@ -266,7 +266,7 @@
                                     </div>
 
                                     <!-- P&ID Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="pid" class="form-label">P&ID:</label>
                                             <input type="text" id="pid" formControlName="pid"
@@ -275,7 +275,7 @@
                                     </div>
 
                                     <!-- GA Drawing Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="gaDrawing" class="form-label">GA Drawing:</label>
                                             <input type="text" id="gaDrawing" formControlName="gaDrawing"
@@ -289,7 +289,7 @@
                     </div>
 
                     <!-- Design -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showDesign')">
                                 Design
@@ -298,33 +298,33 @@
                             <div class="accordion-wrapper" [class.open]="showDesign">
                                 <div class="row">
                                     <!-- Design Code Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="designCode" class="form-label">Design Code:</label>
                                             <select id="designCode" formControlName="designCode"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of designCodeOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentDesignCode" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Edition & Addendum Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="editionAddendum" class="form-label">Edition & Addendum:</label>
                                             <select id="editionAddendum" formControlName="editionAddendum"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of editionAddendumOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentEditionAddendum" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Design Pressure (Internal) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="designPressureInternal" class="form-label">Design Pressure
                                                 (Internal):</label>
@@ -336,7 +336,7 @@
                                     </div>
 
                                     <!-- Design Pressure (External) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="designPressureExternal" class="form-label">Design Pressure
                                                 (External):</label>
@@ -348,8 +348,8 @@
                                     </div>
 
                                     <!-- Design Temperature (Max) Manual entry -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernw">
                                             <label for="designTemperatureMax" class="form-label">Design Temperature
                                                 (Max):</label>
                                             <input type="text" id="designTemperatureMax"
@@ -360,8 +360,8 @@
                                     </div>
 
                                     <!-- Design Temperature (MDMT) Manual entry -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernw">
                                             <label for="designTemperatureMDMT" class="form-label">Design Temperature
                                                 (MDMT):</label>
                                             <input type="text" id="designTemperatureMDMT"
@@ -372,7 +372,7 @@
                                     </div>
 
                                     <!-- MAWP Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="mawp" class="form-label">MAWP:</label>
                                             <input type="text" id="mawp" formControlName="mawp"
@@ -381,7 +381,7 @@
                                     </div>
 
                                     <!-- Design Life Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="designLife" class="form-label">Design Life:</label>
                                             <input type="text" id="designLife" formControlName="designLife"
@@ -390,7 +390,7 @@
                                     </div>
 
                                     <!-- Primary Products Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="primaryProducts" class="form-label">Primary Products:</label>
                                             <input type="text" id="primaryProducts" formControlName="primaryProducts"
@@ -400,7 +400,7 @@
                                     </div>
 
                                     <!-- Margin (Per Day) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="marginPerDay" class="form-label">Margin (Per Day):</label>
                                             <input type="text" id="marginPerDay" formControlName="marginPerDay"
@@ -410,7 +410,7 @@
                                     </div>
 
                                     <!-- Compliance Certification Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="complianceCertification" class="form-label">Compliance
                                                 Certification:</label>
@@ -418,14 +418,14 @@
                                                 formControlName="complianceCertification"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of complianceCertificationOptions"
+                                                <option *ngFor="let item of ddlcomponentComplianceCertification"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Governing Regulatory Body Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="governingRegulatoryBody" class="form-label">Governing Regulatory
                                                 Body:</label>
@@ -442,7 +442,7 @@
                     </div>
 
                     <!-- Geometry -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showGeometry')">
                                 Geometry
@@ -451,20 +451,20 @@
                             <div class="accordion-wrapper" [class.open]="showGeometry">
                                 <div class="row">
                                     <!-- Geometry Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="geometry" class="form-label">Geometry:</label>
                                             <select id="geometry" formControlName="geometry"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of geometryOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentGeometry" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- NPS Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="nps" class="form-label">NPS:</label>
                                             <input type="text" id="nps" formControlName="nps"
@@ -473,7 +473,7 @@
                                     </div>
 
                                     <!-- Inside Diameter (ID) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="insideDiameter" class="form-label">Inside Diameter (ID):</label>
                                             <input type="text" id="insideDiameter" formControlName="insideDiameter"
@@ -483,7 +483,7 @@
                                     </div>
 
                                     <!-- Outside Diameter (OD) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="outsideDiameter" class="form-label">Outside Diameter
                                                 (OD):</label>
@@ -494,7 +494,7 @@
                                     </div>
 
                                     <!-- Length / Height Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="lengthHeight" class="form-label">Length / Height:</label>
                                             <input type="text" id="lengthHeight" formControlName="lengthHeight"
@@ -504,7 +504,7 @@
                                     </div>
 
                                     <!-- Fill Height Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="fillHeight" class="form-label">Fill Height:</label>
                                             <input type="text" id="fillHeight" formControlName="fillHeight"
@@ -513,20 +513,20 @@
                                     </div>
 
                                     <!-- Orientation Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="orientation" class="form-label">Orientation:</label>
                                             <select id="orientation" formControlName="orientation"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of orientationOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentOrientation" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Empty Weight Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="emptyWeight" class="form-label">Empty Weight:</label>
                                             <input type="text" id="emptyWeight" formControlName="emptyWeight"
@@ -535,7 +535,7 @@
                                     </div>
 
                                     <!-- Capacity Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="capacity" class="form-label">Capacity:</label>
                                             <input type="text" id="capacity" formControlName="capacity"
@@ -549,7 +549,7 @@
                     </div>
 
                     <!-- Operation and Process -->
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showOperation')">
                                 Operation and Process
@@ -558,7 +558,7 @@
                             <div class="accordion-wrapper" [class.open]="showOperation">
                                 <div class="row">
                                     <!-- Operating Pressure (max) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="operatingPressureMax" class="form-label">Operating Pressure
                                                 (max):</label>
@@ -570,7 +570,7 @@
                                     </div>
 
                                     <!-- Operating Pressure (avg) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="operatingPressureAvg" class="form-label">Operating Pressure
                                                 (avg):</label>
@@ -582,7 +582,7 @@
                                     </div>
 
                                     <!-- Operating Temp. (max) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="operatingTempMax" class="form-label">Operating Temp.
                                                 (max):</label>
@@ -593,7 +593,7 @@
                                     </div>
 
                                     <!-- Operating Temp. (min) Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="operatingTempMin" class="form-label">Operating Temp.
                                                 (min):</label>
@@ -604,7 +604,7 @@
                                     </div>
 
                                     <!-- Process Fluid Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="processFluid" class="form-label">Process Fluid:</label>
                                             <input type="text" id="processFluid" formControlName="processFluid"
@@ -614,7 +614,7 @@
                                     </div>
 
                                     <!-- Fluid Composition Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="fluidComposition" class="form-label">Fluid Composition:</label>
                                             <input type="text" id="fluidComposition" formControlName="fluidComposition"
@@ -624,20 +624,20 @@
                                     </div>
 
                                     <!-- Fluid Phase Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="fluidPhase" class="form-label">Fluid Phase:</label>
                                             <select id="fluidPhase" formControlName="fluidPhase"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of fluidPhaseOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentFluidPhase" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Inventory Volume Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="inventoryVolume" class="form-label">Inventory Volume:</label>
                                             <input type="text" id="inventoryVolume" formControlName="inventoryVolume"
@@ -647,7 +647,7 @@
                                     </div>
 
                                     <!-- Density Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="density" class="form-label">Density:</label>
                                             <input type="text" id="density" formControlName="density"
@@ -656,7 +656,7 @@
                                     </div>
 
                                     <!-- Viscosity Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="viscosity" class="form-label">Viscosity:</label>
                                             <input type="text" id="viscosity" formControlName="viscosity"
@@ -665,7 +665,7 @@
                                     </div>
 
                                     <!-- Specific Gravity Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="specificGravity" class="form-label">Specific Gravity:</label>
                                             <input type="text" id="specificGravity" formControlName="specificGravity"
@@ -675,7 +675,7 @@
                                     </div>
 
                                     <!-- Flow Rate Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="flowRate" class="form-label">Flow Rate:</label>
                                             <input type="text" id="flowRate" formControlName="flowRate"
@@ -684,7 +684,7 @@
                                     </div>
 
                                     <!-- Velocity Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="velocity" class="form-label">Velocity:</label>
                                             <input type="text" id="velocity" formControlName="velocity"
@@ -693,20 +693,20 @@
                                     </div>
 
                                     <!-- Corrosivity Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="corrosivity" class="form-label">Corrosivity:</label>
                                             <select id="corrosivity" formControlName="corrosivity"
                                                 class="form-select form-control-nb">
-                                                <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of corrosivityOptions" [value]="item.id">{{
+                                                <option value="0" disabled selected>corrosivity</option>
+                                                <option *ngFor="let item of ddlcomponentCorrosivity" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- pH Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="pH" class="form-label">pH:</label>
                                             <input type="text" id="pH" formControlName="pH"
@@ -715,60 +715,60 @@
                                     </div>
 
                                     <!-- Process Environment Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="processEnvironment" class="form-label">Process
                                                 Environment:</label>
                                             <select id="processEnvironment" formControlName="processEnvironment"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of processEnvironmentOptions"
+                                                <option *ngFor="let item of ddlcomponentProcessEnvironment"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Toxic Mixture Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="toxicMixture" class="form-label">Toxic Mixture:</label>
                                             <select id="toxicMixture" formControlName="toxicMixture"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of toxicMixtureOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentToxicMixture" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Toxic Fluid Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="toxicFluid" class="form-label">Toxic Fluid:</label>
                                             <select id="toxicFluid" formControlName="toxicFluid"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of toxicFluidOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentToxicFluid" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Flammability Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="flammability" class="form-label">Flammability:</label>
                                             <select id="flammability" formControlName="flammability"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of flammabilityOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentFlammability" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Operating weight Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="operatingWeight" class="form-label">Operating weight:</label>
                                             <input type="text" id="operatingWeight" formControlName="operatingWeight"
@@ -778,20 +778,20 @@
                                     </div>
 
                                     <!-- Criticality Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="criticality" class="form-label">Criticality:</label>
                                             <select id="criticality" formControlName="criticality"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of criticalityOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentCriticality" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Humidity Level Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="humidityLevel" class="form-label">Humidity Level:</label>
                                             <input type="text" id="humidityLevel" formControlName="humidityLevel"
@@ -801,7 +801,7 @@
                                     </div>
 
                                     <!-- Seismic Zone Classification Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="seismicZoneClassification" class="form-label">Seismic Zone
                                                 Classification:</label>
@@ -809,41 +809,41 @@
                                                 formControlName="seismicZoneClassification"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of seismicZoneClassificationOptions"
+                                                <option *ngFor="let item of ddlcomponentSeismicZoneClassification"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Fire & Explosion Risk Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="fireExplosionRisk" class="form-label">Fire & Explosion
                                                 Risk:</label>
                                             <select id="fireExplosionRisk" formControlName="fireExplosionRisk"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of fireExplosionRiskOptions" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentFireExplosionRisk" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Toxic Risk Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="toxicRisk" class="form-label">Toxic Risk:</label>
                                             <select id="toxicRisk" formControlName="toxicRisk"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of toxicRiskOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentToxicRisk" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Total Population Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="totalPopulation" class="form-label">Total Population:</label>
                                             <input type="text" id="totalPopulation" formControlName="totalPopulation"
@@ -853,7 +853,7 @@
                                     </div>
 
                                     <!-- Population Density Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="populationDensity" class="form-label">Population
                                                 Density:</label>
@@ -869,7 +869,7 @@
                     </div>
 
                     <!-- Fabrication -->
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showFabrication')">
                                 Fabrication
@@ -878,7 +878,7 @@
                             <div class="accordion-wrapper" [class.open]="showFabrication">
                                 <div class="row">
                                     <!-- Manufacturer Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="manufacturer" class="form-label">Manufacturer:</label>
                                             <input type="text" id="manufacturer" formControlName="manufacturer"
@@ -887,7 +887,7 @@
                                     </div>
 
                                     <!-- Serial Number Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="serialNumber" class="form-label">Serial Number:</label>
                                             <input type="text" id="serialNumber" formControlName="serialNumber"
@@ -897,7 +897,7 @@
                                     </div>
 
                                     <!-- Warranty Date Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="warrantyDate" class="form-label">Warranty Date:</label>
                                             <input type="text" id="warrantyDate" formControlName="warrantyDate"
@@ -907,73 +907,73 @@
                                     </div>
 
                                     <!-- Heat Treatment Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="heatTreatment" class="form-label">Heat Treatment:</label>
                                             <select id="heatTreatment" formControlName="heatTreatment"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of heatTreatmentOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentHeatTreatment" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Heat Treatment Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="heatTreatmentType" class="form-label">Heat Treatment
                                                 Type:</label>
                                             <select id="heatTreatmentType" formControlName="heatTreatmentType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of heatTreatmentTypeOptions" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentHeatTreatmentType" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Impact Test Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="impactTest" class="form-label">Impact Test:</label>
                                             <select id="impactTest" formControlName="impactTest"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of impactTestOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentImpactTest" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Pressure Test Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="pressureTest" class="form-label">Pressure Test:</label>
                                             <select id="pressureTest" formControlName="pressureTest"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of pressureTestOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentPressureTest" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Pressure Test Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="pressureTestType" class="form-label">Pressure Test Type:</label>
                                             <select id="pressureTestType" formControlName="pressureTestType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of pressureTestTypeOptions" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentPressureTestType" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Test Pressure Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="testPressure" class="form-label">Test Pressure:</label>
                                             <input type="text" id="testPressure" formControlName="testPressure"
@@ -983,34 +983,34 @@
                                     </div>
 
                                     <!-- Radiography Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="radiography" class="form-label">Radiography:</label>
                                             <select id="radiography" formControlName="radiography"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of radiographyOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentRadiography" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Radiography Category Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="radiographyCategory" class="form-label">Radiography
                                                 Category:</label>
                                             <select id="radiographyCategory" formControlName="radiographyCategory"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of radiographyCategoryOptions"
+                                                <option *ngFor="let item of ddlcomponentRadiographyCategory"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Joint Efficiency Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="jointEfficiency" class="form-label">Joint Efficiency:</label>
                                             <input type="text" id="jointEfficiency" formControlName="jointEfficiency"
@@ -1020,7 +1020,7 @@
                                     </div>
 
                                     <!-- Other NDE Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="otherNDE" class="form-label">Other NDE:</label>
                                             <input type="text" id="otherNDE" formControlName="otherNDE"
@@ -1034,7 +1034,7 @@
                     </div>
 
                     <!-- Material -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showMaterial')">
                                 Material
@@ -1043,20 +1043,20 @@
                             <div class="accordion-wrapper" [class.open]="showMaterial">
                                 <div class="row">
                                     <!-- General Material Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="generalMaterial" class="form-label">General Material:</label>
                                             <select id="generalMaterial" formControlName="generalMaterial"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of generalMaterialOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentGeneralMaterial" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Material Specification Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="materialSpecification" class="form-label">Material
                                                 Specification:</label>
@@ -1068,7 +1068,7 @@
                                     </div>
 
                                     <!-- Allowable Stress Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="allowableStress" class="form-label">Allowable Stress:</label>
                                             <input type="text" id="allowableStress" formControlName="allowableStress"
@@ -1078,7 +1078,7 @@
                                     </div>
 
                                     <!-- Nominal Thickness Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="nominalThickness" class="form-label">Nominal Thickness:</label>
                                             <input type="text" id="nominalThickness" formControlName="nominalThickness"
@@ -1088,7 +1088,7 @@
                                     </div>
 
                                     <!-- Corrosion Allowance Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="corrosionAllowance" class="form-label">Corrosion
                                                 Allowance:</label>
@@ -1100,46 +1100,46 @@
                                     </div>
 
                                     <!-- Cladding Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="cladding" class="form-label">Cladding:</label>
                                             <select id="cladding" formControlName="cladding"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of claddingOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentCladding" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Cladding Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="claddingType" class="form-label">Cladding Type:</label>
                                             <select id="claddingType" formControlName="claddingType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of claddingTypeOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentCladdingType" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Cladding Material Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="claddingMaterial" class="form-label">Cladding Material:</label>
                                             <select id="claddingMaterial" formControlName="claddingMaterial"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of claddingMaterialOptions" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentCladdingMaterial" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Cladding Thickness Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="claddingThickness" class="form-label">Cladding
                                                 Thickness:</label>
@@ -1150,40 +1150,40 @@
                                     </div>
 
                                     <!-- Lining Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="lining" class="form-label">Lining:</label>
                                             <select id="lining" formControlName="lining"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of liningOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentLining" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Lining Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="liningType" class="form-label">Lining Type:</label>
                                             <select id="liningType" formControlName="liningType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of liningTypeOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentLiningType" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Material Certification Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="materialCertification" class="form-label">Material
                                                 Certification:</label>
                                             <select id="materialCertification" formControlName="materialCertification"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of materialCertificationOptions"
+                                                <option *ngFor="let item of ddlcomponentMaterialCertification"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
@@ -1195,7 +1195,7 @@
                     </div>
 
                     <!-- External -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showExternal')">
                                 External
@@ -1204,34 +1204,34 @@
                             <div class="accordion-wrapper" [class.open]="showExternal">
                                 <div class="row">
                                     <!-- External Coating Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="externalCoating" class="form-label">External Coating:</label>
                                             <select id="externalCoating" formControlName="externalCoating"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of externalCoatingOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentExternalCoating" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- External Coating Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="externalCoatingType" class="form-label">External Coating
                                                 Type:</label>
                                             <select id="externalCoatingType" formControlName="externalCoatingType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of externalCoatingTypeOptions"
+                                                <option *ngFor="let item of ddlcomponentExternalCoatingType"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- External Coating Thickness Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="externalCoatingThickness" class="form-label">External Coating
                                                 Thickness:</label>
@@ -1243,7 +1243,7 @@
                                     </div>
 
                                     <!-- External Coating Age Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="externalCoatingAge" class="form-label">External Coating
                                                 Age:</label>
@@ -1255,47 +1255,47 @@
                                     </div>
 
                                     <!-- Insulation Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="insulation" class="form-label">Insulation:</label>
                                             <select id="insulation" formControlName="insulation"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of insulationOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentInsulation" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Insulation Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="insulationType" class="form-label">Insulation Type:</label>
                                             <select id="insulationType" formControlName="insulationType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of insulationTypeOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentInsulationType" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Insulation Material Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="insulationMaterial" class="form-label">Insulation
                                                 Material:</label>
                                             <select id="insulationMaterial" formControlName="insulationMaterial"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of insulationMaterialOptions"
+                                                <option *ngFor="let item of ddlcomponentInsulationMaterial"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Insulation Thickness Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="insulationThickness" class="form-label">Insulation
                                                 Thickness:</label>
@@ -1307,93 +1307,93 @@
                                     </div>
 
                                     <!-- CUI Potential Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="cuiPotential" class="form-label">CUI Potential:</label>
                                             <select id="cuiPotential" formControlName="cuiPotential"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of cuiPotentialOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentCUIPotential" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- External Environment Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="externalEnvironment" class="form-label">External
                                                 Environment:</label>
                                             <select id="externalEnvironment" formControlName="externalEnvironment"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of externalEnvironmentOptions"
+                                                <option *ngFor="let item of ddlcomponentExternalEnvironment"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Support Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="supportType" class="form-label">Support Type:</label>
                                             <select id="supportType" formControlName="supportType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of supportTypeOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentSupportType" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Heat Tracing Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="heatTracing" class="form-label">Heat Tracing:</label>
                                             <select id="heatTracing" formControlName="heatTracing"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of heatTracingOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentHeatTracing" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Fire Proofing Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="fireProofing" class="form-label">Fire Proofing:</label>
                                             <select id="fireProofing" formControlName="fireProofing"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of fireProofingOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentFireProofing" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Buried Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="buried" class="form-label">Buried:</label>
                                             <select id="buried" formControlName="buried"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of buriedOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentBuried" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Cathodic Protection Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="cathodicProtection" class="form-label">Cathodic
                                                 Protection:</label>
                                             <select id="cathodicProtection" formControlName="cathodicProtection"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of cathodicProtectionOptions"
+                                                <option *ngFor="let item of ddlcomponentCathodicProtection"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
@@ -1405,7 +1405,7 @@
                     </div>
 
                     <!-- Deadleg -->
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showDeadleg')">
                                 Deadleg
@@ -1414,20 +1414,20 @@
                             <div class="accordion-wrapper" [class.open]="showDeadleg">
                                 <div class="row">
                                     <!-- Is it a Deadleg? Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="isDeadleg" class="form-label">Is it a Deadleg?</label>
                                             <select id="isDeadleg" formControlName="isDeadleg"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of isDeadlegOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentIsitaDeadleg" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Deadleg ID Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="deadlegId" class="form-label">Deadleg ID:</label>
                                             <input type="text" id="deadlegId" formControlName="deadlegId"
@@ -1436,7 +1436,7 @@
                                     </div>
 
                                     <!-- Deadleg Description Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="deadlegDescription" class="form-label">Deadleg
                                                 Description:</label>
@@ -1448,27 +1448,27 @@
                                     </div>
 
                                     <!-- Deadleg Category Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="deadlegCategory" class="form-label">Deadleg Category:</label>
                                             <select id="deadlegCategory" formControlName="deadlegCategory"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of deadlegCategoryOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentDeadlegCategory" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Deadleg Criticality Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="deadlegCriticality" class="form-label">Deadleg
                                                 Criticality:</label>
                                             <select id="deadlegCriticality" formControlName="deadlegCriticality"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of deadlegCriticalityOptions"
+                                                <option *ngFor="let item of ddlcomponentDeadlegCriticality"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
@@ -1480,7 +1480,7 @@
                     </div>
 
                     <!-- Safety and Process Control -->
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showSafety')">
                                 Safety and Process Control
@@ -1490,21 +1490,21 @@
 
                                 <div class="row">
                                     <!-- Pressure Relief Devices Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="pressureReliefDevices" class="form-label">Pressure Relief
                                                 Devices:</label>
                                             <select id="pressureReliefDevices" formControlName="pressureReliefDevices"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of pressureReliefDevicesOptions"
+                                                <option *ngFor="let item of ddlcomponentPressureReliefDevices"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- PRD ID Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="prdId" class="form-label">PRD ID:</label>
                                             <input type="text" id="prdId" formControlName="prdId"
@@ -1513,7 +1513,7 @@
                                     </div>
 
                                     <!-- PRD Set Pressure Manual entry -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="prdSetPressure" class="form-label">PRD Set Pressure:</label>
                                             <input type="text" id="prdSetPressure" formControlName="prdSetPressure"
@@ -1523,60 +1523,60 @@
                                     </div>
 
                                     <!-- Chemical Injection Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="chemicalInjection" class="form-label">Chemical
                                                 Injection:</label>
                                             <select id="chemicalInjection" formControlName="chemicalInjection"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of chemicalInjectionOptions" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentChemicalInjection" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Detection System Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="detectionSystem" class="form-label">Detection System:</label>
                                             <select id="detectionSystem" formControlName="detectionSystem"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of detectionSystemOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentDetectionSystem" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Isolation System Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="isolationSystem" class="form-label">Isolation System:</label>
                                             <select id="isolationSystem" formControlName="isolationSystem"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of isolationSystemOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentIsolationSystem" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Mitigation System Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="mitigationSystem" class="form-label">Mitigation System:</label>
                                             <select id="mitigationSystem" formControlName="mitigationSystem"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of mitigationSystemOptions" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentMitigationSystem" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Online Corrosion Monitoring Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="onlineCorrosionMonitoring" class="form-label">Online Corrosion
                                                 Monitoring:</label>
@@ -1584,14 +1584,14 @@
                                                 formControlName="onlineCorrosionMonitoring"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of onlineCorrosionMonitoringOptions"
+                                                <option *ngFor="let item of ddlcomponentOnlineCorrosionMonitoring"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Corrosion Monitoring Type Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="corrosionMonitoringType" class="form-label">Corrosion Monitoring
                                                 Type:</label>
@@ -1599,29 +1599,29 @@
                                                 formControlName="corrosionMonitoringType"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of corrosionMonitoringTypeOptions"
+                                                <option *ngFor="let item of ddlcomponentCorrosionMonitoringType"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Hazard Classification Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="hazardClassification" class="form-label">Hazard
                                                 Classification:</label>
                                             <select id="hazardClassification" formControlName="hazardClassification"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of hazardClassificationOptions"
+                                                <option *ngFor="let item of ddlcomponentHazardClassification"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <!-- Safety & Environmental Permits Manual entry -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernw">
                                             <label for="safetyEnvironmentalPermits" class="form-label">Safety &
                                                 Environmental Permits:</label>
                                             <input type="text" id="safetyEnvironmentalPermits"
@@ -1632,14 +1632,14 @@
                                     </div>
 
                                     <!-- Incident History (If Any) Drop down -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="incidentHistory" class="form-label">Incident History (If
                                                 Any):</label>
                                             <select id="incidentHistory" formControlName="incidentHistory"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of incidentHistoryOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentIncidentHistory" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
@@ -1651,7 +1651,7 @@
                     </div>
 
                     <!-- Integrity & Inspection -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showIntegrity')">
                                 Integrity & Inspection
@@ -1661,14 +1661,14 @@
                                 <div class="row">
                                     <!-- Current Inspection Strategy Drop down -->
                                     <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="currentInspectionStrategy" class="form-label">Current Inspection
                                                 Strategy:</label>
                                             <select id="currentInspectionStrategy"
                                                 formControlName="currentInspectionStrategy"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of currentInspectionStrategyOptions"
+                                                <option *ngFor="let item of ddlcomponentCurrentInspectionStrategy"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
@@ -1686,7 +1686,7 @@
 
                                     <!-- Shutdown/ Turnaround Frequency Manual entry -->
                                     <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="shutdownFrequency" class="form-label">Shutdown/ Turnaround
                                                 Frequency:</label>
                                             <input type="text" id="shutdownFrequency"
@@ -1721,7 +1721,7 @@
 
                                     <!-- Subsequent Major Shutdown Date Manual entry -->
                                     <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="subsequentMajorShutdownDate" class="form-label">Subsequent Major
                                                 Shutdown Date:</label>
                                             <input type="text" id="subsequentMajorShutdownDate"
@@ -1733,7 +1733,7 @@
 
                                     <!-- Mean Time Between Failures (MTBF) Manual entry -->
                                     <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="mtbf" class="form-label">Mean Time Between Failures
                                                 (MTBF):</label>
                                             <input type="text" id="mtbf" formControlName="mtbf"
@@ -1767,7 +1767,7 @@
                                             <select id="inspectionAccess" formControlName="inspectionAccess"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of inspectionAccessOptions" [value]="item.id">
+                                                <option *ngFor="let item of ddlcomponentInspectionAccess" [value]="item.id">
                                                     {{ item.name }}</option>
                                             </select>
                                         </div>
@@ -1800,7 +1800,7 @@
                     </div>
 
                     <!-- Inspection Schedule -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showInspectionSchedule')">
                                 Inspection Schedule
@@ -1899,7 +1899,7 @@
                     </div>
 
                     <!-- Maintenance Schedule -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showMaintenanceSchedule')">
                                 Maintenance Schedule
@@ -1909,14 +1909,14 @@
                                 <div class="row">
                                     <!-- Scheduled Repair/Replacement Drop down -->
                                     <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="scheduledRepairReplacement" class="form-label">Scheduled
                                                 Repair/Replacement:</label>
                                             <select id="scheduledRepairReplacement"
                                                 formControlName="scheduledRepairReplacement"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of scheduledRepairReplacementOptions"
+                                                <option *ngFor="let item of ddlcomponentScheduledRepairReplacement"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
@@ -1924,7 +1924,7 @@
 
                                     <!-- Scheduled Repair/Replacement Date Manual entry -->
                                     <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="scheduledRepairReplacementDate" class="form-label">Scheduled
                                                 Repair/Replacement Date:</label>
                                             <input type="text" id="scheduledRepairReplacementDate"
@@ -1936,14 +1936,14 @@
 
                                     <!-- Repair/Replacement during next shutdown Drop down -->
                                     <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="repairReplacementNextShutdown"
                                                 class="form-label">Repair/Replacement during next shutdown:</label>
                                             <select id="repairReplacementNextShutdown"
                                                 formControlName="repairReplacementNextShutdown"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of repairReplacementNextShutdownOptions"
+                                                <option *ngFor="let item of ddlcomponentRepairReplacementDuringNextShutdown"
                                                     [value]="item.id">{{ item.name }}</option>
                                             </select>
                                         </div>
@@ -1955,7 +1955,7 @@
                     </div>
 
                     <!-- Integration & Metadata -->
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showMetadata')">
                                 Integration & Metadata
@@ -2014,7 +2014,7 @@
                                             <select id="syncStatus" formControlName="syncStatus"
                                                 class="form-select form-control-nb">
                                                 <option value="0" disabled selected></option>
-                                                <option *ngFor="let item of syncStatusOptions" [value]="item.id">{{
+                                                <option *ngFor="let item of ddlcomponentSyncStatus" [value]="item.id">{{
                                                     item.name }}</option>
                                             </select>
                                         </div>
@@ -2026,7 +2026,7 @@
                     </div>
 
                     <!-- Record Audit Information -->
-                    <!-- <div class="col-md-12">
+                    <!-- <div class="col-md-3">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showAudit')">
                                 Record Audit Information
@@ -2035,7 +2035,7 @@
                             <div class="accordion-wrapper" [class.open]="showAudit"></div>
                         </div>
                     </div> -->
-                    <div class="col-md-12">
+                    <div class="col-md-3">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showDocument')">
                                 Documents

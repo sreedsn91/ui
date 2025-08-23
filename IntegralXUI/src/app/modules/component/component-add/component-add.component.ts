@@ -19,73 +19,74 @@ export class ComponentAddComponent {
   componentForm!: FormGroup;
 
   documentPreviews: File[] = [];
-  plants: any[] = [];
-  areas: any[] = [];
-  units: any[] = [];
-  systems: any[] = [];
-  circuits: any[] = [];
-
-  componentCategory: any[] = [];
-  componentType: any[] = [];
-  componentOperationalStatus: any[] = [];
-  componentDesignCode: any[] = [];
-  componentEditionAddendum: any[] = [];
-  componentComplianceCertification: any[] = [];
-  componentGeometry: any[] = [];
-  componentOrientation: any[] = [];
-  componentFluidPhase: any[] = [];
-  componentCorrosivity: any[] = [];
-  componentProcessEnvironment: any[] = [];
-  componentToxicMixture: any[] = [];
-  componentToxicFluid: any[] = [];
-  componentFlammability: any[] = [];
-  componentCriticality: any[] = [];
-  componentSeismicZoneClassification: any[] = [];
-  componentFireExplosionRisk: any[] = [];
-  componentToxicRisk: any[] = [];
-  componentHeatTreatment: any[] = [];
-  componentHeatTreatmentType: any[] = [];
-  componentImpactTest: any[] = [];
-  componentPressureTest: any[] = [];
-  componentPressureTestType: any[] = [];
-  componentRadiography: any[] = [];
-  componentRadiographyCategory: any[] = [];
-  componentGeneralMaterial: any[] = [];
-  componentCladding: any[] = [];
-  componentCladdingType: any[] = [];
-  componentCladdingMaterial: any[] = [];
-  componentLining: any[] = [];
-  componentLiningType: any[] = [];
-  componentMaterialCertification: any[] = [];
-  componentExternalCoating: any[] = [];
-  componentExternalCoatingType: any[] = [];
-  componentInsulation: any[] = [];
-  componentInsulationType: any[] = [];
-  componentInsulationMaterial: any[] = [];
-  componentCUIPotential: any[] = [];
-  componentExternalEnvironment: any[] = [];
-  componentSupportType: any[] = [];
-  componentHeatTracing: any[] = [];
-  componentFireProofing: any[] = [];
-  componentBuried: any[] = [];
-  componentCathodicProtection: any[] = [];
-  componentIsitaDeadleg: any[] = [];
-  componentDeadlegCategory: any[] = [];
-  componentDeadlegCriticality: any[] = [];
-  componentPressureReliefDevices: any[] = [];
-  componentChemicalInjection: any[] = [];
-  componentDetectionSystem: any[] = [];
-  componentIsolationSystem: any[] = [];
-  componentMitigationSystem: any[] = [];
-  componentOnlineCorrosionMonitoring: any[] = [];
-  componentCorrosionMonitoringType: any[] = [];
-  componentHazardClassification: any[] = [];
-  componentIncidentHistory: any[] = [];
-  componentCurrentInspectionStrategy: any[] = [];
-  componentInspectionAccess: any[] = [];
-  componentScheduledRepairReplacement: any[] = [];
-  componentRepairReplacementDuringNextShutdown: any[] = [];
-  componentSyncStatus: any[] = [];
+ ddlplants: any;
+ddlareas: any;
+ddlunits: any;
+ddlsystems: any;
+ddlcircuits: any;
+ddlcorrosionLoops: any;
+ddlequipments: any;
+ddlcomponentCategory: any;
+ddlcomponentType: any;
+ddlcomponentOperationalStatus: any;
+ddlcomponentDesignCode: any;
+ddlcomponentEditionAddendum: any;
+ddlcomponentComplianceCertification: any;
+ddlcomponentGeometry: any;
+ddlcomponentOrientation: any;
+ddlcomponentFluidPhase: any;
+ddlcomponentCorrosivity: any;
+ddlcomponentProcessEnvironment: any;
+ddlcomponentToxicMixture: any;
+ddlcomponentToxicFluid: any;
+ddlcomponentFlammability: any;
+ddlcomponentCriticality: any;
+ddlcomponentSeismicZoneClassification: any;
+ddlcomponentFireExplosionRisk: any;
+ddlcomponentToxicRisk: any;
+ddlcomponentHeatTreatment: any;
+ddlcomponentHeatTreatmentType: any;
+ddlcomponentImpactTest: any;
+ddlcomponentPressureTest: any;
+ddlcomponentPressureTestType: any;
+ddlcomponentRadiography: any;
+ddlcomponentRadiographyCategory: any;
+ddlcomponentGeneralMaterial: any;
+ddlcomponentCladding: any;
+ddlcomponentCladdingType: any;
+ddlcomponentCladdingMaterial: any;
+ddlcomponentLining: any;
+ddlcomponentLiningType: any;
+ddlcomponentMaterialCertification: any;
+ddlcomponentExternalCoating: any;
+ddlcomponentExternalCoatingType: any;
+ddlcomponentInsulation: any;
+ddlcomponentInsulationType: any;
+ddlcomponentInsulationMaterial: any;
+ddlcomponentCUIPotential: any;
+ddlcomponentExternalEnvironment: any;
+ddlcomponentSupportType: any;
+ddlcomponentHeatTracing: any;
+ddlcomponentFireProofing: any;
+ddlcomponentBuried: any;
+ddlcomponentCathodicProtection: any;
+ddlcomponentIsitaDeadleg: any;
+ddlcomponentDeadlegCategory: any;
+ddlcomponentDeadlegCriticality: any;
+ddlcomponentPressureReliefDevices: any;
+ddlcomponentChemicalInjection: any;
+ddlcomponentDetectionSystem: any;
+ddlcomponentIsolationSystem: any;
+ddlcomponentMitigationSystem: any;
+ddlcomponentOnlineCorrosionMonitoring: any;
+ddlcomponentCorrosionMonitoringType: any;
+ddlcomponentHazardClassification: any;
+ddlcomponentIncidentHistory: any;
+ddlcomponentCurrentInspectionStrategy: any;
+ddlcomponentInspectionAccess: any;
+ddlcomponentScheduledRepairReplacement: any;
+ddlcomponentRepairReplacementDuringNextShutdown: any;
+ddlcomponentSyncStatus: any;
 
   expand = true;
   showGeneral: boolean = this.expand;
@@ -107,17 +108,14 @@ export class ComponentAddComponent {
 
   constructor(private service: ComponentService, private fb: FormBuilder, private au: AuthService, private router: Router) {
     this.canAdd = (this.au.getCanAdd());
-  }
 
-  ngOnInit() {
-    alert("1");
-    this.componentForm = this.fb.group({
+     this.componentForm = this.fb.group({
       // Identification
       id: [0],
-      clientId: [null, Validators.required],
-      componentID: [''],
-      componentDescription: [''],
-      componentCategory: [null],
+      clientId: [this.au.getClientId()],
+      componentId: [null,Validators.required],
+      componentDescription: [null,Validators.required],
+      componentCategory: [''],
       componentType: [null],
 
       // Dates
@@ -126,18 +124,18 @@ export class ComponentAddComponent {
       operationalStatus: [null],
 
       // Location
-      plantID: [null],
-      areaID: [null],
-      unitID: [null],
-      systemID: [null],
-      circuitID: [null],
-      corrosionLoopID: [null],
-      equipmentID: [null],
+      plantId: [null,Validators.required],
+      areaId: [0],
+      unitId: [0],
+      systemId: [0],
+      circuitId: [0],
+      corrosionLoopId: [0],
+      equipmentId: [0],
       specificLocation: [''],
       equipmentFrom: [''],
       equipmentTo: [''],
       pfd: [''],
-      pAndID: [''],
+      pAndId: [''],
       gaDrawing: [''],
 
       // Design
@@ -231,10 +229,176 @@ export class ComponentAddComponent {
       isDeleted: [false],
       isActive: [true]
     });
- this.loadDropdowns();
+
+  }
+
+  ngOnInit() {
+   
+
+
+    
+    this.componentForm.get('plantId')?.valueChanges.subscribe((plantId) => {
+      alert();
+      this.componentForm.get('name')?.updateValueAndValidity();
+      if (plantId) {
+        this.loadAreasByPlant(plantId);
+        this.loadUnits(plantId, 0);
+        this.loadSystems(plantId, 0, 0);
+        this.loadCircuits(plantId, 0, 0, 0);
+
+      } else {
+        this.ddlareas = [];
+        this.ddlunits = [];
+        this.ddlsystems = [];
+        this.ddlcircuits = []; // Reset area list if no plant is selected
+      }
+    });
+    this.componentForm.get('areaId')?.valueChanges.subscribe((areaId) => {
+
+      this.componentForm.get('name')?.updateValueAndValidity();
+      if (areaId) {
+
+        this.loadUnits(this.componentForm.get('plantId').value, areaId);
+        this.loadSystems(this.componentForm.get('plantId').value, areaId, 0);
+        this.loadCircuits(this.componentForm.get('plantId').value, areaId, 0, 0);
+                this.loadSystems(this.componentForm.get('plantId').value, 0, 0);
+        this.loadCircuits(this.componentForm.get('plantId').value, 0, 0, 0);
+        this.loadcorrosionLoop(this.componentForm.get('plantId').value,0, 0,0,0);
+        this.loadEquipment(this.componentForm.get('plantId').value, 0, 0, 0,0, 0);
+
+      } else {
+
+        this.ddlunits = [];
+        this.ddlsystems = [];
+        this.ddlcircuits = []; // Reset area list if no plant is selected
+      }
+    });
+    this.componentForm.get('unitId')?.valueChanges.subscribe((unitId) => {
+
+      this.componentForm.get('name')?.updateValueAndValidity();
+      if (unitId) {
+
+        this.loadSystems(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, unitId);
+        this.loadCircuits(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, unitId, 0);
+        this.loadcorrosionLoop(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, 0,0,0);
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, 0, 0,0, 0);
+
+      } else {
+
+        this.ddlsystems = []; // Reset area list if no plant is selected
+        this.ddlcircuits = [];
+      }
+    });
+    this.componentForm.get('systemId')?.valueChanges.subscribe((systemId) => {
+
+      this.componentForm.get('name')?.updateValueAndValidity();
+      if (systemId) {
+
+        this.loadCircuits(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, systemId);
+           this.loadcorrosionLoop(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value,0,0);
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, 0,0, 0);
+
+
+      } else {
+
+        this.ddlcircuits = []; // Reset area list if no plant is selected
+      }
+    });
+
+     this.componentForm.get('circuitId')?.valueChanges.subscribe((circuitId) => {
+
+      this.componentForm.get('name')?.updateValueAndValidity();
+      if (circuitId) {
+
+        this.loadcorrosionLoop(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value,this.componentForm.get('systemId').value, circuitId);
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, this.componentForm.get('systemId').value, this.componentForm.get('circuitId').value, 0);
+
+      } else {
+
+        this.ddlcircuits = []; // Reset area list if no plant is selected
+      }
+    });
+
+     this.componentForm.get('corrosionLoopId')?.valueChanges.subscribe((corrosionLoopId) => {
+
+      this.componentForm.get('name')?.updateValueAndValidity();
+      if (corrosionLoopId) {
+
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, this.componentForm.get('systemId').value, this.componentForm.get('circuitId').value, corrosionLoopId);
+
+      } else {
+
+        this.ddlcircuits = []; // Reset area list if no plant is selected
+      }
+    });
+
+    this.componentForm.get('areaId')?.valueChanges.subscribe(() => {
+      this.componentForm.get('name')?.updateValueAndValidity();
+    });
+    this.componentForm.get('unitId')?.valueChanges.subscribe(() => {
+      this.componentForm.get('name')?.updateValueAndValidity();
+    });
+    this.componentForm.get('unitId')?.valueChanges.subscribe(() => {
+      this.componentForm.get('name')?.updateValueAndValidity();
+    });
+    this.componentForm.get('systemId')?.valueChanges.subscribe(() => {
+      this.componentForm.get('name')?.updateValueAndValidity();
+    });
+    this.componentForm.get('circuitId')?.valueChanges.subscribe(() => {
+      this.componentForm.get('name')?.updateValueAndValidity();
+    });
+       this.componentForm.get('corrosionLoopId')?.valueChanges.subscribe(() => {
+      this.componentForm.get('name')?.updateValueAndValidity();
+    });
+      this.componentForm.get('equipmentId')?.valueChanges.subscribe(() => {
+      this.componentForm.get('name')?.updateValueAndValidity();
+    });
+
+     this.loadDropdowns();
+
+ 
   }
 
 
+  loadAreasByPlant(plantId: number) {
+
+    this.service.getArea(plantId).subscribe((data: any[]) => {
+      this.ddlareas = data;
+    });
+  }
+  loadUnits(plantId: number, areaId: number) {
+
+    this.service.getUnits(plantId, areaId).subscribe((data: any[]) => {
+      this.ddlunits = data;
+    });
+  }
+  loadSystems(plantId: number, areaId: number, unitId: number) {
+
+    this.service.getSystems(plantId, areaId, unitId).subscribe((data: any[]) => {
+      this.ddlsystems = data;
+    });
+  }
+
+  loadCircuits(plantId: number, areaId: number, unitId: number, systemId: number) {
+
+    this.service.getCircuits(plantId, areaId, unitId, systemId).subscribe((data: any[]) => {
+      this.ddlcircuits = data;
+    });
+  }
+  
+  loadcorrosionLoop(plantId: number, areaId: number, unitId: number, systemId: number,corrosionLoopId: number) {
+
+    this.service.getCorrosionLoop(plantId, areaId, unitId, systemId,corrosionLoopId).subscribe((data: any[]) => {
+      this.ddlcorrosionLoops = data;
+    });
+  }
+  
+  loadEquipment(plantId: number, areaId: number, unitId: number, systemId: number,corrosionLoopId: number,equipmentId: number ) {
+
+    this.service.getEquipment(plantId, areaId, unitId, systemId,corrosionLoopId,equipmentId).subscribe((data: any[]) => {
+      this.ddlequipments = data;
+    });
+  }
 saveComponent() {
  if (this.componentForm.invalid) {
       return;
@@ -306,250 +470,135 @@ saveComponent() {
 //DDL
 loadDropdowns() {
  // Subscribe to each service call individually
-this.service.getComponentCategory().subscribe((data: any) => {
-  this.componentCategory = data;
-});
 
-this.service.getComponentType().subscribe((data: any) => {
-  this.componentType = data;
-});
-
-this.service.getComponentOperationalStatus().subscribe((data: any) => {
-  this.componentOperationalStatus = data;
-});
-
-this.service.getComponentDesignCode().subscribe((data: any) => {
-  this.componentDesignCode = data;
-});
-
-this.service.getComponentEditionAddendum().subscribe((data: any) => {
-  this.componentEditionAddendum = data;
-});
-
-this.service.getComponentComplianceCertification().subscribe((data: any) => {
-  this.componentComplianceCertification = data;
-});
-
-this.service.getComponentGeometry().subscribe((data: any) => {
-  this.componentGeometry = data;
-});
-
-this.service.getComponentOrientation().subscribe((data: any) => {
-  this.componentOrientation = data;
-});
-
-this.service.getComponentFluidPhase().subscribe((data: any) => {
-  this.componentFluidPhase = data;
-});
-
-this.service.getComponentCorrosivity().subscribe((data: any) => {
-  this.componentCorrosivity = data;
-});
-
-this.service.getComponentProcessEnvironment().subscribe((data: any) => {
-  this.componentProcessEnvironment = data;
-});
-
-this.service.getComponentToxicMixture().subscribe((data: any) => {
-  this.componentToxicMixture = data;
-});
-
-this.service.getComponentToxicFluid().subscribe((data: any) => {
-  this.componentToxicFluid = data;
-});
-
-this.service.getComponentFlammability().subscribe((data: any) => {
-  this.componentFlammability = data;
-});
-
-this.service.getComponentCriticality().subscribe((data: any) => {
-  this.componentCriticality = data;
-});
-
-this.service.getComponentSeismicZoneClassification().subscribe((data: any) => {
-  this.componentSeismicZoneClassification = data;
-});
-
-this.service.getComponentFireExplosionRisk().subscribe((data: any) => {
-  this.componentFireExplosionRisk = data;
-});
-
-this.service.getComponentToxicRisk().subscribe((data: any) => {
-  this.componentToxicRisk = data;
-});
-
-this.service.getComponentHeatTreatment().subscribe((data: any) => {
-  this.componentHeatTreatment = data;
-});
-
-this.service.getComponentHeatTreatmentType().subscribe((data: any) => {
-  this.componentHeatTreatmentType = data;
-});
-
-this.service.getComponentImpactTest().subscribe((data: any) => {
-  this.componentImpactTest = data;
-});
-
-this.service.getComponentPressureTest().subscribe((data: any) => {
-  this.componentPressureTest = data;
-});
-
-this.service.getComponentPressureTestType().subscribe((data: any) => {
-  this.componentPressureTestType = data;
-});
-
-this.service.getComponentRadiography().subscribe((data: any) => {
-  this.componentRadiography = data;
-});
-
-this.service.getComponentRadiographyCategory().subscribe((data: any) => {
-  this.componentRadiographyCategory = data;
-});
-
-this.service.getComponentGeneralMaterial().subscribe((data: any) => {
-  this.componentGeneralMaterial = data;
-});
-
-this.service.getComponentCladding().subscribe((data: any) => {
-  this.componentCladding = data;
-});
-
-this.service.getComponentCladdingType().subscribe((data: any) => {
-  this.componentCladdingType = data;
-});
-
-this.service.getComponentCladdingMaterial().subscribe((data: any) => {
-  this.componentCladdingMaterial = data;
-});
-
-this.service.getComponentLining().subscribe((data: any) => {
-  this.componentLining = data;
-});
-
-this.service.getComponentLiningType().subscribe((data: any) => {
-  this.componentLiningType = data;
-});
-
-this.service.getComponentMaterialCertification().subscribe((data: any) => {
-  this.componentMaterialCertification = data;
-});
-
-this.service.getComponentExternalCoating().subscribe((data: any) => {
-  this.componentExternalCoating = data;
-});
-
-this.service.getComponentExternalCoatingType().subscribe((data: any) => {
-  this.componentExternalCoatingType = data;
-});
-
-this.service.getComponentInsulation().subscribe((data: any) => {
-  this.componentInsulation = data;
-});
-
-this.service.getComponentInsulationType().subscribe((data: any) => {
-  this.componentInsulationType = data;
-});
-
-this.service.getComponentInsulationMaterial().subscribe((data: any) => {
-  this.componentInsulationMaterial = data;
-});
-
-this.service.getComponentCUIPotential().subscribe((data: any) => {
-  this.componentCUIPotential = data;
-});
-
-this.service.getComponentExternalEnvironment().subscribe((data: any) => {
-  this.componentExternalEnvironment = data;
-});
-
-this.service.getComponentSupportType().subscribe((data: any) => {
-  this.componentSupportType = data;
-});
-
-this.service.getComponentHeatTracing().subscribe((data: any) => {
-  this.componentHeatTracing = data;
-});
-
-this.service.getComponentFireProofing().subscribe((data: any) => {
-  this.componentFireProofing = data;
-});
-
-this.service.getComponentBuried().subscribe((data: any) => {
-  this.componentBuried = data;
-});
-
-this.service.getComponentCathodicProtection().subscribe((data: any) => {
-  this.componentCathodicProtection = data;
-});
-
-this.service.getComponentIsitaDeadleg().subscribe((data: any) => {
-  this.componentIsitaDeadleg = data;
-});
-
-this.service.getComponentDeadlegCategory().subscribe((data: any) => {
-  this.componentDeadlegCategory = data;
-});
-
-this.service.getComponentDeadlegCriticality().subscribe((data: any) => {
-  this.componentDeadlegCriticality = data;
-});
-
-this.service.getComponentPressureReliefDevices().subscribe((data: any) => {
-  this.componentPressureReliefDevices = data;
-});
-
-this.service.getComponentChemicalInjection().subscribe((data: any) => {
-  this.componentChemicalInjection = data;
-});
-
-this.service.getComponentDetectionSystem().subscribe((data: any) => {
-  this.componentDetectionSystem = data;
-});
-
-this.service.getComponentIsolationSystem().subscribe((data: any) => {
-  this.componentIsolationSystem = data;
-});
-
-this.service.getComponentMitigationSystem().subscribe((data: any) => {
-  this.componentMitigationSystem = data;
-});
-
-this.service.getComponentOnlineCorrosionMonitoring().subscribe((data: any) => {
-  this.componentOnlineCorrosionMonitoring = data;
-});
-
-this.service.getComponentCorrosionMonitoringType().subscribe((data: any) => {
-  this.componentCorrosionMonitoringType = data;
-});
-
-this.service.getComponentHazardClassification().subscribe((data: any) => {
-  this.componentHazardClassification = data;
-});
-
-this.service.getComponentIncidentHistory().subscribe((data: any) => {
-  this.componentIncidentHistory = data;
-});
-
-this.service.getComponentCurrentInspectionStrategy().subscribe((data: any) => {
-  this.componentCurrentInspectionStrategy = data;
-});
-
-this.service.getComponentInspectionAccess().subscribe((data: any) => {
-  this.componentInspectionAccess = data;
-});
-
-this.service.getComponentScheduledRepairReplacement().subscribe((data: any) => {
-  this.componentScheduledRepairReplacement = data;
-});
-
-this.service.getComponentRepairReplacementDuringNextShutdown().subscribe((data: any) => {
-  this.componentRepairReplacementDuringNextShutdown = data;
-});
-
-this.service.getComponentSyncStatus().subscribe((data: any) => {
-  this.componentSyncStatus = data;
-});
-
+ 
+  forkJoin({
+    ddlplants : this.service.getPlants(),
+ddlcomponentCategory: this.service.getComponentCategory(),
+ddlcomponentType: this.service.getComponentType(),
+ddlcomponentOperationalStatus: this.service.getComponentOperationalStatus(),
+ddlcomponentDesignCode: this.service.getComponentDesignCode(),
+ddlcomponentEditionAddendum: this.service.getComponentEditionAddendum(),
+ddlcomponentComplianceCertification: this.service.getComponentComplianceCertification(),
+ddlcomponentGeometry: this.service.getComponentGeometry(),
+ddlcomponentOrientation: this.service.getComponentOrientation(),
+ddlcomponentFluidPhase: this.service.getComponentFluidPhase(),
+ddlcomponentCorrosivity: this.service.getComponentCorrosivity(),
+ddlcomponentProcessEnvironment: this.service.getComponentProcessEnvironment(),
+ddlcomponentToxicMixture: this.service.getComponentToxicMixture(),
+ddlcomponentToxicFluid: this.service.getComponentToxicFluid(),
+ddlcomponentFlammability: this.service.getComponentFlammability(),
+ddlcomponentCriticality: this.service.getComponentCriticality(),
+ddlcomponentSeismicZoneClassification: this.service.getComponentSeismicZoneClassification(),
+ddlcomponentFireExplosionRisk: this.service.getComponentFireExplosionRisk(),
+ddlcomponentToxicRisk: this.service.getComponentToxicRisk(),
+ddlcomponentHeatTreatment: this.service.getComponentHeatTreatment(),
+ddlcomponentHeatTreatmentType: this.service.getComponentHeatTreatmentType(),
+ddlcomponentImpactTest: this.service.getComponentImpactTest(),
+ddlcomponentPressureTest: this.service.getComponentPressureTest(),
+ddlcomponentPressureTestType: this.service.getComponentPressureTestType(),
+ddlcomponentRadiography: this.service.getComponentRadiography(),
+ddlcomponentRadiographyCategory: this.service.getComponentRadiographyCategory(),
+ddlcomponentGeneralMaterial: this.service.getComponentGeneralMaterial(),
+ddlcomponentCladding: this.service.getComponentCladding(),
+ddlcomponentCladdingType: this.service.getComponentCladdingType(),
+ddlcomponentCladdingMaterial: this.service.getComponentCladdingMaterial(),
+ddlcomponentLining: this.service.getComponentLining(),
+ddlcomponentLiningType: this.service.getComponentLiningType(),
+ddlcomponentMaterialCertification: this.service.getComponentMaterialCertification(),
+ddlcomponentExternalCoating: this.service.getComponentExternalCoating(),
+ddlcomponentExternalCoatingType: this.service.getComponentExternalCoatingType(),
+ddlcomponentInsulation: this.service.getComponentInsulation(),
+ddlcomponentInsulationType: this.service.getComponentInsulationType(),
+ddlcomponentInsulationMaterial: this.service.getComponentInsulationMaterial(),
+ddlcomponentCUIPotential: this.service.getComponentCUIPotential(),
+ddlcomponentExternalEnvironment: this.service.getComponentExternalEnvironment(),
+ddlcomponentSupportType: this.service.getComponentSupportType(),
+ddlcomponentHeatTracing: this.service.getComponentHeatTracing(),
+ddlcomponentFireProofing: this.service.getComponentFireProofing(),
+ddlcomponentBuried: this.service.getComponentBuried(),
+ddlcomponentCathodicProtection: this.service.getComponentCathodicProtection(),
+ddlcomponentIsitaDeadleg: this.service.getComponentIsitaDeadleg(),
+ddlcomponentDeadlegCategory: this.service.getComponentDeadlegCategory(),
+ddlcomponentDeadlegCriticality: this.service.getComponentDeadlegCriticality(),
+ddlcomponentPressureReliefDevices: this.service.getComponentPressureReliefDevices(),
+ddlcomponentChemicalInjection: this.service.getComponentChemicalInjection(),
+ddlcomponentDetectionSystem: this.service.getComponentDetectionSystem(),
+ddlcomponentIsolationSystem: this.service.getComponentIsolationSystem(),
+ddlcomponentMitigationSystem: this.service.getComponentMitigationSystem(),
+ddlcomponentOnlineCorrosionMonitoring: this.service.getComponentOnlineCorrosionMonitoring(),
+ddlcomponentCorrosionMonitoringType: this.service.getComponentCorrosionMonitoringType(),
+ddlcomponentHazardClassification: this.service.getComponentHazardClassification(),
+ddlcomponentIncidentHistory: this.service.getComponentIncidentHistory(),
+ddlcomponentCurrentInspectionStrategy: this.service.getComponentCurrentInspectionStrategy(),
+ddlcomponentInspectionAccess: this.service.getComponentInspectionAccess(),
+ddlcomponentScheduledRepairReplacement: this.service.getComponentScheduledRepairReplacement(),
+ddlcomponentRepairReplacementDuringNextShutdown: this.service.getComponentRepairReplacementDuringNextShutdown(),
+ddlcomponentSyncStatus: this.service.getComponentSyncStatus()
+}).subscribe(results => {
+this.ddlplants = results.ddlplants;
+this.ddlcomponentCategory = results.ddlcomponentCategory;
+this.ddlcomponentType = results.ddlcomponentType;
+this.ddlcomponentOperationalStatus = results.ddlcomponentOperationalStatus;
+this.ddlcomponentDesignCode = results.ddlcomponentDesignCode;
+this.ddlcomponentEditionAddendum = results.ddlcomponentEditionAddendum;
+this.ddlcomponentComplianceCertification = results.ddlcomponentComplianceCertification;
+this.ddlcomponentGeometry = results.ddlcomponentGeometry;
+this.ddlcomponentOrientation = results.ddlcomponentOrientation;
+this.ddlcomponentFluidPhase = results.ddlcomponentFluidPhase;
+this.ddlcomponentCorrosivity = results.ddlcomponentCorrosivity;
+this.ddlcomponentProcessEnvironment = results.ddlcomponentProcessEnvironment;
+this.ddlcomponentToxicMixture = results.ddlcomponentToxicMixture;
+this.ddlcomponentToxicFluid = results.ddlcomponentToxicFluid;
+this.ddlcomponentFlammability = results.ddlcomponentFlammability;
+this.ddlcomponentCriticality = results.ddlcomponentCriticality;
+this.ddlcomponentSeismicZoneClassification = results.ddlcomponentSeismicZoneClassification;
+this.ddlcomponentFireExplosionRisk = results.ddlcomponentFireExplosionRisk;
+this.ddlcomponentToxicRisk = results.ddlcomponentToxicRisk;
+this.ddlcomponentHeatTreatment = results.ddlcomponentHeatTreatment;
+this.ddlcomponentHeatTreatmentType = results.ddlcomponentHeatTreatmentType;
+this.ddlcomponentImpactTest = results.ddlcomponentImpactTest;
+this.ddlcomponentPressureTest = results.ddlcomponentPressureTest;
+this.ddlcomponentPressureTestType = results.ddlcomponentPressureTestType;
+this.ddlcomponentRadiography = results.ddlcomponentRadiography;
+this.ddlcomponentRadiographyCategory = results.ddlcomponentRadiographyCategory;
+this.ddlcomponentGeneralMaterial = results.ddlcomponentGeneralMaterial;
+this.ddlcomponentCladding = results.ddlcomponentCladding;
+this.ddlcomponentCladdingType = results.ddlcomponentCladdingType;
+this.ddlcomponentCladdingMaterial = results.ddlcomponentCladdingMaterial;
+this.ddlcomponentLining = results.ddlcomponentLining;
+this.ddlcomponentLiningType = results.ddlcomponentLiningType;
+this.ddlcomponentMaterialCertification = results.ddlcomponentMaterialCertification;
+this.ddlcomponentExternalCoating = results.ddlcomponentExternalCoating;
+this.ddlcomponentExternalCoatingType = results.ddlcomponentExternalCoatingType;
+this.ddlcomponentInsulation = results.ddlcomponentInsulation;
+this.ddlcomponentInsulationType = results.ddlcomponentInsulationType;
+this.ddlcomponentInsulationMaterial = results.ddlcomponentInsulationMaterial;
+this.ddlcomponentCUIPotential = results.ddlcomponentCUIPotential;
+this.ddlcomponentExternalEnvironment = results.ddlcomponentExternalEnvironment;
+this.ddlcomponentSupportType = results.ddlcomponentSupportType;
+this.ddlcomponentHeatTracing = results.ddlcomponentHeatTracing;
+this.ddlcomponentFireProofing = results.ddlcomponentFireProofing;
+this.ddlcomponentBuried = results.ddlcomponentBuried;
+this.ddlcomponentCathodicProtection = results.ddlcomponentCathodicProtection;
+this.ddlcomponentIsitaDeadleg = results.ddlcomponentIsitaDeadleg;
+this.ddlcomponentDeadlegCategory = results.ddlcomponentDeadlegCategory;
+this.ddlcomponentDeadlegCriticality = results.ddlcomponentDeadlegCriticality;
+this.ddlcomponentPressureReliefDevices = results.ddlcomponentPressureReliefDevices;
+this.ddlcomponentChemicalInjection = results.ddlcomponentChemicalInjection;
+this.ddlcomponentDetectionSystem = results.ddlcomponentDetectionSystem;
+this.ddlcomponentIsolationSystem = results.ddlcomponentIsolationSystem;
+this.ddlcomponentMitigationSystem = results.ddlcomponentMitigationSystem;
+this.ddlcomponentOnlineCorrosionMonitoring = results.ddlcomponentOnlineCorrosionMonitoring;
+this.ddlcomponentCorrosionMonitoringType = results.ddlcomponentCorrosionMonitoringType;
+this.ddlcomponentHazardClassification = results.ddlcomponentHazardClassification;
+this.ddlcomponentIncidentHistory = results.ddlcomponentIncidentHistory;
+this.ddlcomponentCurrentInspectionStrategy = results.ddlcomponentCurrentInspectionStrategy;
+this.ddlcomponentInspectionAccess = results.ddlcomponentInspectionAccess;
+this.ddlcomponentScheduledRepairReplacement = results.ddlcomponentScheduledRepairReplacement;
+this.ddlcomponentRepairReplacementDuringNextShutdown = results.ddlcomponentRepairReplacementDuringNextShutdown;
+this.ddlcomponentSyncStatus = results.ddlcomponentSyncStatus;
+    });
   }
   //accodion functions
   expandAll() {

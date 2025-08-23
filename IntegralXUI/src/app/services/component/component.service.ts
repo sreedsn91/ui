@@ -61,7 +61,20 @@ export class ComponentService {
         const clientId = Number(this.authService.getClientId());
         return this.http.get(`${this.apiUrl}CorrossionLoop/getSystems/${clientId}/${plantId}/${areaId}/${unitId}`, { headers: this.getHeaders() });
       }
-  
+    getCircuits(plantId: number, areaId: number, unitId: number,systemId: number) {
+    const clientId = Number(this.authService.getClientId());
+    return this.http.get(`${this.apiUrl}Equipment/getCircuits/${clientId}/${plantId}/${areaId}/${unitId}/${systemId}`, { headers: this.getHeaders() });
+  }
+
+     getCorrosionLoop(plantId: number, areaId: number, unitId: number,systemId: number,corrosionLoopId: number) {
+    const clientId = Number(this.authService.getClientId());
+    return this.http.get(`${this.apiUrl}Equipment/getCorrosionLoop/${clientId}/${plantId}/${areaId}/${unitId}/${systemId}/${corrosionLoopId}`, { headers: this.getHeaders() });
+  }
+
+     getEquipment(plantId: number, areaId: number, unitId: number,systemId: number,corrosionLoopId: number,equipmentId: number) {
+    const clientId = Number(this.authService.getClientId());
+    return this.http.get(`${this.apiUrl}Equipment/getEquipment/${clientId}/${plantId}/${areaId}/${unitId}/${systemId}/${corrosionLoopId}/${equipmentId}`, { headers: this.getHeaders() });
+  }
        getComponentDetails(systemId: number): Observable<any> {
       const clientId = Number(this.authService.getClientId());
      debugger
