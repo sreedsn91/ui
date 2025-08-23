@@ -306,247 +306,247 @@ saveComponent() {
 //DDL
 loadDropdowns() {
  // Subscribe to each service call individually
-this.service.getComponentCategory().subscribe(data => {
+this.service.getComponentCategory().subscribe((data: any) => {
   this.componentCategory = data;
 });
 
-this.service.getComponentType().subscribe(data => {
+this.service.getComponentType().subscribe((data: any) => {
   this.componentType = data;
 });
 
-this.service.getComponentOperationalStatus().subscribe(data => {
+this.service.getComponentOperationalStatus().subscribe((data: any) => {
   this.componentOperationalStatus = data;
 });
 
-this.service.getComponentDesignCode().subscribe(data => {
+this.service.getComponentDesignCode().subscribe((data: any) => {
   this.componentDesignCode = data;
 });
 
-this.service.getComponentEditionAddendum().subscribe(data => {
+this.service.getComponentEditionAddendum().subscribe((data: any) => {
   this.componentEditionAddendum = data;
 });
 
-this.service.getComponentComplianceCertification().subscribe(data => {
+this.service.getComponentComplianceCertification().subscribe((data: any) => {
   this.componentComplianceCertification = data;
 });
 
-this.service.getComponentGeometry().subscribe(data => {
+this.service.getComponentGeometry().subscribe((data: any) => {
   this.componentGeometry = data;
 });
 
-this.service.getComponentOrientation().subscribe(data => {
+this.service.getComponentOrientation().subscribe((data: any) => {
   this.componentOrientation = data;
 });
 
-this.service.getComponentFluidPhase().subscribe(data => {
+this.service.getComponentFluidPhase().subscribe((data: any) => {
   this.componentFluidPhase = data;
 });
 
-this.service.getComponentCorrosivity().subscribe(data => {
+this.service.getComponentCorrosivity().subscribe((data: any) => {
   this.componentCorrosivity = data;
 });
 
-this.service.getComponentProcessEnvironment().subscribe(data => {
+this.service.getComponentProcessEnvironment().subscribe((data: any) => {
   this.componentProcessEnvironment = data;
 });
 
-this.service.getComponentToxicMixture().subscribe(data => {
+this.service.getComponentToxicMixture().subscribe((data: any) => {
   this.componentToxicMixture = data;
 });
 
-this.service.getComponentToxicFluid().subscribe(data => {
+this.service.getComponentToxicFluid().subscribe((data: any) => {
   this.componentToxicFluid = data;
 });
 
-this.service.getComponentFlammability().subscribe(data => {
+this.service.getComponentFlammability().subscribe((data: any) => {
   this.componentFlammability = data;
 });
 
-this.service.getComponentCriticality().subscribe(data => {
+this.service.getComponentCriticality().subscribe((data: any) => {
   this.componentCriticality = data;
 });
 
-this.service.getComponentSeismicZoneClassification().subscribe(data => {
+this.service.getComponentSeismicZoneClassification().subscribe((data: any) => {
   this.componentSeismicZoneClassification = data;
 });
 
-this.service.getComponentFireExplosionRisk().subscribe(data => {
+this.service.getComponentFireExplosionRisk().subscribe((data: any) => {
   this.componentFireExplosionRisk = data;
 });
 
-this.service.getComponentToxicRisk().subscribe(data => {
+this.service.getComponentToxicRisk().subscribe((data: any) => {
   this.componentToxicRisk = data;
 });
 
-this.service.getComponentHeatTreatment().subscribe(data => {
+this.service.getComponentHeatTreatment().subscribe((data: any) => {
   this.componentHeatTreatment = data;
 });
 
-this.service.getComponentHeatTreatmentType().subscribe(data => {
+this.service.getComponentHeatTreatmentType().subscribe((data: any) => {
   this.componentHeatTreatmentType = data;
 });
 
-this.service.getComponentImpactTest().subscribe(data => {
+this.service.getComponentImpactTest().subscribe((data: any) => {
   this.componentImpactTest = data;
 });
 
-this.service.getComponentPressureTest().subscribe(data => {
+this.service.getComponentPressureTest().subscribe((data: any) => {
   this.componentPressureTest = data;
 });
 
-this.service.getComponentPressureTestType().subscribe(data => {
+this.service.getComponentPressureTestType().subscribe((data: any) => {
   this.componentPressureTestType = data;
 });
 
-this.service.getComponentRadiography().subscribe(data => {
+this.service.getComponentRadiography().subscribe((data: any) => {
   this.componentRadiography = data;
 });
 
-this.service.getComponentRadiographyCategory().subscribe(data => {
+this.service.getComponentRadiographyCategory().subscribe((data: any) => {
   this.componentRadiographyCategory = data;
 });
 
-this.service.getComponentGeneralMaterial().subscribe(data => {
+this.service.getComponentGeneralMaterial().subscribe((data: any) => {
   this.componentGeneralMaterial = data;
 });
 
-this.service.getComponentCladding().subscribe(data => {
+this.service.getComponentCladding().subscribe((data: any) => {
   this.componentCladding = data;
 });
 
-this.service.getComponentCladdingType().subscribe(data => {
+this.service.getComponentCladdingType().subscribe((data: any) => {
   this.componentCladdingType = data;
 });
 
-this.service.getComponentCladdingMaterial().subscribe(data => {
+this.service.getComponentCladdingMaterial().subscribe((data: any) => {
   this.componentCladdingMaterial = data;
 });
 
-this.service.getComponentLining().subscribe(data => {
+this.service.getComponentLining().subscribe((data: any) => {
   this.componentLining = data;
 });
 
-this.service.getComponentLiningType().subscribe(data => {
+this.service.getComponentLiningType().subscribe((data: any) => {
   this.componentLiningType = data;
 });
 
-this.service.getComponentMaterialCertification().subscribe(data => {
+this.service.getComponentMaterialCertification().subscribe((data: any) => {
   this.componentMaterialCertification = data;
 });
 
-this.service.getComponentExternalCoating().subscribe(data => {
+this.service.getComponentExternalCoating().subscribe((data: any) => {
   this.componentExternalCoating = data;
 });
 
-this.service.getComponentExternalCoatingType().subscribe(data => {
+this.service.getComponentExternalCoatingType().subscribe((data: any) => {
   this.componentExternalCoatingType = data;
 });
 
-this.service.getComponentInsulation().subscribe(data => {
+this.service.getComponentInsulation().subscribe((data: any) => {
   this.componentInsulation = data;
 });
 
-this.service.getComponentInsulationType().subscribe(data => {
+this.service.getComponentInsulationType().subscribe((data: any) => {
   this.componentInsulationType = data;
 });
 
-this.service.getComponentInsulationMaterial().subscribe(data => {
+this.service.getComponentInsulationMaterial().subscribe((data: any) => {
   this.componentInsulationMaterial = data;
 });
 
-this.service.getComponentCUIPotential().subscribe(data => {
+this.service.getComponentCUIPotential().subscribe((data: any) => {
   this.componentCUIPotential = data;
 });
 
-this.service.getComponentExternalEnvironment().subscribe(data => {
+this.service.getComponentExternalEnvironment().subscribe((data: any) => {
   this.componentExternalEnvironment = data;
 });
 
-this.service.getComponentSupportType().subscribe(data => {
+this.service.getComponentSupportType().subscribe((data: any) => {
   this.componentSupportType = data;
 });
 
-this.service.getComponentHeatTracing().subscribe(data => {
+this.service.getComponentHeatTracing().subscribe((data: any) => {
   this.componentHeatTracing = data;
 });
 
-this.service.getComponentFireProofing().subscribe(data => {
+this.service.getComponentFireProofing().subscribe((data: any) => {
   this.componentFireProofing = data;
 });
 
-this.service.getComponentBuried().subscribe(data => {
+this.service.getComponentBuried().subscribe((data: any) => {
   this.componentBuried = data;
 });
 
-this.service.getComponentCathodicProtection().subscribe(data => {
+this.service.getComponentCathodicProtection().subscribe((data: any) => {
   this.componentCathodicProtection = data;
 });
 
-this.service.getComponentIsitaDeadleg().subscribe(data => {
+this.service.getComponentIsitaDeadleg().subscribe((data: any) => {
   this.componentIsitaDeadleg = data;
 });
 
-this.service.getComponentDeadlegCategory().subscribe(data => {
+this.service.getComponentDeadlegCategory().subscribe((data: any) => {
   this.componentDeadlegCategory = data;
 });
 
-this.service.getComponentDeadlegCriticality().subscribe(data => {
+this.service.getComponentDeadlegCriticality().subscribe((data: any) => {
   this.componentDeadlegCriticality = data;
 });
 
-this.service.getComponentPressureReliefDevices().subscribe(data => {
+this.service.getComponentPressureReliefDevices().subscribe((data: any) => {
   this.componentPressureReliefDevices = data;
 });
 
-this.service.getComponentChemicalInjection().subscribe(data => {
+this.service.getComponentChemicalInjection().subscribe((data: any) => {
   this.componentChemicalInjection = data;
 });
 
-this.service.getComponentDetectionSystem().subscribe(data => {
+this.service.getComponentDetectionSystem().subscribe((data: any) => {
   this.componentDetectionSystem = data;
 });
 
-this.service.getComponentIsolationSystem().subscribe(data => {
+this.service.getComponentIsolationSystem().subscribe((data: any) => {
   this.componentIsolationSystem = data;
 });
 
-this.service.getComponentMitigationSystem().subscribe(data => {
+this.service.getComponentMitigationSystem().subscribe((data: any) => {
   this.componentMitigationSystem = data;
 });
 
-this.service.getComponentOnlineCorrosionMonitoring().subscribe(data => {
+this.service.getComponentOnlineCorrosionMonitoring().subscribe((data: any) => {
   this.componentOnlineCorrosionMonitoring = data;
 });
 
-this.service.getComponentCorrosionMonitoringType().subscribe(data => {
+this.service.getComponentCorrosionMonitoringType().subscribe((data: any) => {
   this.componentCorrosionMonitoringType = data;
 });
 
-this.service.getComponentHazardClassification().subscribe(data => {
+this.service.getComponentHazardClassification().subscribe((data: any) => {
   this.componentHazardClassification = data;
 });
 
-this.service.getComponentIncidentHistory().subscribe(data => {
+this.service.getComponentIncidentHistory().subscribe((data: any) => {
   this.componentIncidentHistory = data;
 });
 
-this.service.getComponentCurrentInspectionStrategy().subscribe(data => {
+this.service.getComponentCurrentInspectionStrategy().subscribe((data: any) => {
   this.componentCurrentInspectionStrategy = data;
 });
 
-this.service.getComponentInspectionAccess().subscribe(data => {
+this.service.getComponentInspectionAccess().subscribe((data: any) => {
   this.componentInspectionAccess = data;
 });
 
-this.service.getComponentScheduledRepairReplacement().subscribe(data => {
+this.service.getComponentScheduledRepairReplacement().subscribe((data: any) => {
   this.componentScheduledRepairReplacement = data;
 });
 
-this.service.getComponentRepairReplacementDuringNextShutdown().subscribe(data => {
+this.service.getComponentRepairReplacementDuringNextShutdown().subscribe((data: any) => {
   this.componentRepairReplacementDuringNextShutdown = data;
 });
 
-this.service.getComponentSyncStatus().subscribe(data => {
+this.service.getComponentSyncStatus().subscribe((data: any) => {
   this.componentSyncStatus = data;
 });
 
