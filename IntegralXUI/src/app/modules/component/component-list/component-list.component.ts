@@ -15,7 +15,7 @@ export class ComponentListComponent {
 
   equipments: any[] = [];
       systemColumns: ColDef[] = [
-        { field: 'ComponentID', headerName: 'Name', flex: 1 },
+        { field: 'componentID', headerName: 'Name', flex: 1 },
         { field: 'id', headerName: 'id', hide: true },
         { field: 'plant', headerName: 'Plant', flex: 1 },
         { field: 'area', headerName: 'Area', flex: 1 },

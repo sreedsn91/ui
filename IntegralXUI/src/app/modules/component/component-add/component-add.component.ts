@@ -111,7 +111,7 @@ ddlcomponentSyncStatus: any;
 
      this.componentForm = this.fb.group({
       // Identification
-      id: [0],
+      id: [null],
       clientId: [this.au.getClientId()],
       componentId: [null,Validators.required],
       componentDescription: [null,Validators.required],
@@ -125,12 +125,12 @@ ddlcomponentSyncStatus: any;
 
       // Location
       plantId: [null,Validators.required],
-      areaId: [0],
-      unitId: [0],
-      systemId: [0],
-      circuitId: [0],
-      corrosionLoopId: [0],
-      equipmentId: [0],
+      areaId: [null],
+      unitId: [null],
+      systemId: [null],
+      circuitId: [null],
+      corrosionLoopId: [null],
+      equipmentId: [null],
       specificLocation: [''],
       equipmentFrom: [''],
       equipmentTo: [''],
@@ -141,56 +141,56 @@ ddlcomponentSyncStatus: any;
       // Design
       designCode: [null],
       editionAndAddendum: [null],
-      designPressureInternal: [0],
-      designPressureExternal: [0],
-      designTemperatureMax: [0],
-      designTemperatureMDMT: [0],
-      mawp: [0],
-      designLife: [0],
+      designPressureInternal: [null],
+      designPressureExternal: [null],
+      designTemperatureMax: [null],
+      designTemperatureMDMT: [null],
+      mawp: [null],
+      designLife: [null],
       primaryProducts: [''],
-      marginPerDay: [0],
+      marginPerDay: [null],
       complianceCertification: [null],
       governingRegulatoryBody: [''],
 
       // Geometry
       geometry: [null],
-      nps: [0],
-      insideDiameter: [0],
-      outsideDiameter: [0],
-      lengthHeight: [0],
-      fillHeight: [0],
+      nps: [null],
+      insideDiameter: [null],
+      outsideDiameter: [null],
+      lengthHeight: [null],
+      fillHeight: [null],
       orientation: [null],
-      emptyWeight: [0],
-      capacity: [0],
+      emptyWeight: [null],
+      capacity: [null],
 
       // Operating Conditions
-      operatingPressureMax: [0],
-      operatingPressureAvg: [0],
-      operatingTempMax: [0],
-      operatingTempMin: [0],
+      operatingPressureMax: [null],
+      operatingPressureAvg: [null],
+      operatingTempMax: [null],
+      operatingTempMin: [null],
       processFluid: [''],
       fluidComposition: [''],
       fluidPhase: [null],
-      inventoryVolume: [0],
-      density: [0],
-      viscosity: [0],
-      specificGravity: [0],
-      flowRate: [0],
-      velocity: [0],
+      inventoryVolume: [null],
+      density: [null],
+      viscosity: [null],
+      specificGravity: [null],
+      flowRate: [null],
+      velocity: [null],
       corrosivity: [null],
-      ph: [0],
+      ph: [null],
       processEnvironment: [null],
       toxicMixture: [null],
       toxicFluid: [null],
       flammability: [null],
-      operatingWeight: [0],
+      operatingWeight: [null],
       criticality: [null],
-      humidityLevel: [0],
+      humidityLevel: [null],
       seismicZoneClassification: [null],
       fireAndExplosionRisk: [null],
       toxicRisk: [null],
-      totalPopulation: [0],
-      populationDensity: [0],
+      totalPopulation: [null],
+      populationDensity: [null],
 
       // Manufacturer & Testing
       manufacturer: [''],
@@ -210,17 +210,84 @@ ddlcomponentSyncStatus: any;
       // Material
       generalMaterial: [null],
       materialSpecification: [''],
-      allowableStress: [0],
-      nominalThickness: [0],
-      corrosionAllowance: [0],
+      allowableStress: [null],
+      nominalThickness: [null],
+      corrosionAllowance: [null],
       cladding: [null],
       claddingType: [null],
       claddingMaterial: [null],
-      claddingThickness: [0],
+      claddingThickness: [null],
       lining: [null],
       liningType: [null],
       materialCertification: [null],
 
+      externalCoating: [null],
+      externalCoatingType: [null],
+      externalCoatingThickness: [null],
+      externalCoatingAge: [null],
+      insulation: [null],
+      insulationType: [null],
+      insulationMaterial: [null],
+      insulationThickness: [''],
+      cuiPotential: [null],
+      externalEnvironment: [null],
+      supportType: [null],
+      heatTracing: [null],
+      fireProofing: [null],
+      buried: [null],
+      cathodicProtection: [null],
+
+      isDeadleg: [null],
+      deadlegId: [''],
+      deadlegDescription: [''],
+      deadlegCategory: [null],
+      deadlegCriticality: [null],
+
+      pressureReliefDevices: [null],
+      prdId: [''],
+      prdSetPressure: [null],
+      chemicalInjection: [null],
+      detectionSystem: [null],
+      isolationSystem: [null],
+      mitigationSystem: [null],
+      onlineCorrosionMonitoring: [null],
+      corrosionMonitoringType: [null],
+      hazardClassification: [null],
+      safetyEnvironmentalPermits: [''],
+      incidentHistory: [null],
+
+      currentInspectionStrategy: [null],
+      damageMechanisms: [''],
+      shutdownFrequency: [null],
+      lastMajorShutdownDate: [''],
+      nextMajorShutdownDate: [''],
+      subsequentMajorShutdownDate: [''],
+      mtbf: [null],
+      mttr: [null],
+      cmlDrawingId: [''],
+      inspectionAccess: [null],
+      inspectionSupervisor: [''],
+      inspector: [''],
+
+      internalInspection: [''],
+      externalInspection: [''],
+      onStreamInspection: [''],
+      tmInspection: [''],
+
+      prevInternalInspection: [''],
+      prevExternalInspection: [''],
+      prevOnStreamInspection: [''],
+      prevTmInspection: [''],
+
+      scheduledRepairReplacement: [null],
+      scheduledRepairReplacementDate: [''],
+      repairReplacementDuringNextShutdown: [null],
+
+      erpCircuitCode: [''],
+      erpSystem: [''],
+      functionalLocation: [''],
+      externalSystemId: [''],
+      syncStatus: [null],
       // Meta
       addedBy: [null],
       addedOn: [null],
@@ -231,12 +298,8 @@ ddlcomponentSyncStatus: any;
     });
 
   }
-
+  
   ngOnInit() {
-   
-
-
-    
     this.componentForm.get('plantId')?.valueChanges.subscribe((plantId) => {
       alert();
       this.componentForm.get('name')?.updateValueAndValidity();
@@ -264,7 +327,7 @@ ddlcomponentSyncStatus: any;
                 this.loadSystems(this.componentForm.get('plantId').value, 0, 0);
         this.loadCircuits(this.componentForm.get('plantId').value, 0, 0, 0);
         this.loadcorrosionLoop(this.componentForm.get('plantId').value,0, 0,0,0);
-        this.loadEquipment(this.componentForm.get('plantId').value, 0, 0, 0,0, 0);
+        this.loadEquipment(this.componentForm.get('plantId').value, 0, 0, 0,0,0, 0);
 
       } else {
 
@@ -281,7 +344,7 @@ ddlcomponentSyncStatus: any;
         this.loadSystems(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, unitId);
         this.loadCircuits(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, unitId, 0);
         this.loadcorrosionLoop(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, 0,0,0);
-        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, 0, 0,0, 0);
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, 0, 0,0, 0,0);
 
       } else {
 
@@ -296,7 +359,7 @@ ddlcomponentSyncStatus: any;
 
         this.loadCircuits(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, systemId);
            this.loadcorrosionLoop(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value,0,0);
-        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, 0,0, 0);
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, 0,0, 0,0);
 
 
       } else {
@@ -311,7 +374,7 @@ ddlcomponentSyncStatus: any;
       if (circuitId) {
 
         this.loadcorrosionLoop(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value,this.componentForm.get('systemId').value, circuitId);
-        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, this.componentForm.get('systemId').value, this.componentForm.get('circuitId').value, 0);
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, this.componentForm.get('systemId').value, this.componentForm.get('circuitId').value, 0,0);
 
       } else {
 
@@ -324,7 +387,7 @@ ddlcomponentSyncStatus: any;
       this.componentForm.get('name')?.updateValueAndValidity();
       if (corrosionLoopId) {
 
-        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, this.componentForm.get('systemId').value, this.componentForm.get('circuitId').value, corrosionLoopId);
+        this.loadEquipment(this.componentForm.get('plantId').value, this.componentForm.get('areaId').value, this.componentForm.get('unitId').value, this.componentForm.get('systemId').value, this.componentForm.get('circuitId').value, corrosionLoopId,0);
 
       } else {
 
@@ -393,9 +456,9 @@ ddlcomponentSyncStatus: any;
     });
   }
   
-  loadEquipment(plantId: number, areaId: number, unitId: number, systemId: number,corrosionLoopId: number,equipmentId: number ) {
+  loadEquipment(plantId: number, areaId: number, unitId: number, systemId: number,circuitId :number,corrosionLoopId: number,equipmentId: number ) {
 
-    this.service.getEquipment(plantId, areaId, unitId, systemId,corrosionLoopId,equipmentId).subscribe((data: any[]) => {
+    this.service.getEquipment(plantId, areaId, unitId, systemId,corrosionLoopId,circuitId,equipmentId).subscribe((data: any[]) => {
       this.ddlequipments = data;
     });
   }
@@ -412,7 +475,7 @@ saveComponent() {
         formData.append(key, value);
       }
     });
-
+ formData.append('clientId', this.au.getClientId().toString());
     this.documentPreviews.forEach(file => {
       formData.append('documents', file);
     });

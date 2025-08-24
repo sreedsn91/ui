@@ -71,9 +71,9 @@ export class ComponentService {
     return this.http.get(`${this.apiUrl}Equipment/getCorrosionLoop/${clientId}/${plantId}/${areaId}/${unitId}/${systemId}/${corrosionLoopId}`, { headers: this.getHeaders() });
   }
 
-     getEquipment(plantId: number, areaId: number, unitId: number,systemId: number,corrosionLoopId: number,equipmentId: number) {
+     getEquipment(plantId: number, areaId: number, unitId: number,systemId: number,corrosionLoopId: number,circuitId: number,equipmentId: number) {
     const clientId = Number(this.authService.getClientId());
-    return this.http.get(`${this.apiUrl}Equipment/getEquipment/${clientId}/${plantId}/${areaId}/${unitId}/${systemId}/${corrosionLoopId}/${equipmentId}`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}Equipment/getEquipment/${clientId}/${plantId}/${areaId}/${unitId}/${systemId}/${corrosionLoopId}/${circuitId}/${equipmentId}`, { headers: this.getHeaders() });
   }
        getComponentDetails(systemId: number): Observable<any> {
       const clientId = Number(this.authService.getClientId());
@@ -85,10 +85,10 @@ export class ComponentService {
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       });
-      return this.http.delete(`${this.apiUrl}CorrossionLoop/DeleteCorrossionLoop/${id}`, { headers: this.getHeadersWithoutType() });
+      return this.http.delete(`${this.apiUrl}CorrossionLoop/DeleteComponent/${id}`, { headers: this.getHeadersWithoutType() });
     }
       downloadDocument(documentId: number): Observable<Blob> {
-      return this.http.get(`${this.apiUrl}CorrossionLoop/download/${documentId}`, { headers: this.getHeadersWithoutType(), responseType: 'blob' });
+      return this.http.get(`${this.apiUrl}CorrossionLoop/DownloadDocumentComp/${documentId}`, { headers: this.getHeadersWithoutType(), responseType: 'blob' });
     }
   
       addComponent(circuit: FormData): Observable<System> {
