@@ -730,6 +730,7 @@ saveComponent() {
   }
 
   downloadFile(file: File) {
+    debugger;
     const url = URL.createObjectURL(file);
     const a = document.createElement('a');
     a.href = url;
@@ -754,6 +755,28 @@ saveComponent() {
     this.documentsToDelete.push(documentID);
     this.documents = this.documents.filter(doc => doc.id !== documentID); // Remove from UI
   }
+  
+    DeleteComp() {
+      Swal.fire({
+        title: 'Are you sure?You want to delete this component!',
+        text: 'All data associated with this component will be lost',
+        icon: 'warning',
+        width: '300px',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.service.deleteComponent(this.childValue).subscribe(
+            () => this.backToComponent(),
+            error =>
+              Swal.fire('Delete failed:', error)
+          );
+  
+        }
+      });
+    }
   
   onFileSelect(event: any) {
     if (event.target.files.length > 0) {

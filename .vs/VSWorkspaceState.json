@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\IntegralXUI",
+    "\\IntegralXUI\\src",
+    "\\IntegralXUI\\src\\app",
+    "\\IntegralXUI\\src\\app\\modules",
+    "\\IntegralXUI\\src\\app\\modules\\component",
+    "\\IntegralXUI\\src\\app\\modules\\component\\component-add"
+  ],
+  "SelectedNode": "\\IntegralXUI\\src\\app\\modules\\component\\component-add\\component-add.component.html",
+  "PreviewInSolutionExplorer": false
+}

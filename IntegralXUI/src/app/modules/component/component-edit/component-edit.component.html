@@ -17,10 +17,20 @@
                     <div *ngIf="this.expand"> <button class="btn-commonIcon" (click)="collapseAll()"
                             title="Collapse all sections"> <i class="bi feather icon-minimize-2"></i> </button> </div>
 
-                    <div *ngIf="this.canAdd"> <button type="submit" [disabled]="componentForm.invalid" title="Save data"
-                            class="btn-saveIcon"> <i class="bi  feather icon-save"></i></button> </div>
-                    <div *ngIf="!this.canAdd"> <button disabled class="btn-saveIcon" title="Save data-disabled"> <i
-                                class="bi  feather icon-save"></i></button> </div>
+                                                <div *ngIf="this.canEdit"> <button type="submit"
+                                                        [disabled]="componentForm.invalid" title="Save data"
+                                                        class="btn-saveIcon"> <i
+                                                            class="bi  feather icon-save"></i></button> </div>
+                                                <div *ngIf="!this.canEdit"> <button type="submit" disabled
+                                                        class="btn-saveIcon" title="Save data-disabled"> <i
+                                                            class="bi  feather icon-save"></i></button> </div>
+                                                <div *ngIf="this.canDelete"> <button type="button"
+                                                        *ngIf="this.canDelete" class="btn-deleteIcon"
+                                                        (click)="DeleteComp()"> <i
+                                                            class="bi  feather icon-trash"></i></button></div>
+                                                <div *ngIf="!this.canDelete"> <button type="button" disabled
+                                                        *ngIf="this.canDelete" class="btn-deleteIcon"> <i
+                                                            class="bi  feather icon-trash"></i></button></div>
                 </div>
 
                 <div class="row">
