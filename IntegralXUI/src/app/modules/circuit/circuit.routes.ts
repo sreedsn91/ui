@@ -12,7 +12,7 @@ export const CIRCUIT_ROUTES: Routes = [
       { path: 'list', component: CircuitListComponent },
       { path: 'add', component: CircuitAddComponent },
       { path: 'edit', component: CircuitEditComponent },
-      { path: 'system', component: CircuitComponent },
+      { path: 'circuit', component: CircuitComponent },
     ]
   }
 ];

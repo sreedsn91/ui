@@ -43,7 +43,7 @@ const routes: Routes = [
       { path: 'clientcorrosionloop', loadChildren: () => import('./modules/corrossionLoop/corrossionLoop.routes').then(c => c.CL_ROUTES), canActivate: [AuthGuard], data: { moduleid: 16 } },
       { path: 'clientcomponent', loadChildren: () => import('./modules/component/component.routes').then(c => c.EQUIPMENT_ROUTES), canActivate: [AuthGuard], data: { moduleid: 10 } },
       { path: 'clientequipment', loadChildren: () => import('./modules/equipment/equipment.routes').then(c => c.EQUIPMENT_ROUTES), canActivate: [AuthGuard], data: { moduleid: 9 } },
-      { path: 'clientciml', loadComponent: () => import('./modules/plant/plant.component').then(c => c.PlantComponent), canActivate: [AuthGuard], data: { moduleid: 11 } },
+      { path: 'clientciml', loadChildren: () => import('./modules/ciml/ciml.routes').then(c => c.CIML_ROUTES), canActivate: [AuthGuard], data: { moduleid: 11 } },
       { path: 'clientimport', loadComponent: () => import('./modules/import/import.component').then(c => c.ImportComponent), canActivate: [AuthGuard], data: { moduleid: 16 } },
      
     ]
