@@ -19,7 +19,7 @@ export class CimlAddComponent {
 
  // Accordion state variables
   expand = false;
-  showGeneral = false;
+  showGeneral = true;
   showLocation = false;
   showDesign = false;
   showGeometry = false;
@@ -55,79 +55,88 @@ export class CimlAddComponent {
   ddlcircuits: any;
   ddlcorrosionLoops: any;
   ddlequipments: any;
-  ddlcomponentCategory: any;
-  ddlcomponentType: any;
-  ddlcomponentOperationalStatus: any;
-  ddlcomponentDesignCode: any;
-  ddlcomponentEditionAddendum: any;
-  ddlcomponentComplianceCertification: any;
-  ddlcomponentGeometry: any;
-  ddlcomponentOrientation: any;
-  ddlcomponentFluidPhase: any;
-  ddlcomponentCorrosivity: any;
-  ddlcomponentProcessEnvironment: any;
-  ddlcomponentToxicMixture: any;
-  ddlcomponentToxicFluid: any;
-  ddlcomponentFlammability: any;
-  ddlcomponentCriticality: any;
-  ddlcomponentSeismicZoneClassification: any;
-  ddlcomponentFireExplosionRisk: any;
-  ddlcomponentToxicRisk: any;
-  ddlcomponentHeatTreatment: any;
-  ddlcomponentHeatTreatmentType: any;
-  ddlcomponentImpactTest: any;
-  ddlcomponentPressureTest: any;
-  ddlcomponentPressureTestType: any;
-  ddlcomponentRadiography: any;
-  ddlcomponentRadiographyCategory: any;
-  ddlcomponentGeneralMaterial: any;
-  ddlcomponentCladding: any;
-  ddlcomponentCladdingType: any;
-  ddlcomponentCladdingMaterial: any;
-  ddlcomponentLining: any;
-  ddlcomponentLiningType: any;
-  ddlcomponentMaterialCertification: any;
-  ddlcomponentExternalCoating: any;
-  ddlcomponentExternalCoatingType: any;
-  ddlcomponentInsulation: any;
-  ddlcomponentInsulationType: any;
-  ddlcomponentInsulationMaterial: any;
-  ddlcomponentCUIPotential: any;
-  ddlcomponentExternalEnvironment: any;
-  ddlcomponentSupportType: any;
-  ddlcomponentHeatTracing: any;
-  ddlcomponentFireProofing: any;
-  ddlcomponentBuried: any;
-  ddlcomponentCathodicProtection: any;
-  ddlcomponentIsitaDeadleg: any;
-  ddlcomponentDeadlegCategory: any;
-  ddlcomponentDeadlegCriticality: any;
-  ddlcomponentPressureReliefDevices: any;
-  ddlcomponentChemicalInjection: any;
-  ddlcomponentDetectionSystem: any;
-  ddlcomponentIsolationSystem: any;
-  ddlcomponentMitigationSystem: any;
-  ddlcomponentOnlineCorrosionMonitoring: any;
-  ddlcomponentCorrosionMonitoringType: any;
-  ddlcomponentHazardClassification: any;
-  ddlcomponentIncidentHistory: any;
-  ddlcomponentCurrentInspectionStrategy: any;
-  ddlcomponentInspectionAccess: any;
-  ddlcomponentScheduledRepairReplacement: any;
-  ddlcomponentRepairReplacementDuringNextShutdown: any;
-  ddlcomponentSyncStatus: any;
+  ddlcomponents: any;
+   categories: any;
+   types: any;
+   operationalStatus: any;
+   designCodes: any;
+   editions: any;
+   certifications: any;
+   geometryOptions: any;
+   orientationOptions: any;
+   fluidPhases: any;
+   corrosivityOptions: any;
+   processEnvironments: any;
+   toxicMixtures: any;
+   toxicFluids: any;
+   flammabilityOptions: any;
+   criticalityOptions: any;
+   seismicZones: any;
+   fireExplosionRisks: any;
+   toxicRisks: any;
+   heatTreatments: any;
+   heatTreatmentTypes: any;
+   impactTests: any;
+   pressureTests: any;
+   pressureTestTypes: any;
+   radiographies: any;
+   radiographyCategories: any;
+   generalMaterials: any;
+   claddingOptions: any;
+   claddingTypes: any;
+   claddingMaterials: any;
+   liningOptions: any;
+   liningTypes: any;
+   materialCertifications: any;
+   externalCoatings: any;
+   externalCoatingTypes: any;
+   insulationOptions: any;
+   insulationTypes: any;
+   insulationMaterials: any;
+   cuiPotentials: any;
+   externalEnvironments: any;
+   supportTypes: any;
+   heatTracings: any;
+   fireProofings: any;
+   buriedOptions: any;
+   accessibilityOptions: any;
+   cathodicProtections: any;
+   deadlegOptions: any;
+   deadlegCategories: any;
+   deadlegCriticalities: any;
+   pressureReliefDevicesOptions: any;
+   chemicalInjectionOptions: any;
+   detectionSystemOptions: any;
+   isolationSystemOptions: any;
+   mitigationSystemOptions: any;
+   onlineCorrosionMonitoringOptions: any;
+   corrosionMonitoringTypes: any;
+   soilToAirInterfaces: any;
+   hazardClassifications: any;
+   incidentHistories: any;
+   inspectionStrategies: any;
+   injectionPoints: any;
+   inspectionAccessOptions: any;
+   repairReplacementOptions: any;
+   nextShutdownOptions: any;
+   syncStatusOptions: any; 
+   internalEntryOptions: any;  
+   accessTypeOptions: any;  
+   insulationRemovalRequired: any;
+
   
 
   constructor(private service: CimlService, private fb: FormBuilder, private au: AuthService, private router: Router) {
-      this.canAdd = (this.au.getCanAdd());
+    debugger;  
+    this.canAdd = (this.au.getCanAdd());
   
      this.cimlForm = this.fb.group({
       id: [null],
       clientId: [this.au.getClientId()],
-      cmlId: ['', Validators.required],
-      cmlDescription: ['', Validators.required],
-      cmlCategory: ['', Validators.required],
-      cmlType: [''],
+      cml_Id: ['', Validators.required],
+      cml_Description: ['', Validators.required],
+      cml_Category: ['', Validators.required],
+      cml_Type: [''],
       commissioningDate: [''],
       builtDate: [''],
       operationalStatus: [''],
@@ -241,8 +250,8 @@ export class CimlAddComponent {
       injectionPoint: [''],
       soilToAirInterface: [''],
       pressureReliefDevices: [''],
-      prdId: [''],
-      prdSetPressure: [''],
+      prd_Id: [''],
+      prd_SetPressure: [''],
       chemicalInjection: [''],
       detectionSystem: [''],
       isolationSystem: [''],
@@ -450,6 +459,10 @@ export class CimlAddComponent {
   }
 
 
+
+
+
+
   loadAreasByPlant(plantId: number) {
 
     this.service.getArea(plantId).subscribe((data: any[]) => {
@@ -475,6 +488,12 @@ export class CimlAddComponent {
       this.ddlcircuits = data;
     });
   }
+  loadComponents(plantId: number, areaId: number, unitId: number, systemId: number,corrosionLoopId: number,circuitId: number,equipmentId: number) {
+
+    this.service.getComponent(plantId, areaId, unitId, systemId,corrosionLoopId,circuitId,equipmentId).subscribe((data: any[]) => {
+      this.ddlcomponents = data;
+    });
+  }
   
   loadcorrosionLoop(plantId: number, areaId: number, unitId: number, systemId: number,corrosionLoopId: number) {
 
@@ -491,7 +510,19 @@ export class CimlAddComponent {
   }
 saveCIML() {
  if (this.cimlForm.invalid) {
-      return;
+   const invalidFields = [];
+    const controls = this.cimlForm.controls;
+
+    for (const name in controls) {
+       if (controls[name].invalid) {
+        const errors = controls[name].errors;
+        const currentValue = controls[name].value;
+        invalidFields.push({ field: name, errors: errors, value: currentValue });
+      }
+    }
+
+    console.log('Invalid fields with reasons and current values:', invalidFields);
+     return;
     }
     const formData = new FormData();
     Object.keys(this.cimlForm.value).forEach(key => {
@@ -509,8 +540,6 @@ saveCIML() {
 
     this.service.addCIML(formData).subscribe(
       (response) => {
-
-
         Swal.fire({
           title: 'Success!',
           text: 'CIML added successfully',
@@ -561,134 +590,147 @@ saveCIML() {
 loadDropdowns() {
  // Subscribe to each service call individually
 
- 
-  forkJoin({
-    ddlplants : this.service.getPlants(),
-ddlcomponentCategory: this.service.getCIMLCategory(),
-ddlcomponentType: this.service.getCIMLType(),
-ddlcomponentOperationalStatus: this.service.getCIMLOperationalStatus(),
-ddlcomponentDesignCode: this.service.getCIMLDesignCode(),
-ddlcomponentEditionAddendum: this.service.getCIMLEditionAddendum(),
-ddlcomponentComplianceCertification: this.service.getCIMLComplianceCertification(),
-ddlcomponentGeometry: this.service.getCIMLGeometry(),
-ddlcomponentOrientation: this.service.getCIMLOrientation(),
-ddlcomponentFluidPhase: this.service.getCIMLFluidPhase(),
-ddlcomponentCorrosivity: this.service.getCIMLCorrosivity(),
-ddlcomponentProcessEnvironment: this.service.getCIMLProcessEnvironment(),
-ddlcomponentToxicMixture: this.service.getCIMLToxicMixture(),
-ddlcomponentToxicFluid: this.service.getCIMLToxicFluid(),
-ddlcomponentFlammability: this.service.getCIMLFlammability(),
-ddlcomponentCriticality: this.service.getCIMLCriticality(),
-ddlcomponentSeismicZoneClassification: this.service.getCIMLSeismicZoneClassification(),
-ddlcomponentFireExplosionRisk: this.service.getCIMLFireExplosionRisk(),
-ddlcomponentToxicRisk: this.service.getCIMLToxicRisk(),
-ddlcomponentHeatTreatment: this.service.getCIMLHeatTreatment(),
-ddlcomponentHeatTreatmentType: this.service.getCIMLHeatTreatmentType(),
-ddlcomponentImpactTest: this.service.getCIMLImpactTest(),
-ddlcomponentPressureTest: this.service.getCIMLPressureTest(),
-ddlcomponentPressureTestType: this.service.getCIMLPressureTestType(),
-ddlcomponentRadiography: this.service.getCIMLRadiography(),
-ddlcomponentRadiographyCategory: this.service.getCIMLRadiographyCategory(),
-ddlcomponentGeneralMaterial: this.service.getCIMLGeneralMaterial(),
-ddlcomponentCladding: this.service.getCIMLCladding(),
-ddlcomponentCladdingType: this.service.getCIMLCladdingType(),
-ddlcomponentCladdingMaterial: this.service.getCIMLCladdingMaterial(),
-ddlcomponentLining: this.service.getCIMLLining(),
-ddlcomponentLiningType: this.service.getCIMLLiningType(),
-ddlcomponentMaterialCertification: this.service.getCIMLMaterialCertification(),
-ddlcomponentExternalCoating: this.service.getCIMLExternalCoating(),
-ddlcomponentExternalCoatingType: this.service.getCIMLExternalCoatingType(),
-ddlcomponentInsulation: this.service.getCIMLInsulation(),
-ddlcomponentInsulationType: this.service.getCIMLInsulationType(),
-ddlcomponentInsulationMaterial: this.service.getCIMLInsulationMaterial(),
-ddlcomponentCUIPotential: this.service.getCIMLCUIPotential(),
-ddlcomponentExternalEnvironment: this.service.getCIMLExternalEnvironment(),
-ddlcomponentSupportType: this.service.getCIMLSupportType(),
-ddlcomponentHeatTracing: this.service.getCIMLHeatTracing(),
-ddlcomponentFireProofing: this.service.getCIMLFireProofing(),
-ddlcomponentBuried: this.service.getCIMLBuried(),
-ddlcomponentCathodicProtection: this.service.getCIMLCathodicProtection(),
-ddlcomponentIsitaDeadleg: this.service.getCIMLIsitaDeadleg(),
-ddlcomponentDeadlegCategory: this.service.getCIMLDeadlegCategory(),
-ddlcomponentDeadlegCriticality: this.service.getCIMLDeadlegCriticality(),
-ddlcomponentPressureReliefDevices: this.service.getCIMLPressureReliefDevices(),
-ddlcomponentChemicalInjection: this.service.getCIMLChemicalInjection(),
-ddlcomponentDetectionSystem: this.service.getCIMLDetectionSystem(),
-ddlcomponentIsolationSystem: this.service.getCIMLIsolationSystem(),
-ddlcomponentMitigationSystem: this.service.getCIMLMitigationSystem(),
-ddlcomponentOnlineCorrosionMonitoring: this.service.getCIMLOnlineCorrosionMonitoring(),
-ddlcomponentCorrosionMonitoringType: this.service.getCIMLCorrosionMonitoringType(),
-ddlcomponentHazardClassification: this.service.getCIMLHazardClassification(),
-ddlcomponentIncidentHistory: this.service.getCIMLIncidentHistory(),
-ddlcomponentCurrentInspectionStrategy: this.service.getCIMLCurrentInspectionStrategy(),
-ddlcomponentInspectionAccess: this.service.getCIMLInspectionAccess(),
-ddlcomponentScheduledRepairReplacement: this.service.getCIMLScheduledRepairReplacement(),
-ddlcomponentRepairReplacementDuringNextShutdown: this.service.getCIMLRepairReplacementDuringNextShutdown(),
-ddlcomponentSyncStatus: this.service.getCIMLSyncStatus()
+forkJoin({
+  ddlplants: this.service.getPlants(),
+  categories: this.service.getCIMLCategory(),
+  types: this.service.getCIMLType(),
+  operationalStatus: this.service.getCIMLOperationalStatus(),
+  designCode: this.service.getCIMLDesignCode(),
+  editionAddendum: this.service.getCIMLEditionAddendum(),
+  complianceCertification: this.service.getCIMLComplianceCertification(),
+  geometry: this.service.getCIMLGeometry(),
+  orientation: this.service.getCIMLOrientation(),
+  fluidPhase: this.service.getCIMLFluidPhase(),
+  corrosivity: this.service.getCIMLCorrosivity(),
+  processEnvironment: this.service.getCIMLProcessEnvironment(),
+  toxicMixture: this.service.getCIMLToxicMixture(),
+  toxicFluid: this.service.getCIMLToxicFluid(),
+  flammability: this.service.getCIMLFlammability(),
+  criticality: this.service.getCIMLCriticality(),
+  seismicZoneClassification: this.service.getCIMLSeismicZoneClassification(),
+  fireExplosionRisk: this.service.getCIMLFireExplosionRisk(),
+  toxicRisk: this.service.getCIMLToxicRisk(),
+  heatTreatment: this.service.getCIMLHeatTreatment(),
+  heatTreatmentType: this.service.getCIMLHeatTreatmentType(),
+  impactTest: this.service.getCIMLImpactTest(),
+  pressureTest: this.service.getCIMLPressureTest(),
+  pressureTestType: this.service.getCIMLPressureTestType(),
+  radiography: this.service.getCIMLRadiography(),
+  radiographyCategory: this.service.getCIMLRadiographyCategory(),
+  generalMaterial: this.service.getCIMLGeneralMaterial(),
+  cladding: this.service.getCIMLCladding(),
+  claddingType: this.service.getCIMLCladdingType(),
+  claddingMaterial: this.service.getCIMLCladdingMaterial(),
+  lining: this.service.getCIMLLining(),
+  liningType: this.service.getCIMLLiningType(),
+  materialCertification: this.service.getCIMLMaterialCertification(),
+  externalCoating: this.service.getCIMLExternalCoating(),
+  externalCoatingType: this.service.getCIMLExternalCoatingType(),
+  insulation: this.service.getCIMLInsulation(),
+  insulationType: this.service.getCIMLInsulationType(),
+  insulationMaterial: this.service.getCIMLInsulationMaterial(),
+  cuPotential: this.service.getCIMLCUIPotential(),
+  externalEnvironment: this.service.getCIMLExternalEnvironment(),
+  supportType: this.service.getCIMLSupportType(),
+  heatTracing: this.service.getCIMLHeatTracing(),
+  fireProofing: this.service.getCIMLFireProofing(),
+  buried: this.service.getCIMLBuried(),
+  cathodicProtection: this.service.getCIMLCathodicProtection(),
+  isitaDeadleg: this.service.getCIMLIsitaDeadleg(),
+  deadlegCategory: this.service.getCIMLDeadlegCategory(),
+  deadlegCriticality: this.service.getCIMLDeadlegCriticality(),
+  pressureReliefDevices: this.service.getCIMLPressureReliefDevices(),
+  chemicalInjection: this.service.getCIMLChemicalInjection(),
+  detectionSystem: this.service.getCIMLDetectionSystem(),
+  isolationSystem: this.service.getCIMLIsolationSystem(),
+  mitigationSystem: this.service.getCIMLMitigationSystem(),
+  onlineCorrosionMonitoringOptions: this.service.getCIMLOnlineCorrosionMonitoring(),
+  corrosionMonitoringType: this.service.getCIMLCorrosionMonitoringType(),
+  hazardClassification: this.service.getCIMLHazardClassification(),
+  incidentHistory: this.service.getCIMLIncidentHistory(),
+  currentInspectionStrategy: this.service.getCIMLCurrentInspectionStrategy(),
+  inspectionAccess: this.service.getCIMLInspectionAccess(),
+  scheduledRepairReplacement: this.service.getCIMLScheduledRepairReplacement(),
+  repairReplacementDuringNextShutdown: this.service.getCIMLRepairReplacementDuringNextShutdown(),
+  syncStatus: this.service.getCIMLSyncStatus(),
+  insulationRemovalRequired: this.service.getCIMLInsulationRemovalRequired(),
+  internalEntry: this.service.GetDdlCIMLInternalEntry(),
+  accessTypeOptions: this.service.GetDdlCIMLAccessType(),
+  injectionPoints: this.service.GetDdlCIMLCIMLInjectionPoint(),
+  soilToAirInterfaces: this.service.GetDdlCIMLSoilToAirInterface(),
+  accessibilityOptions: this.service.GetDdlCIMLAccessible()
 }).subscribe(results => {
-this.ddlplants = results.ddlplants;
-this.ddlcomponentCategory = results.ddlcomponentCategory;
-this.ddlcomponentType = results.ddlcomponentType;
-this.ddlcomponentOperationalStatus = results.ddlcomponentOperationalStatus;
-this.ddlcomponentDesignCode = results.ddlcomponentDesignCode;
-this.ddlcomponentEditionAddendum = results.ddlcomponentEditionAddendum;
-this.ddlcomponentComplianceCertification = results.ddlcomponentComplianceCertification;
-this.ddlcomponentGeometry = results.ddlcomponentGeometry;
-this.ddlcomponentOrientation = results.ddlcomponentOrientation;
-this.ddlcomponentFluidPhase = results.ddlcomponentFluidPhase;
-this.ddlcomponentCorrosivity = results.ddlcomponentCorrosivity;
-this.ddlcomponentProcessEnvironment = results.ddlcomponentProcessEnvironment;
-this.ddlcomponentToxicMixture = results.ddlcomponentToxicMixture;
-this.ddlcomponentToxicFluid = results.ddlcomponentToxicFluid;
-this.ddlcomponentFlammability = results.ddlcomponentFlammability;
-this.ddlcomponentCriticality = results.ddlcomponentCriticality;
-this.ddlcomponentSeismicZoneClassification = results.ddlcomponentSeismicZoneClassification;
-this.ddlcomponentFireExplosionRisk = results.ddlcomponentFireExplosionRisk;
-this.ddlcomponentToxicRisk = results.ddlcomponentToxicRisk;
-this.ddlcomponentHeatTreatment = results.ddlcomponentHeatTreatment;
-this.ddlcomponentHeatTreatmentType = results.ddlcomponentHeatTreatmentType;
-this.ddlcomponentImpactTest = results.ddlcomponentImpactTest;
-this.ddlcomponentPressureTest = results.ddlcomponentPressureTest;
-this.ddlcomponentPressureTestType = results.ddlcomponentPressureTestType;
-this.ddlcomponentRadiography = results.ddlcomponentRadiography;
-this.ddlcomponentRadiographyCategory = results.ddlcomponentRadiographyCategory;
-this.ddlcomponentGeneralMaterial = results.ddlcomponentGeneralMaterial;
-this.ddlcomponentCladding = results.ddlcomponentCladding;
-this.ddlcomponentCladdingType = results.ddlcomponentCladdingType;
-this.ddlcomponentCladdingMaterial = results.ddlcomponentCladdingMaterial;
-this.ddlcomponentLining = results.ddlcomponentLining;
-this.ddlcomponentLiningType = results.ddlcomponentLiningType;
-this.ddlcomponentMaterialCertification = results.ddlcomponentMaterialCertification;
-this.ddlcomponentExternalCoating = results.ddlcomponentExternalCoating;
-this.ddlcomponentExternalCoatingType = results.ddlcomponentExternalCoatingType;
-this.ddlcomponentInsulation = results.ddlcomponentInsulation;
-this.ddlcomponentInsulationType = results.ddlcomponentInsulationType;
-this.ddlcomponentInsulationMaterial = results.ddlcomponentInsulationMaterial;
-this.ddlcomponentCUIPotential = results.ddlcomponentCUIPotential;
-this.ddlcomponentExternalEnvironment = results.ddlcomponentExternalEnvironment;
-this.ddlcomponentSupportType = results.ddlcomponentSupportType;
-this.ddlcomponentHeatTracing = results.ddlcomponentHeatTracing;
-this.ddlcomponentFireProofing = results.ddlcomponentFireProofing;
-this.ddlcomponentBuried = results.ddlcomponentBuried;
-this.ddlcomponentCathodicProtection = results.ddlcomponentCathodicProtection;
-this.ddlcomponentIsitaDeadleg = results.ddlcomponentIsitaDeadleg;
-this.ddlcomponentDeadlegCategory = results.ddlcomponentDeadlegCategory;
-this.ddlcomponentDeadlegCriticality = results.ddlcomponentDeadlegCriticality;
-this.ddlcomponentPressureReliefDevices = results.ddlcomponentPressureReliefDevices;
-this.ddlcomponentChemicalInjection = results.ddlcomponentChemicalInjection;
-this.ddlcomponentDetectionSystem = results.ddlcomponentDetectionSystem;
-this.ddlcomponentIsolationSystem = results.ddlcomponentIsolationSystem;
-this.ddlcomponentMitigationSystem = results.ddlcomponentMitigationSystem;
-this.ddlcomponentOnlineCorrosionMonitoring = results.ddlcomponentOnlineCorrosionMonitoring;
-this.ddlcomponentCorrosionMonitoringType = results.ddlcomponentCorrosionMonitoringType;
-this.ddlcomponentHazardClassification = results.ddlcomponentHazardClassification;
-this.ddlcomponentIncidentHistory = results.ddlcomponentIncidentHistory;
-this.ddlcomponentCurrentInspectionStrategy = results.ddlcomponentCurrentInspectionStrategy;
-this.ddlcomponentInspectionAccess = results.ddlcomponentInspectionAccess;
-this.ddlcomponentScheduledRepairReplacement = results.ddlcomponentScheduledRepairReplacement;
-this.ddlcomponentRepairReplacementDuringNextShutdown = results.ddlcomponentRepairReplacementDuringNextShutdown;
-this.ddlcomponentSyncStatus = results.ddlcomponentSyncStatus;
-    });
+  debugger;
+  this.ddlplants = results.ddlplants;
+  this.categories = results.categories;
+  this.soilToAirInterfaces = results.soilToAirInterfaces;
+  this.types = results.types;
+  this.operationalStatus = results.operationalStatus;
+  this.designCodes = results.designCode;
+  this.editions = results.editionAddendum;
+  this.certifications = results.complianceCertification;
+  this.geometryOptions = results.geometry;
+  this.orientationOptions = results.orientation;
+  this.fluidPhases = results.fluidPhase;
+  this.corrosivityOptions = results.corrosivity;
+  this.processEnvironments = results.processEnvironment;
+  this.toxicMixtures = results.toxicMixture;
+  this.toxicFluids = results.toxicFluid;
+  this.flammabilityOptions = results.flammability;
+  this.criticalityOptions = results.criticality;
+  this.seismicZones = results.seismicZoneClassification;
+  this.fireExplosionRisks = results.fireExplosionRisk;
+  this.toxicRisks = results.toxicRisk;
+  this.injectionPoints = results.injectionPoints;
+  this.heatTreatments = results.heatTreatment;
+  this.heatTreatmentTypes = results.heatTreatmentType;
+  this.impactTests = results.impactTest;
+  this.pressureTests = results.pressureTest;
+  this.pressureTestTypes = results.pressureTestType;
+  this.radiographies = results.radiography;
+  this.radiographyCategories = results.radiographyCategory;
+  this.generalMaterials = results.generalMaterial;
+  this.claddingOptions = results.cladding;
+  this.claddingTypes = results.claddingType;
+  this.claddingMaterials = results.claddingMaterial;
+  this.liningOptions = results.lining;
+  this.liningTypes = results.liningType;
+  this.materialCertifications = results.materialCertification;
+  this.externalCoatings = results.externalCoating;
+  this.externalCoatingTypes = results.externalCoatingType;
+  this.insulationOptions = results.insulation;
+  this.insulationTypes = results.insulationType;
+  this.insulationMaterials = results.insulationMaterial;
+  this.cuiPotentials = results.cuPotential;
+  this.externalEnvironments = results.externalEnvironment;
+  this.supportTypes = results.supportType;
+  this.heatTracings = results.heatTracing;
+  this.fireProofings= results.fireProofing;
+  this.buriedOptions = results.buried;
+  this.cathodicProtections = results.cathodicProtection;
+  this.deadlegOptions = results.isitaDeadleg;
+  this.deadlegCategories = results.deadlegCategory;
+  this.deadlegCriticalities = results.deadlegCriticality;
+  this.pressureReliefDevicesOptions = results.pressureReliefDevices;
+  this.chemicalInjectionOptions = results.chemicalInjection;
+  this.detectionSystemOptions = results.detectionSystem;
+  this.isolationSystemOptions = results.isolationSystem;
+  this.mitigationSystemOptions = results.mitigationSystem;
+  this.onlineCorrosionMonitoringOptions = results.onlineCorrosionMonitoringOptions;
+  this.corrosionMonitoringTypes = results.corrosionMonitoringType;
+  this.hazardClassifications = results.hazardClassification;
+  this.incidentHistories = results.incidentHistory;
+  this.inspectionStrategies = results.currentInspectionStrategy;
+  this.inspectionAccessOptions = results.inspectionAccess;
+  this.repairReplacementOptions = results.scheduledRepairReplacement;
+  this.nextShutdownOptions = results.repairReplacementDuringNextShutdown;
+  this.syncStatusOptions = results.syncStatus;
+  this.insulationRemovalRequired = results.insulationRemovalRequired;
+  this.internalEntryOptions = results.internalEntry;
+  this.accessTypeOptions = results.accessTypeOptions;
+  this.accessibilityOptions = results.accessibilityOptions;
+});
+
   }
 
   //accodion

@@ -72,7 +72,7 @@
                                                     <div *ngIf="this.canEdit" > <button type="submit" [disabled]="circuitForm.invalid" title="Save data" class="btn-saveIcon">   <i class="bi  feather icon-save"></i></button> </div>
                                                     <div *ngIf="!this.canEdit" > <button type="submit"   disabled class="btn-saveIcon" title="Save data-disabled">  <i  class="bi  feather icon-save"></i></button> </div>
                                                     <div *ngIf="this.canDelete"> <button type="button" *ngIf="this.canDelete"
-                                                        class="btn-deleteIcon" (click)="DeleteCircuit()"> <i class="bi  feather icon-trash"></i></button></div>
+                                                        class="btn-deleteIcon" (click)="DeleteComponent()"> <i class="bi  feather icon-trash"></i></button></div>
                                                 <div *ngIf="!this.canDelete"> <button type="button" disabled
                                                         *ngIf="this.canDelete" class="btn-deleteIcon"> <i class="bi  feather icon-trash"></i></button></div>
                                                 </div>

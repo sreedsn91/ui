@@ -44,22 +44,22 @@ export class CimlService {
       getPlants() {
     
         const clientId = Number(this.authService.getClientId());
-        return this.http.get(`${this.apiUrl}CIML/getPlants/${clientId}`, { headers: this.getHeaders() });
+        return this.http.get(`${this.apiUrl}Equipment/getPlants/${clientId}`, { headers: this.getHeaders() });
       }
       getArea(plantId: number) {
     
         const clientId = Number(this.authService.getClientId());
-        return this.http.get(`${this.apiUrl}CIML/getArea/${clientId}/${plantId}`, { headers: this.getHeaders() });
+        return this.http.get(`${this.apiUrl}Equipment/getArea/${clientId}/${plantId}`, { headers: this.getHeaders() });
       }
     
       getUnits(plantId: number, areaId: number) {
         const clientId = Number(this.authService.getClientId());
-        return this.http.get(`${this.apiUrl}CIML/getUnits/${clientId}/${plantId}/${areaId}`, { headers: this.getHeaders() });
+        return this.http.get(`${this.apiUrl}Equipment/getUnits/${clientId}/${plantId}/${areaId}`, { headers: this.getHeaders() });
       }
       
       getSystems(plantId: number, areaId: number, unitId: number) {
         const clientId = Number(this.authService.getClientId());
-        return this.http.get(`${this.apiUrl}CIML/getSystems/${clientId}/${plantId}/${areaId}/${unitId}`, { headers: this.getHeaders() });
+        return this.http.get(`${this.apiUrl}Equipment/getSystems/${clientId}/${plantId}/${areaId}/${unitId}`, { headers: this.getHeaders() });
       }
     getCircuits(plantId: number, areaId: number, unitId: number,systemId: number) {
     const clientId = Number(this.authService.getClientId());
@@ -135,7 +135,24 @@ getCIMLOperationalStatus(): Observable<any> {
     headers: this.getHeaders(),
   });
 }
-
+GetDdlCIMLInternalEntry(): Observable<any> {
+  const clientId = Number(this.authService.getClientId());
+  return this.http.get(`${this.apiUrl}CIML/GetDdlCIMLInternalEntry/${clientId}`, {
+    headers: this.getHeaders(),
+  });
+}
+GetDdlCIMLAccessType(): Observable<any> {
+  const clientId = Number(this.authService.getClientId());
+  return this.http.get(`${this.apiUrl}CIML/GetDdlCIMLAccessType/${clientId}`, {
+    headers: this.getHeaders(),
+  });
+}
+GetDdlCIMLAccessible(): Observable<any> {
+  const clientId = Number(this.authService.getClientId());
+  return this.http.get(`${this.apiUrl}CIML/GetDdlCIMLAccessible/${clientId}`, {
+    headers: this.getHeaders(),
+  });
+}
 getCIMLDesignCode(): Observable<any> {
   const clientId = Number(this.authService.getClientId());
   return this.http.get(`${this.apiUrl}CIML/getCIMLDesignCode/${clientId}`, {
@@ -394,7 +411,18 @@ getCIMLSupportType(): Observable<any> {
     headers: this.getHeaders(),
   });
 }
-
+GetDdlCIMLSoilToAirInterface(): Observable<any> {
+  const clientId = Number(this.authService.getClientId());
+  return this.http.get(`${this.apiUrl}CIML/GetDdlCIMLSoilToAirInterface/${clientId}`, {
+    headers: this.getHeaders(),
+  });
+}
+GetDdlCIMLCIMLInjectionPoint(): Observable<any> {
+  const clientId = Number(this.authService.getClientId());
+  return this.http.get(`${this.apiUrl}CIML/GetDdlCIMLCIMLInjectionPoint/${clientId}`, {
+    headers: this.getHeaders(),
+  });
+}
 getCIMLHeatTracing(): Observable<any> {
   const clientId = Number(this.authService.getClientId());
   return this.http.get(`${this.apiUrl}CIML/getCIMLHeatTracing/${clientId}`, {
@@ -516,7 +544,7 @@ getCIMLCurrentInspectionStrategy(): Observable<any> {
 
 getCIMLInspectionAccess(): Observable<any> {
   const clientId = Number(this.authService.getClientId());
-  return this.http.get(`${this.apiUrl}CIML/getCIMLInspectionAccess/${clientId}`, {
+  return this.http.get(`${this.apiUrl}CIML/GetDdlCIMLAccessible/${clientId}`, {
     headers: this.getHeaders(),
   });
 }
@@ -538,6 +566,12 @@ getCIMLRepairReplacementDuringNextShutdown(): Observable<any> {
 getCIMLSyncStatus(): Observable<any> {
   const clientId = Number(this.authService.getClientId());
   return this.http.get(`${this.apiUrl}CIML/getCIMLSyncStatus/${clientId}`, {
+    headers: this.getHeaders(),
+  });
+}
+getCIMLInsulationRemovalRequired(): Observable<any> {
+  const clientId = Number(this.authService.getClientId());
+  return this.http.get(`${this.apiUrl}CIML/getCIMLInsulationRemoval/${clientId}`, {
     headers: this.getHeaders(),
   });
 }

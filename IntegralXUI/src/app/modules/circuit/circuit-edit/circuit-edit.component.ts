@@ -817,9 +817,9 @@ debugger;
     this.showAudit = state;
     this.showDocument = state;
   }
-  DeleteCircuit() {
+  DeleteComponent() {
          Swal.fire({
-           title: 'Are you sure?You want to delete this circuit!',
+           title: 'Are you sure?You want to delete this Component!',
            text: 'All data associated with this circuit will be lost',
            icon: 'warning',
            width: '300px',
