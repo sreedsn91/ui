@@ -14,14 +14,15 @@ import { SharedDataService } from 'src/app/services/shared-data/shared-data.serv
 export class CimlListComponent {
 CIMLs: any[] = [];
   systemColumns: ColDef[] = [
-    { field: 'cML_ID', headerName: 'Name', flex: 1 },
+    { field: 'cmL_ID', headerName: 'Name', flex: 1 },
     { field: 'id', headerName: 'id', hide: true },
-    { field: 'type', headerName: 'Type' },
-    { field: 'plant', headerName: 'Status', flex: 1 },
+       { field: 'cmL_Description', headerName: 'Description', flex: 1 },
+        { field: 'category', headerName: 'Category', flex: 1 },
+    { field: 'plant', headerName: 'Plant', flex: 1 },
     { field: 'area', headerName: 'Area', flex: 1 },
     { field: 'unit', headerName: 'Unit', flex: 1 },
     { field: 'system', headerName: 'System', flex: 1 },
-    { field: 'component', headerName: 'Component', flex: 1 },
+ 
     { field: 'equipment', headerName: 'Equipment', flex: 1 },
     { field: 'status', headerName: 'Status', flex: 1 },
   ];
@@ -39,6 +40,7 @@ CIMLs: any[] = [];
 
   loadCiml() {
     this.service.getCIML().subscribe((data: any[]) => {
+      debugger;
       this.CIMLs = data;
     });
   }

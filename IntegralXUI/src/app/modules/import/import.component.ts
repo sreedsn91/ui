@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoadingService } from 'src/app/common/loadingPanel/loading.service';
@@ -8,7 +9,7 @@ import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-import',
- imports: [ReactiveFormsModule],
+ imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './import.component.html',
   styleUrl: './import.component.scss'
 })
