@@ -51,6 +51,11 @@ export class ComponentService {
         const clientId = Number(this.authService.getClientId());
         return this.http.get(`${this.apiUrl}CorrossionLoop/getArea/${clientId}/${plantId}`, { headers: this.getHeaders() });
       }
+       
+  getCorrosionLoopAll(plantId: number) {
+    const clientId = Number(this.authService.getClientId());
+    return this.http.get(`${this.apiUrl}Equipment/getCorrosionLoopAll/${clientId}/${plantId}`, { headers: this.getHeaders() });
+  }
     
       getUnits(plantId: number, areaId: number) {
         const clientId = Number(this.authService.getClientId());

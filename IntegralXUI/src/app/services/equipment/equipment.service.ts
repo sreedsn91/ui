@@ -72,6 +72,7 @@ export class EquipmentService {
     const clientId = Number(this.authService.getClientId());
     return this.http.get(`${this.apiUrl}Circuit/getYesNoNa/${clientId}`);
   }
+  
   getEquipmentCategory(typeId: number): Observable<any> {
     const clientId = Number(this.authService.getClientId());
     return this.http.get(
@@ -442,11 +443,17 @@ export class EquipmentService {
       headers: this.getHeaders(),
     });
   }
+  
   getEquipmentDesignCode(typeId: number): Observable<any> {
     const clientId = Number(this.authService.getClientId());
     return this.http.get(`${this.apiUrl}Equipment/getEquipmentDesignCode/${clientId}/${typeId}`, {
       headers: this.getHeaders(),
     });
+  }
+  
+  getCorrosionLoopAll(plantId: number) {
+    const clientId = Number(this.authService.getClientId());
+    return this.http.get(`${this.apiUrl}Equipment/getCorrosionLoopAll/${clientId}/${plantId}`, { headers: this.getHeaders() });
   }
 
   getEquipmentDeadLegType(typeId: number): Observable<any> {

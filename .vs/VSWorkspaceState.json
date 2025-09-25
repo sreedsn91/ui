@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\IntegralXUI",
+    "\\IntegralXUI\\src",
+    "\\IntegralXUI\\src\\app",
+    "\\IntegralXUI\\src\\app\\modules",
+    "\\IntegralXUI\\src\\app\\modules\\component\\component-add"
   ],
   "PreviewInSolutionExplorer": false
 }

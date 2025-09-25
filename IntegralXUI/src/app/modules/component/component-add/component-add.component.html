@@ -47,7 +47,34 @@
                                     <!-- Component Description (Manual Entry) -->
                                     <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="componentDescription" class="form-label">Component
+                                            <label for="componentDescription" class="form-label">Co
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          mponent
                                                 Description:</label>
                                             <input type="text" id="componentDescription"
                                                 formControlName="componentDescription"
@@ -204,12 +231,34 @@
                                     <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="corrosionLoopId" class="form-label">Corrosion Loop Id:</label>
-                                            <select id="corrosionLoopId" formControlName="corrosionLoopId"
+                                            <!-- <select id="corrosionLoopId" formControlName="corrosionLoopId"
                                                 class="form-select form-control-nb">
                                                 <option value="" disabled selected></option>
                                                 <option *ngFor="let item of ddlcorrosionLoops" [value]="item.id">{{
                                                     item.name }}</option>
-                                            </select>
+                                            </select> -->
+
+                                                                                         <ng-select 
+      id="corrosionLoopId"
+      [items]="cl" 
+      bindLabel="name" 
+      bindValue="id"
+      [multiple]="true"
+      [closeOnSelect]="false"
+      [clearSearchOnAdd]="true"
+      placeholder="Select corrosion loops"
+      formControlName="corrosionLoops"
+      (change)="onCorrosionLoopsChange($event)">
+      
+      <ng-option *ngFor="let loop of cl" [value]="loop.id">
+        {{loop.name}}
+      </ng-option>
+    </ng-select>
+    
+    <!-- Display selected corrosion loops as comma-separated text (optional) -->
+    <small class="text-muted" *ngIf="selectedCorrosionLoops.length > 0">
+      Selected: {{ getSelectedCorrosionLoopNames() }}
+    </small>
                                         </div>
                                     </div>
 

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { forkJoin } from 'rxjs';
 import { LoadingService } from 'src/app/common/loadingPanel/loading.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -10,7 +11,7 @@ import { SharedDataService } from 'src/app/services/shared-data/shared-data.serv
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-component-edit',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,NgSelectModule],
   templateUrl: './component-edit.component.html',
   styleUrl: './component-edit.component.scss'
 })
@@ -26,6 +27,7 @@ ddlareas: any;
 ddlunits: any;
 ddlsystems: any;
 ddlcircuits: any;
+cl: any;
 ddlcorrosionLoops: any;
 ddlequipments: any;
 ddlcomponentCategory: any;
@@ -71,6 +73,7 @@ ddlcomponentSupportType: any;
 ddlcomponentHeatTracing: any;
 ddlcomponentFireProofing: any;
 ddlcomponentBuried: any;
+selectedCL: any;
 ddlcomponentCathodicProtection: any;
 ddlcomponentIsitaDeadleg: any;
 ddlcomponentDeadlegCategory: any;
@@ -112,7 +115,9 @@ ddlcomponentSyncStatus: any;
   showAudit: boolean = this.expand;
   showDocument: boolean = this.expand;
   selectedType: string = '0';
-
+ corrosionLoops: any[] = [];
+  selectedCorrosionLoops: number[] = [];
+  corrosionLoopIds: string = '';
   documentsToDelete: number[] = [];
   documents: any[] = [];
   constructor(private service: ComponentService, private fb: FormBuilder, private au: AuthService, private router: Router,private sharedDataService: SharedDataService,private ls: LoadingService) {
@@ -278,6 +283,8 @@ ddlcomponentSyncStatus: any;
       mttr: [null],
       cmlDrawingID: [''],
       inspectionAccess: [null],
+      corrosionLoops: [null],
+      selectedOptions: [[]],
       inspectionSupervisor: [''],
       inspector: [''],
 
@@ -310,22 +317,68 @@ ddlcomponentSyncStatus: any;
     });
 
   }
-    async ngOnInit() {
 
-    this.ls.showLoading();
+  
+  onCorrosionLoopsChange(selectedIds: any[]): void {
+    debugger;
+    this.selectedCorrosionLoops = selectedIds;
 
+     this.corrosionLoopIds = selectedIds && selectedIds.length > 0 
+      ?selectedIds.map(item => item.id).join(',')
+      : '';
+
+    //this.componentForm.patchValue({ corrosionLoopIDs: this.corrosionLoopIds });
+  }
+ getSelectedItems(): string {
+  alert("1")
+  // Only proceed if data is loaded
+  if (!this.dataLoaded || !this.cl) {
+    return "";
+  }
+  alert("2")
+  debugger;
+  const selectedIds = this.componentForm.get('selectedOptions')?.value || [];
+  this.selectedCorrosionLoops =selectedIds;
+  const selectedItems = this.cl.filter(option => selectedIds.includes(option.id));
+  
+  // Return names as comma-separated string
+    return this.selectedCorrosionLoops
+      .map(id => this.corrosionLoops.find(loop => loop.id === id)?.name)
+      .filter(name => name)
+      .join(', ')
+}
+async ngOnInit() {
+  this.ls.showLoading();
+  
+  try {
     await this.loadComponentDetails();
     await this.loadDropdowns();
+    await this.popolateloops();
     
+    // Set dataLoaded to true only after all async operations complete successfully
+    this.dataLoaded = true;
+  } catch (error) {
+    console.error('Error loading data:', error);
+    // Handle error as needed
+  } finally {
     this.ls.hideLoading();
+  }
+}
+async popolateloops(){
+  if(this.componentForm.value.plantID){
+   
     this.componentForm.get('plantID')?.valueChanges.subscribe((plantID) => {
       
       this.componentForm.get('name')?.updateValueAndValidity();
       if (plantID) {
         this.loadAreasByPlant(plantID);
         this.loadUnits(plantID, 0);
+          this.loadCLByPlant(plantID);
         this.loadSystems(plantID, 0, 0);
         this.loadCircuits(plantID, 0, 0, 0);
+
+        
+       
 
       } else {
         this.ddlareas = [];
@@ -434,12 +487,16 @@ ddlcomponentSyncStatus: any;
       this.componentForm.get('equipmentID')?.valueChanges.subscribe(() => {
       this.componentForm.get('name')?.updateValueAndValidity();
     });
-
-    // this.loadDropdowns();
-
- this.dataLoaded = true;
   }
-
+  }
+  
+ loadCLByPlant(plantID: number) {
+    this.service.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
+      this.cl = data;
+   
+      alert();
+    });
+  }
 
   async loadComponentDetails() {
     this.service.getComponentDetails(this.childValue).subscribe((data: any) => {
@@ -641,7 +698,13 @@ ddlcomponentSyncStatus: any;
     isDeleted: data.isDeleted || false,
     isActive: data.isActive !== undefined ? data.isActive : true
   });
+  this.loadCLByPlant(data.plantID);
       this.documents = (data.docs);
+    debugger
+      const selectedIds = data.corrosionLoopIDs.split(',').map(id => parseInt(id.trim()));
+    
+    // Set the form control value with the array of IDs
+    this.componentForm.get('selectedOptions')?.setValue(selectedIds);
     });
   }
 

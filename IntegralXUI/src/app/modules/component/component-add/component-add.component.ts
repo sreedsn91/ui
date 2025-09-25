@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ComponentService } from 'src/app/services/component/component.service';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-component-add',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,NgSelectModule],
   templateUrl: './component-add.component.html',
   styleUrl: './component-add.component.scss'
 })
@@ -17,7 +18,8 @@ export class ComponentAddComponent {
 
   canAdd: boolean = false;
   componentForm!: FormGroup;
-
+ corrosionLoops: any[] = [];
+  selectedCorrosionLoops: number[] = [];
   documentPreviews: File[] = [];
  ddlplants: any;
 ddlareas: any;
@@ -87,7 +89,8 @@ ddlcomponentInspectionAccess: any;
 ddlcomponentScheduledRepairReplacement: any;
 ddlcomponentRepairReplacementDuringNextShutdown: any;
 ddlcomponentSyncStatus: any;
-
+cl: any;
+corrosionLoopIds: string = '';
   expand = true;
   showGeneral: boolean = this.expand;
   showLocation: boolean = this.expand;
@@ -130,6 +133,7 @@ ddlcomponentSyncStatus: any;
       systemId: [null],
       circuitId: [null],
       corrosionLoopId: [null],
+       corrosionLoopIds: [''],
       equipmentId: [null],
       specificLocation: [''],
       equipmentFrom: [''],
@@ -255,7 +259,7 @@ ddlcomponentSyncStatus: any;
       hazardClassification: [null],
       safetyEnvironmentalPermits: [''],
       incidentHistory: [null],
-
+corrosionLoops: [[]],
       currentInspectionStrategy: [null],
       damageMechanisms: [''],
       shutdownFrequency: [null],
@@ -299,12 +303,30 @@ ddlcomponentSyncStatus: any;
 
   }
   
+  onCorrosionLoopsChange(selectedIds: any[]): void {
+    debugger;
+    alert(selectedIds);
+    this.selectedCorrosionLoops = selectedIds;
+
+     this.corrosionLoopIds = selectedIds && selectedIds.length > 0 
+      ?selectedIds.map(item => item.id).join(',')
+      : '';
+
+    //this.componentForm.patchValue({ corrosionLoopIDs: this.corrosionLoopIds });
+  }
+   getSelectedCorrosionLoopNames(): string {
+    return this.selectedCorrosionLoops
+      .map(id => this.corrosionLoops.find(loop => loop.id === id)?.name)
+      .filter(name => name)
+      .join(', ');
+  }
   ngOnInit() {
     this.componentForm.get('plantId')?.valueChanges.subscribe((plantId) => {
       alert();
       this.componentForm.get('name')?.updateValueAndValidity();
       if (plantId) {
         this.loadAreasByPlant(plantId);
+         this.loadCLByPlant(plantId);
         this.loadUnits(plantId, 0);
         this.loadSystems(plantId, 0, 0);
         this.loadCircuits(plantId, 0, 0, 0);
@@ -422,7 +444,12 @@ ddlcomponentSyncStatus: any;
  
   }
 
+ loadCLByPlant(plantID: number) {
 
+    this.service.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
+      this.cl = data;
+    });
+  }
   loadAreasByPlant(plantId: number) {
 
     this.service.getArea(plantId).subscribe((data: any[]) => {
@@ -466,6 +493,7 @@ saveComponent() {
  if (this.componentForm.invalid) {
       return;
     }
+      const formValue = this.componentForm.value;
     const formData = new FormData();
     Object.keys(this.componentForm.value).forEach(key => {
       const value = this.componentForm.value[key];
@@ -475,7 +503,10 @@ saveComponent() {
         formData.append(key, value);
       }
     });
- formData.append('clientId', this.au.getClientId().toString());
+   
+         formData.append('clientId', this.au.getClientId().toString());
+         
+ formData.append('corrosionLoopIDs', this.corrosionLoopIds);
     this.documentPreviews.forEach(file => {
       formData.append('documents', file);
     });

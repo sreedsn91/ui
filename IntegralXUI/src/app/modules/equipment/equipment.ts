@@ -1,3 +1,5 @@
+
+
 export class EquipmentDTO {
     // General Information
     id?: number;
