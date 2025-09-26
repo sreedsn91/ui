@@ -34,6 +34,7 @@ export class CircuitEditComponent {
   plants: any[] = [];
   areas: any[] = [];
   units: any[] = [];
+  cls: any[] = [];
   systems: any[] = [];
   designCodeList: any[] = [];
   editionList: any[] = [];
@@ -128,6 +129,7 @@ export class CircuitEditComponent {
       plantID: [null, Validators.required],
       areaID: [null],
       unitID: [null],
+      cLId: [null],
       systemID: [null],
       corrosionLoopID: [null],
       specificLocation: [''],
@@ -304,6 +306,7 @@ export class CircuitEditComponent {
       this.circuitForm.get('name')?.updateValueAndValidity();
       if (plantID) {
         this.loadAreasByPlant(plantID);
+         this.loadClByPlant(plantID);
         this.loadUnits(plantID, this.circuitForm.get('areaID').value??0);
         this.loadSystems(plantID, this.circuitForm.get('areaID').value??0, this.circuitForm.get('unitID').value??0);
         this.ls.hideLoading();
@@ -412,6 +415,7 @@ export class CircuitEditComponent {
         plantID: circuitData.plantID,
         areaID: circuitData.areaID,
         unitID: circuitData.unitID,
+         cLId: circuitData.clId,
         systemID: circuitData.systemID,
         corrosionLoopID: circuitData.corrosionLoopID,
         specificLocation: circuitData.specificLocation,
@@ -583,6 +587,12 @@ export class CircuitEditComponent {
 
     this.circuitService.getArea(plantID).subscribe((data: any[]) => {
       this.areas = data;
+    });
+  }
+    loadClByPlant(plantID: number) {
+
+    this.circuitService.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
+      this.cls = data;
     });
   }
   loadUnits(plantID: number, areaID: number) {

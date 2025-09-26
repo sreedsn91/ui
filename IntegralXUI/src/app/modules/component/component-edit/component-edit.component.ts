@@ -330,12 +330,10 @@ ddlcomponentSyncStatus: any;
     //this.componentForm.patchValue({ corrosionLoopIDs: this.corrosionLoopIds });
   }
  getSelectedItems(): string {
-  alert("1")
   // Only proceed if data is loaded
   if (!this.dataLoaded || !this.cl) {
     return "";
   }
-  alert("2")
   debugger;
   const selectedIds = this.componentForm.get('selectedOptions')?.value || [];
   this.selectedCorrosionLoops =selectedIds;
@@ -492,6 +490,7 @@ async popolateloops(){
   
  loadCLByPlant(plantID: number) {
     this.service.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
+      debugger
       this.cl = data;
    
       alert();
@@ -689,7 +688,6 @@ async popolateloops(){
     functionalLocation: data.functionalLocation || '',
     externalSystemID: data.externalSystemID || '',
     syncStatus: data.syncStatus || null,
-
     // Meta
     addedBy: data.addedBy || null,
     addedOn: data.addedOn || null,
@@ -702,9 +700,14 @@ async popolateloops(){
       this.documents = (data.docs);
     debugger
       const selectedIds = data.corrosionLoopIDs.split(',').map(id => parseInt(id.trim()));
-    
+    debugger;
+    this.corrosionLoopIds = data.corrosionLoopIDs || '';
     // Set the form control value with the array of IDs
-    this.componentForm.get('selectedOptions')?.setValue(selectedIds);
+    //this.componentForm.get('selectedOptions')?.setValue(selectedIds);
+    //const selectedIds = [2,3]; // New York & Delhi
+
+// Set it to the form control
+this.componentForm.get('selectedOptions')?.setValue(selectedIds);
     });
   }
 
@@ -761,7 +764,7 @@ saveComponent() {
       }
     });
   formData.append('deletedFiles', JSON.stringify(this.documentsToDelete).toString());
-
+ formData.append('corrosionLoopIDs', this.corrosionLoopIds);
 
     this.documentPreviews.forEach(file => {
       formData.append('documents', file);

@@ -238,15 +238,19 @@
                                                                 </div>
                             
                             
-                                                                <!-- Corrosion Loop ID -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="corrosionLoopID" class="form-label">Corrosion Loop ID:</label>
-                                                                        <input id="corrosionLoopID" formControlName="corrosionLoopID" type="number"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter Corrosion Loop ID" />
-                                                                    </div>
-                                                                </div>
+                                                                 <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="cLId" class="form-label">Corrosion Loop:</label>
+                                            <select id="cLId" formControlName="cLId"
+                                                class="form-control form-control-nb">
+                                                <option value="">-- Select CorrossionLoop --</option>
+                                                <option *ngFor="let cl of cls" [value]="cl.id">{{
+                                                    cl.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                             
                                                                 <!-- Specific Location -->
                                                                 <div class="col-md-6">

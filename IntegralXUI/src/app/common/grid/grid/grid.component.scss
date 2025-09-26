@@ -1,0 +1,134 @@
+.grid-container {
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.ag-theme-alpine {
+  width: 100%;
+  height: 100%;
+  --ag-font-size: 14px;
+  --ag-row-height: 40px;
+  --ag-header-height: 45px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+  .ag-theme-alpine {
+    --ag-font-size: 13px;
+  }
+}
+
+@media (max-width: 992px) {
+  .grid-container {
+    padding: 15px;
+  }
+  
+  .ag-theme-alpine {
+    --ag-font-size: 12px;
+    --ag-row-height: 38px;
+    --ag-header-height: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    padding: 10px;
+    height: calc(100vh - 20px);
+  }
+  
+  .ag-theme-alpine {
+    --ag-font-size: 12px;
+    --ag-row-height: 36px;
+    --ag-header-height: 40px;
+  }
+  
+  /* Make headers more touch-friendly */
+  .ag-header-cell {
+    padding: 8px 4px !important;
+  }
+  
+  /* Adjust pagination for tablets */
+  .ag-paging-panel {
+    padding: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    padding: 5px;
+    height: calc(100vh - 10px);
+  }
+  
+  .ag-theme-alpine {
+    --ag-font-size: 11px;
+    --ag-row-height: 35px;
+    --ag-header-height: 38px;
+  }
+  
+  /* Mobile-specific adjustments */
+  .ag-header-cell {
+    padding: 6px 2px !important;
+    font-size: 11px !important;
+  }
+  
+  .ag-cell {
+    padding: 4px 2px !important;
+    font-size: 11px !important;
+  }
+  
+  /* Hide filter icons on mobile to save space */
+  .ag-header-cell-menu-button {
+    display: none !important;
+  }
+  
+  /* Pagination adjustments for mobile */
+  .ag-paging-panel {
+    flex-wrap: wrap;
+    padding: 5px !important;
+  }
+  
+  .ag-paging-page-summary-panel {
+    order: 2;
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 5px;
+  }
+}
+
+/* Touch-friendly enhancements */
+@media (hover: none) and (pointer: coarse) {
+  .ag-theme-alpine {
+    --ag-row-height: 44px;
+    --ag-header-height: 48px;
+  }
+  
+  .ag-cell, .ag-header-cell {
+    padding: 8px !important;
+  }
+  
+  /* Larger checkbox for touch */
+  .ag-checkbox-input {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+/* Horizontal scroll indicator */
+.ag-body-horizontal-scroll {
+  background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, transparent 20%);
+}
+
+/* Loading overlay responsive */
+.ag-overlay-loading-wrapper {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 480px) {
+  .ag-overlay-loading-wrapper {
+    font-size: 14px;
+  }
+}

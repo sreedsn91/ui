@@ -28,7 +28,11 @@ export class CircuitService {
        Authorization: `Bearer ${this.authService.getToken()}`, // Get token from AuthService
      });
    }
- 
+  getCorrosionLoopAll(plantId: number) {
+    const clientId = Number(this.authService.getClientId());
+    return this.http.get(`${this.apiUrl}Equipment/getCorrosionLoopAll/${clientId}/${plantId}`, { headers: this.getHeaders() });
+  }
+    
    private getHeadersWithoutType(): HttpHeaders {
      return new HttpHeaders({
        Authorization: `Bearer ${this.authService.getToken()}`, // Get token from AuthService

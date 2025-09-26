@@ -72,6 +72,7 @@ export class CircuitAddComponent {
   chemicalInjectionList: any[] = [];
   detectionSystemList: any[] = [];
   isolationSystemList: any[] = [];
+    cls: any[] = [];
   mitigationSystemList: any[] = [];
   onlineCorrosionMonitoringList: any[] = [];
   corrosionMonitoringTypeList: any[] = [];
@@ -114,6 +115,7 @@ export class CircuitAddComponent {
       areaID: [null],
       unitID: [null],
       systemID: [null],
+      cLId: [null],
       corrosionLoopID: [null],
       specificLocation: [''],
       circuitFrom: [''],
@@ -303,6 +305,7 @@ export class CircuitAddComponent {
       this.circuitForm.get('name')?.updateValueAndValidity();
       if (plantID) {
         this.loadAreasByPlant(plantID);
+         this.loadClByPlant(plantID);
         this.loadUnits(plantID, 0);
         this.loadSystems(plantID, 0, 0);
 
@@ -368,6 +371,11 @@ export class CircuitAddComponent {
 
     this.circuitService.getArea(plantID).subscribe((data: any[]) => {
       this.areas = data;
+    });
+  }
+  loadClByPlant(plantID: number) {
+    this.circuitService.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
+      this.cls = data;
     });
   }
   loadUnits(plantID: number, areaID: number) {
