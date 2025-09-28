@@ -18,10 +18,22 @@
       </ul>
     </div>
     <div class="header-icons">
-      <button class="icon-btn" title="Hierarchy"  (click)="showJsonData()">🗄️</button>
-       <button class="icon-btn" title="Settings">⚙️</button>
-      <button class="icon-btn" title="Notifications">🔔</button>
-      <button class="icon-btn" title="Help" (click)="logout()" >🔒</button>
+        <ng-container *ngFor="let item of navigations">
+          <button class="icon-btn"
+             *ngIf="['User','Roles','Logs','Import'].includes(item.title)"
+             [routerLink]="item.url"
+             routerLinkActive="active"title="{{item.title}}">
+            <i class="bi"
+               [ngClass]="'feather icon-' + item.icon"></i>
+          </button>
+        </ng-container>
+      <button class="icon-btn" title="Hierarchy"  (click)="showJsonData()"><i class="bi"
+               [ngClass]="'feather icon-pocket'"></i></button>
+       <button class="icon-btn" title="Settings">  <i class="bi"
+               [ngClass]="'feather icon-settings'"></i></button>
+      <!-- <button class="icon-btn" title="Notifications">🔔</button> -->
+      <button class="icon-btn" title="Help" (click)="logout()" ><i class="bi"
+               [ngClass]="'feather icon-log-out'"></i></button>
      <button class="icon-btn" 
         [title]="isFullScreen ? 'Minimize' : 'Expand'"
         (click)="toggleFullScreen()" >
@@ -242,7 +254,7 @@
     </div>
 
 <!-- Sidebar Navigation -->
-<nav class="sidebar">
+<!-- <nav class="sidebar">
    
     
     <div class="nav-bar">
@@ -256,9 +268,24 @@
             <span>{{ item.title }}</span>
         </button>
     </div>
-</nav>
+</nav> -->
+
 
   <app-breadcrumb />
+
+
+   <div class="side-menu">
+        <ng-container *ngFor="let item of navigations">
+          <a class="side-menu-item"
+             *ngIf="!['User','Roles','Logs','Import'].includes(item.title)"
+             [routerLink]="item.url"
+             routerLinkActive="active">
+            <i class="bi"
+               [ngClass]="'feather icon-' + item.icon"></i>
+            <span class="side-menu-text">{{ item.title }}</span>
+          </a>
+        </ng-container>
+        </div>
 </header>
 
 
@@ -266,14 +293,14 @@
   <div class="pcoded-wrapper">
     <div class="pcoded-content">
       <div class="pcoded-inner-content">
-
+        <div class="main-body">
         <hr style="    color: inherit;
         border: 0;
         margin: 0px !important;
         border-top: var(--bs-border-width) solid;
         opacity: 0.15;">
         <div class="main-body">
-          <div class="page-wrapper">
+          <div class="page-wrapper" style="margin-left: 60px;">
             <app-loading></app-loading>
             <router-outlet />
           </div>
