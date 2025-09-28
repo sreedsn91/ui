@@ -72,6 +72,7 @@ export class EquipmentEditComponent {
   shellJointCategory: any;
   seismicZoneClassification: any;
   schedule: any;
+    cls: any;
   rpbType: any;
   roofCategory: any;
   radiographyCategory: any;
@@ -386,6 +387,7 @@ export class EquipmentEditComponent {
       if (plantID) {
         this.loadAreasByPlant(plantID);
         this.loadUnits(plantID, 0);
+         this.loadClByPlant(plantID);
         this.loadSystems(plantID, 0, 0);
         this.loadCircuits(plantID, 0, 0, 0);
 
@@ -455,7 +457,12 @@ export class EquipmentEditComponent {
       this.equipmentForm.get('name')?.updateValueAndValidity();
     });
   }
+  loadClByPlant(plantID: number) {
 
+    this.equipmentService.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
+      this.cls = data;
+    });
+  }
   saveEquipment() {
    
     if (this.equipmentForm.invalid) {
@@ -1297,6 +1304,7 @@ export class EquipmentEditComponent {
       unitID: [0],
       systemID: [0],
       circuitID: [0],
+      cLId: [0],
       corrosionLoopID: [''],
       specificLocation: [''],
       pipeFrom: [''],
@@ -1547,6 +1555,7 @@ export class EquipmentEditComponent {
         areaID: equipmentData.areaID,
         unitID: equipmentData.unitID,
         systemID: equipmentData.systemID,
+           cLId: equipmentData.clId,
         circuitID: equipmentData.circuitID,
         corrosionLoopID: equipmentData.corrosionLoopID,
         specificLocation: equipmentData.specificLocation,

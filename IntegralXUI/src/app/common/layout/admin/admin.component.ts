@@ -1,5 +1,5 @@
 // angular import
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 declare var bootstrap: any;
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
@@ -37,6 +37,46 @@ interface MenuItem {
   ]
 })
 export class AdminComponent {
+
+
+  isSidebarOpen = true;
+  
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    
+    // Prevent body scroll when sidebar is open
+    if (this.isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  closeSidebar(): void {
+    this.isSidebarOpen = false;
+    document.body.style.overflow = '';
+  }
+
+  onNavItemClick(): void {
+    // Close sidebar when navigation item is clicked
+    this.closeSidebar();
+  }
+
+  // Close sidebar when pressing Escape key
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent): void {
+    if (this.isSidebarOpen) {
+      this.closeSidebar();
+    }
+  }
+
+  // Optional: Close sidebar when window is resized to larger screen
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    if (event.target.innerWidth > 768 && this.isSidebarOpen) {
+      this.closeSidebar();
+    }
+  }
 
   @ViewChild('jsonModal') jsonModal!: ElementRef;
   jsonData: any = null;

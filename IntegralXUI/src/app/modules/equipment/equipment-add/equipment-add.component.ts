@@ -124,6 +124,7 @@ export class EquipmentAddComponent {
   bottomLiningType: any;
   astPadType: any;
   astDrainageType: any;
+  cls: any;
 
 
   constructor(private equipmentService: EquipmentService, private fb: FormBuilder, private au: AuthService, private router: Router) {
@@ -151,6 +152,7 @@ export class EquipmentAddComponent {
       unitID: [0],
       systemID: [0],
       circuitID: [0],
+      cLId: [0],
       corrosionLoopID: [''],
       specificLocation: [''],
       pipeFrom: [''],
@@ -371,6 +373,7 @@ export class EquipmentAddComponent {
       if (plantID) {
         this.loadAreasByPlant(plantID);
         this.loadUnits(plantID, 0);
+         this.loadClByPlant(plantID);
         this.loadSystems(plantID, 0, 0);
         this.loadCircuits(plantID, 0, 0, 0);
 
@@ -473,6 +476,12 @@ export class EquipmentAddComponent {
         this.backToEquipment();
       }
     );
+  }
+  loadClByPlant(plantID: number) {
+
+    this.equipmentService.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
+      this.cls = data;
+    });
   }
   loadAreasByPlant(plantID: number) {
 

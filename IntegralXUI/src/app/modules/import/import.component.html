@@ -1,38 +1,105 @@
-<form [formGroup]="excelForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-  <!-- Type dropdown -->
-   <div class="mb-2 field-containernw">
-    <label for="typeId">Select Type</label>
-    <select class="form-control form-control-nb" formControlName="typeId">
-      <option value="0">-- Select Type --</option>
-      <option value="1">Plant</option>
+<div class="form-container">
+  <div class="form-header">
+    <h1 class="form-title">📊 Excel Data Import</h1>
+    <p class="form-subtitle">Upload your data files and import them into the system</p>
+  </div>
+
+  <form [formGroup]="excelForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="excel-form">
+    
+    <!-- Type Dropdown -->
+    <div class="form-group">
+      <label class="form-label" for="typeId">Select Type</label>
+      <select class="form-control" 
+              formControlName="typeId" 
+              id="typeId"
+              (change)="onTypeChange()"
+              [class.error]="excelForm.get('typeId')?.invalid && excelForm.get('typeId')?.touched">
+          <option value="">-- Select Type --</option>
+         <option value="1">Plant</option>
 <option value="2">Area</option>
 <option value="3">Unit</option>
 <option value="4">System</option>
 <option value="5">Circuit</option>
 <option value="6">Equipment</option>
-    </select>
-  </div>
-  <div *ngIf="excelForm.get('typeId')?.value == 6" class="mb-2 field-containernw">
-  <label for="equipmentSubCategory">Equipment Sub-Category</label>
-  <select class="form-control form-control-nb" formControlName="equipmentSubCategory">
-      <option value="">-- Select Sub-Category --</option>
-      <option value="1">Plant</option>
-      <option value="2">Area</option>
-      <option value="3">Unit</option>
-  </select>
+      </select>
+      <div class="error-message" *ngIf="excelForm.get('typeId')?.invalid && excelForm.get('typeId')?.touched">
+        Please select a type
+      </div>
+    </div>
+
+    <!-- Equipment Sub-Category (Only for Equipment) -->
+    <div class="form-group fade-in" 
+         *ngIf="excelForm.get('typeId')?.value === '6'">
+      <label class="form-label" for="equipmentSubCategory">Equipment Sub-Category</label>
+      <select class="form-control" 
+              formControlName="equipmentSubCategory"
+              id="equipmentSubCategory"
+              (change)="onSubCategoryChange()"
+              [class.error]="excelForm.get('equipmentSubCategory')?.invalid && excelForm.get('equipmentSubCategory')?.touched">
+        <option value="">-- Select Sub-Category --</option>
+        <option value="1">Pressure vessel</option>
+        <option value="2">Pipe</option>
+        <option value="3">Tank</option>
+      </select>
+      <div class="error-message" 
+           *ngIf="excelForm.get('equipmentSubCategory')?.invalid && excelForm.get('equipmentSubCategory')?.touched && excelForm.get('typeId')?.value === 'equipment'">
+        Please select a sub-category for equipment
+      </div>
+    </div>
+
+    <!-- Hidden Client ID -->
+    <input type="hidden" formControlName="clientId" />
+
+    <!-- File Upload with Download Button -->
+    <div class="form-group">
+      <label class="form-label" for="fileExcel">Upload Excel File</label>
+      <div class="file-upload-container">
+        <div class="file-upload-wrapper">
+          <div class="file-input-custom">
+            <input type="file" 
+                   (change)="onFileChange($event)" 
+                   accept=".xlsx,.xls" 
+                   id="fileExcel"
+                   #fileInput
+                   [class.error]="!selectedFile && formSubmitted"
+                   required />
+            <label for="fileExcel" 
+                   class="file-input-label"
+                   [class.has-file]="selectedFile"
+                   (dragover)="onDragOver($event)"
+                   (dragleave)="onDragLeave($event)"
+                   (drop)="onDrop($event)">
+              <span class="file-icon">{{ selectedFile ? '✅' : '📄' }}</span>
+              <div class="file-text">
+                <div>{{ selectedFile ? 'File selected successfully' : 'Choose Excel file or drag and drop' }}</div>
+                <div class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</div>
+              </div>
+            </label>
+          </div>
+          <div class="error-message" *ngIf="!selectedFile && formSubmitted">
+            Please select a file
+          </div>
+        </div>
+        
+        <button type="button" 
+                class="download-btn" 
+                [disabled]="!canDownloadSample()"
+                [class.loading]="downloadLoading"
+                (click)="downloadSample()">
+          <span>💾</span>
+          <span *ngIf="!downloadLoading">{{ getDownloadButtonText() }}</span>
+          <span *ngIf="downloadLoading">Downloading...</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" 
+            class="submit-btn"
+            [disabled]="excelForm.invalid || !selectedFile || submitLoading">
+      <span *ngIf="!submitLoading">🚀 Import Data</span>
+      <span *ngIf="submitLoading">⏳ Importing Data...</span>
+    </button>
+
+  </form>
 </div>
-
-  <!-- Hidden client ID -->
-  <input type="hidden" formControlName="clientId" />
-
-  <!-- File upload -->
-  <div class="mb-2 field-containernw">
-    <label for="fileExcel">Upload Excel</label>
-    <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" class="form-control form-control-nb" required />
-  </div>
-
-  <!-- Submit -->
-  <button type="submit" class="btn btn-primary">
-    Submit
-  </button>
-</form>
