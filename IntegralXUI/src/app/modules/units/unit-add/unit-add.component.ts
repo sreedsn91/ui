@@ -35,7 +35,9 @@ export class UnitAddComponent {
   modelAvailabilities: any[] = [];
   sapLinkedEquipmentData: any[] = [];
   historicalRecordsAvailability: any[] = [];
-    showGeneral = true;
+  Utility: any[] = [];
+
+  showGeneral = true;
   showDesign = false;
   showMaintenance = false;
   showIntegration = false;
@@ -62,6 +64,9 @@ export class UnitAddComponent {
       statusId: ['' ],
       typeId: ['' ],
       categoryId: ['' ],
+        feedstockFlowRate: [''],
+      primaryFlowRate: [''],
+      utilityRequirements: [''],
       designLife: [null, Validators.min(0)],
       primaryProducts: [''],
       capacity: [null, [  Validators.min(0)]],
@@ -170,7 +175,9 @@ export class UnitAddComponent {
     this.unitService.getUnitTypes().subscribe((data: any) => {
       this.unitTypes = data;
     });
-  
+   this.unitService.getUtility().subscribe((data: any) => {
+      this.Utility = data;
+    });
     this.unitService.getUnitCategories().subscribe((data: any) => {
       this.unitCategories = data;
     });

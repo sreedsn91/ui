@@ -275,7 +275,7 @@
                                     <!-- Add your fields for Design and Construction Data here -->
                                     <div class="col-md-4">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="designLife" class="form-label">Design Life:</label>
+                                            <label for="designLife" class="form-label">Design Life(Years):</label>
                                             <input type="number" id="designLife" formControlName="designLife"
                                                 class="form-control form-control-nb" placeholder="Enter design life" />
                                             <div *ngIf=" unitForm.controls['designLife'].invalid &&  unitForm.controls['designLife'].touched"
@@ -337,7 +337,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="capacity" class="form-label">Capacity:</label>
+                                            <label for="capacity" class="form-label">Capacity(bpad):</label>
                                             <input type="number" id="capacity" formControlName="capacity"
                                                 class="form-control form-control-nb" placeholder="Enter capacity" />
                                             <div *ngIf="  unitForm.controls['capacity'].invalid &&   unitForm.controls['capacity'].touched"
@@ -350,7 +350,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="marginPerDay" class="form-label">Margin Per Day:</label>
+                                            <label for="marginPerDay" class="form-label">Margin Per Day($):</label>
                                             <input type="number" id="marginPerDay" formControlName="marginPerDay"
                                                 class="form-control form-control-nb"
                                                 placeholder="Enter margin per day" />
@@ -427,7 +427,7 @@
                                         <div class="m-1 field-containernw">
                                             <label for="shutdownTurnaroundFrequency" class="form-label">Shutdown
                                                 Turnaround
-                                                Frequency:</label>
+                                                Frequency(Years):</label>
                                             <input type="number" id="shutdownTurnaroundFrequency"
                                                 formControlName="shutdownTurnaroundFrequency"
                                                 class="form-control form-control-nb"
@@ -494,10 +494,10 @@
                                 <div class="row">
                                     <!-- Add your fields for Environmental & Operating Conditions here -->
                                     <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="operatingTemperatureRange" class="form-label">Operating
                                                 Temperature
-                                                Range:</label>
+                                                Range(°C):</label>
                                             <input type="number" id="operatingTemperatureRange"
                                                 formControlName="operatingTemperatureRange"
                                                 class="form-control form-control-nb"
@@ -512,9 +512,9 @@
 
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="operatingPressureRange" class="form-label">Operating Pressure
-                                                Range:</label>
+                                                Range(Bar):</label>
                                             <input type="number" id="operatingPressureRange"
                                                 formControlName="operatingPressureRange"
                                                 class="form-control form-control-nb"
@@ -528,6 +528,44 @@
                                         </div>
 
                                     </div>
+                                      <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="feedstockFlowRate" class="form-label">Feedstock Flow Rate(bpad):</label>
+                                            <input type="number" id="feedstockFlowRate" formControlName="feedstockFlowRate"
+                                                class="form-control form-control-nb" placeholder="Enter feed stock flowRate" />
+                                            <div *ngIf="  unitForm.controls['feedstockFlowRate'].invalid &&   unitForm.controls['feedstockFlowRate'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="  unitForm.controls['feedstockFlowRate'].errors?.['min']">Invalid
+                                                    Feedstock Flow Rate.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                      <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="primaryFlowRate" class="form-label">Product Flow Rate(bpad):</label>
+                                            <input type="number" id="primaryFlowRate" formControlName="primaryFlowRate"
+                                                class="form-control form-control-nb" placeholder="Enter primary product flowRate" />
+                                            <div *ngIf="  unitForm.controls['primaryFlowRate'].invalid &&   unitForm.controls['primaryFlowRate'].touched"
+                                                class="text-danger">
+                                                <div *ngIf="  unitForm.controls['primaryFlowRate'].errors?.['min']">Invalid
+                                                    Product Flow Rate.</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                      <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="utilityRequirements" class="form-label">Utility Requirements:</label>
+                                            <select id="utilityRequirements" formControlName="utilityRequirements"
+                                                class="form-select form-control-nb">
+                                                <option *ngFor="let item of Utility" [value]="item.id">{{
+                                                    item.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
                                     <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="corrosiveEnvironments" class="form-label">Corrosive
@@ -540,7 +578,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="humidityLevel" class="form-label">Humidity Level:</label>
+                                            <label for="humidityLevel" class="form-label">Humidity Level(%):</label>
                                             <input id="humidityLevel" formControlName="humidityLevel"
                                                 class="form-control form-control-nb"
                                                 placeholder="Enter humidity level" />
@@ -598,7 +636,7 @@
                                     <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
                                             <label for="populationDensity" class="form-label">Population
-                                                Density:</label>
+                                                Density(/M2):</label>
                                             <input type="number" id="populationDensity"
                                                 formControlName="populationDensity" class="form-control form-control-nb"
                                                 placeholder="Enter population density" />
@@ -636,7 +674,7 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
+                                        <div class="m-1 field-containernw">
                                             <label for="safetyEnvironmentalPermits" class="form-label">Safety &
                                                 Environmental
                                                 Permits:</label>

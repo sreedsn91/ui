@@ -132,12 +132,9 @@ label {
 	margin: -5px;
 }
 .breadcrumb {
-	height: 7px !important;
-	margin-left: 10px !important;
-	font-size: 13px !important;
-	background-color: #f8f9fa;
-	padding: 10px 15px;
-	border-radius: 5px;
+    font-size: 15px !important;
+    background-color: #ffffff;
+    padding: 1px 15px;
 }
 .ag-header {
 	height: 30px !important;
@@ -818,8 +815,8 @@ hr{
   }
   .floating-button-panel {
     position: fixed;
-    top: 94px;
-    right: 39px;
+    top: 132px;
+    right: 58px;
     z-index: 9999;
     background: none;
     padding: 10px 15px;

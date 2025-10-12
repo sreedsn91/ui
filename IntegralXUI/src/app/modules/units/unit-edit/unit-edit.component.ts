@@ -53,6 +53,7 @@ export class UnitEditComponent {
   hazardClassifications: any[] = [];
   reliabilityMetrics: any[] = [];
   modelAvailabilities: any[] = [];
+    Utility: any[] = [];
   sapLinkedEquipmentData: any[] = [];
   historicalRecordsAvailability: any[] = [];
 
@@ -80,6 +81,9 @@ export class UnitEditComponent {
       ownerOrOperator: [''],
       commissioningDate: [null ],
       builtDate: [null ],
+      feedstockFlowRate: [''],
+      primaryFlowRate: [''],
+      utilityRequirements: [''],
       statusId: ['' ],
       typeId: ['' ],
       categoryId: ['' ],
@@ -177,6 +181,9 @@ export class UnitEditComponent {
         categoryId:  unitData.categoryId || '',
         designLife:  unitData.designLife || null,
         primaryProducts:  unitData.primaryProducts || '',
+              feedstockFlowRate:unitData.feedstockFlowRate || '',
+      primaryFlowRate: unitData.primaryFlowRate || '',
+      utilityRequirements:unitData.utilityRequirements || '',
         capacity:  unitData.capacity || null,
         marginPerDay:  unitData.marginPerDay || null,
         numberOfProcessingUnits:  unitData.numberOfProcessingUnits || null,
@@ -296,6 +303,10 @@ export class UnitEditComponent {
     this.unitService.getUnitTypes().subscribe((data: any) => {
       this.unitTypes = data;
     });
+     this.unitService.getUtility().subscribe((data: any) => {
+      this.Utility = data;
+    });
+  
   
     this.unitService.getUnitCategories().subscribe((data: any) => {
       this.unitCategories = data;

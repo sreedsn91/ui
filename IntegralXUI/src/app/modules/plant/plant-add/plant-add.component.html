@@ -172,7 +172,7 @@
 
                                     <div class="col-md-4">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="designLife" class="form-label">Design Life:</label>
+                                            <label for="designLife" class="form-label">Design Life(Years):</label>
                                             <input type="number" id="designLife" formControlName="designLife"
                                                 class="form-control form-control-nb" placeholder="Enter design life" />
                                             <div *ngIf="plantForm.controls['designLife'].invalid && plantForm.controls['designLife'].touched"
@@ -230,7 +230,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="capacity" class="form-label">Capacity:</label>
+                                            <label for="capacity" class="form-label">Capacity(bpad):</label>
                                             <input type="number" id="capacity" formControlName="capacity"
                                                 class="form-control form-control-nb" placeholder="Enter capacity" />
                                             <div *ngIf=" plantForm.controls['capacity'].invalid &&  plantForm.controls['capacity'].touched"
@@ -242,7 +242,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="marginPerDay" class="form-label">Margin Per Day:</label>
+                                            <label for="marginPerDay" class="form-label">Margin Per Day($):</label>
                                             <input type="number" id="marginPerDay" formControlName="marginPerDay"
                                                 class="form-control form-control-nb"
                                                 placeholder="Enter margin per day" />
@@ -312,7 +312,7 @@
 
                          </div>  <div class="col-md-6"> <div class="m-1 field-containernw">
                             <label for="shutdownTurnaroundFrequency" class="form-label">Shutdown Turnaround
-                                Frequency:</label>
+                                Frequency(Years):</label>
                             <input type="number" id="shutdownTurnaroundFrequency"
                                 formControlName="shutdownTurnaroundFrequency" class="form-control form-control-nb"
                                 placeholder="Enter shutdown turnaround frequency" />
@@ -368,7 +368,7 @@
                                         <div class="m-1 field-containernw">
                                             <label for="operatingTemperatureRange" class="form-label">Operating
                                                 Temperature
-                                                Range:</label>
+                                                Range(°C):</label>
                                             <input type="number" id="operatingTemperatureRange"
                                                 formControlName="operatingTemperatureRange"
                                                 class="form-control form-control-nb"
@@ -609,35 +609,17 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <!-- Basic Information (Column 1) -->
-
-
-                 
-
-
-               
-
-
-
-
-                    <div class="col-sm-3 row row-gap2 gx-3 setHeight">
-
-                        <h5 class="exclude-row"> </h5>
-                        <hr class="exclude-row">
-                   
- </div>  
-                </div>
+              
 
                 <!-- Submit Button -->
-                <div class="row mt-4">
+                <!-- <div class="row mt-4">
                     <div *ngIf="this.canAdd" class="col-sm-12 text-center">
                         <button type="submit" [disabled]="plantForm.invalid" class="btn btn-primary">Save Plant</button>
                     </div>
                     <div *ngIf="!this.canAdd" class="col-sm-12 text-center">
                         <button type="button" disabled class="btn btn-primary">Save Plant</button>
                     </div>
-                </div>
+                </div> -->
             </form>
 
 

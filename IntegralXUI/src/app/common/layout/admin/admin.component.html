@@ -1,6 +1,6 @@
 <div class="header">
   <div class="header-left">
-    <div class="logo"> <a [routerLink]="['/dashboard']" class="b-brand">IntegralX</a></div>
+    <div class="logo"> <a [routerLink]="['/dashboard']" class="b-brand" style="color: rgb(13 166 253);;">IntegralX</a></div>
   
   </div>
 
@@ -57,16 +57,12 @@
           <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
         </ul>
       </div>
-      <div class="dropdown" *ngIf="(logo && logo !== 'null' && logo !== '')">
-        <img [src]="(logo)" alt="User" class="user-img mx-2 dropdown-toggle" style="border-radius: 0px !important;"
-          id="userDropdown" />
-
-      </div>
+     
   </div>
 </div>
 
 
-<header class="">
+<header class="" >
   <div class="d-flex align-items-center">
     
       <!-- Bootstrap Modal -->
@@ -293,19 +289,14 @@
   <div class="pcoded-wrapper">
     <div class="pcoded-content">
       <div class="pcoded-inner-content">
-        <div class="main-body">
-        <hr style="    color: inherit;
-        border: 0;
-        margin: 0px !important;
-        border-top: var(--bs-border-width) solid;
-        opacity: 0.15;">
-        <div class="main-body">
-          <div class="page-wrapper" style="margin-left: 60px;">
+       
+       
+        <div class="main-body" style="background-color: #fff;">
+          <div class="page-wrapper" style="margin-left: 60px; ">
             <app-loading></app-loading>
             <router-outlet />
           </div>
         </div>
-      </div>
     </div>
   </div>
   <div class="pc-menu-overlay" (click)="closeMenu()" (keydown)="handleKeyDown($event)" tabindex="0"></div>

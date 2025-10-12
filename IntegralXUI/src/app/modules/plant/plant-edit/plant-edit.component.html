@@ -46,11 +46,79 @@
                             aria-labelledby="tab1-tab">
                             <div class="">
                                 <div class="row">
-                                    <div class="col-sm-6">
-                                        <h3>Plant Charts</h3>
-                                        <!-- <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
-                          [labels]="chartOptions.labels" [colors]="chartOptions.colors">
-                        </apx-chart> -->
+                                    <div class="col-sm-8">
+                                       <div class="plant-dashboard-container">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="header-left">
+      
+        <div class="plant-info">
+          <h1 class="plant-title">
+            <span class="material-icons"></span>
+            {{ plantData?.plantName || 'Loading Plant...' }}
+          </h1>
+          <p class="plant-subtitle">Plant Dashboard Overview</p>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading && !plantData" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading plant dashboard...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-container">
+    <span class="material-icons">error_outline</span>
+    <h3>Oops! Something went wrong</h3>
+    <p>{{ error }}</p>
+    <button class="retry-btn" (click)="refresh()">
+      <span class="material-icons">refresh</span>
+      Try Again
+    </button>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!isLoading && !error && plantData" class="dashboard-content">
+    
+    <!-- Summary Card -->
+    <div class="summary-card">
+     
+      <div class="summary-content">
+        <h2 class="summary-title">Total Assets</h2>
+        <div class="summary-value">{{ getTotalAssets() }}</div>
+        <p class="summary-description">Across all hierarchy levels</p>
+      </div>
+      <!-- <div class="summary-visual">
+        <span class="material-icons">Total Assets</span>
+      </div> -->
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div *ngFor="let card of dashboardCards" 
+           class="stat-card" 
+           [style.border-left-color]="card.color"
+           (click)="navigateToDetail(card.route)"
+           [class.clickable]="card.route">
+      
+        <div class="stat-content">
+          <h3 class="stat-title">{{ card.title }}</h3>
+          <p class="stat-count">{{ card.count }}</p>
+          <div class="stat-footer">
+            <span class="stat-label">Total {{ card.title.toLowerCase() }}</span>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +338,7 @@
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="designLife"
-                                                                            class="form-label">Design Life:</label>
+                                                                            class="form-label">Design Life(Years):</label>
                                                                         <input type="number" id="designLife"
                                                                             formControlName="designLife"
                                                                             class="form-control form-control-nb"
@@ -346,7 +414,7 @@
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="capacity"
-                                                                            class="form-label">Capacity:</label>
+                                                                            class="form-label">Capacity(bpad):</label>
                                                                         <input type="number" id="capacity"
                                                                             formControlName="capacity"
                                                                             class="form-control form-control-nb"
@@ -363,7 +431,7 @@
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="marginPerDay"
-                                                                            class="form-label">Margin Per Day:</label>
+                                                                            class="form-label">Margin Per Day($):</label>
                                                                         <input type="number" id="marginPerDay"
                                                                             formControlName="marginPerDay"
                                                                             class="form-control form-control-nb"
@@ -451,7 +519,7 @@
                                                                     <div class="m-1 field-containernw">
                                                                         <label for="shutdownTurnaroundFrequency"
                                                                             class="form-label">Shutdown Turnaround
-                                                                            Frequency:</label>
+                                                                            Frequency(Years):</label>
                                                                         <input type="number"
                                                                             id="shutdownTurnaroundFrequency"
                                                                             formControlName="shutdownTurnaroundFrequency"
@@ -533,7 +601,7 @@
                                                                         <label for="operatingTemperatureRange"
                                                                             class="form-label">Operating
                                                                             Temperature
-                                                                            Range:</label>
+                                                                            Range(°C):</label>
                                                                         <input type="number"
                                                                             id="operatingTemperatureRange"
                                                                             formControlName="operatingTemperatureRange"

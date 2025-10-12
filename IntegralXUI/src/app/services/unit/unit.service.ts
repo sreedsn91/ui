@@ -57,6 +57,10 @@ export class UnitService {
     const clientId =Number( this.authService.getClientId());
      return this.http.get(`${this.apiUrl}Unit/getUnitTypes/${clientId}`, { headers: this.getHeaders() });
    }
+  getUtility() { 
+    const clientId =Number( this.authService.getClientId());
+     return this.http.get(`${this.apiUrl}Unit/GetDdlUtility/${clientId}`, { headers: this.getHeaders() });
+   }
    getUnitPlants() { 
     
     const clientId =Number( this.authService.getClientId());

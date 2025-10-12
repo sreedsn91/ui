@@ -47,7 +47,7 @@
                             <div class="">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h3>Unit Charts</h3>
+                                        <h3>Circuit Charts</h3>
                                         <!-- <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
                           [labels]="chartOptions.labels" [colors]="chartOptions.colors">
                         </apx-chart> -->
@@ -353,7 +353,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="designPressureInternal" class="form-label">Design Pressure
-                                                                            (Internal):</label>
+                                                                            Internal(PSI):</label>
                                                                         <input id="designPressureInternal" formControlName="designPressureInternal"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter internal pressure" />
@@ -364,7 +364,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernw">
                                                                         <label for="designPressureExternal" class="form-label">Design Pressure
-                                                                            (External):</label>
+                                                                            -External(PSI):</label>
                                                                         <input id="designPressureExternal" formControlName="designPressureExternal"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter external pressure" />
@@ -375,7 +375,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernw">
                                                                         <label for="designTemperatureMax" class="form-label">Design Temperature
-                                                                            (Max):</label>
+                                                                            -Max(°C):</label>
                                                                         <input id="designTemperatureMax" formControlName="designTemperatureMax"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter max temperature" />
@@ -386,7 +386,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernw">
                                                                         <label for="designTemperatureMDMT" class="form-label">Design Temperature
-                                                                            (MDMT):</label>
+                                                                            -MDMT(°C):</label>
                                                                         <input id="designTemperatureMDMT" formControlName="designTemperatureMDMT"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter MDMT temperature" />
@@ -396,7 +396,7 @@
                                                                 <!-- MAWP -->
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="mawp" class="form-label">MAWP:</label>
+                                                                        <label for="mawp" class="form-label">MAWP(°C):</label>
                                                                         <input id="mawp" formControlName="mawp" class="form-control form-control-nb"
                                                                             placeholder="Enter MAWP" />
                                                                     </div>
@@ -405,7 +405,7 @@
                                                                 <!-- Design Life -->
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="designLife" class="form-label">Design Life:</label>
+                                                                        <label for="designLife" class="form-label">Design Life(Years):</label>
                                                                         <input id="designLife" formControlName="designLife"
                                                                             class="form-control form-control-nb" placeholder="Enter design life" />
                                                                     </div>
@@ -424,7 +424,7 @@
                                                                 <!-- Margin Per Day -->
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="marginPerDay" class="form-label">Margin Per Day:</label>
+                                                                        <label for="marginPerDay" class="form-label">Margin Per Day($):</label>
                                                                         <input id="marginPerDay" formControlName="marginPerDay"
                                                                             class="form-control form-control-nb" placeholder="Enter margin/day" />
                                                                     </div>
@@ -475,9 +475,9 @@
                             
                                                             <div class="row">
                                                                 <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
+                                                                    <div class="m-1 field-containernw">
                                                                         <label for="operatingPressureMax" class="form-label">Operating Pressure
-                                                                            (Max):</label>
+                                                                            -Max(Psi):</label>
                                                                         <input id="operatingPressureMax" type="number"
                                                                             formControlName="operatingPressureMax"
                                                                             class="form-control form-control-nb" placeholder="Enter max pressure" />
@@ -486,9 +486,9 @@
                             
                                                                 <!-- Operating Pressure Avg -->
                                                                 <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
+                                                                    <div class="m-1 field-containernw">
                                                                         <label for="operatingPressureAvg" class="form-label">Operating Pressure
-                                                                            (Avg):</label>
+                                                                            -Avg(Psi):</label>
                                                                         <input id="operatingPressureAvg" type="number"
                                                                             formControlName="operatingPressureAvg"
                                                                             class="form-control form-control-nb" placeholder="Enter avg pressure" />
@@ -499,7 +499,7 @@
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernw">
                                                                         <label for="operatingTempMax" class="form-label">Operating Temperature
-                                                                            (Max):</label>
+                                                                            -Max(°C):</label>
                                                                         <input id="operatingTempMax" type="number"
                                                                             formControlName="operatingTempMax" class="form-control form-control-nb"
                                                                             placeholder="Enter max temp" />
@@ -510,7 +510,7 @@
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernw">
                                                                         <label for="operatingTempMin" class="form-label">Operating Temperature
-                                                                            (Min):</label>
+                                                                            -Min(°C):</label>
                                                                         <input id="operatingTempMin" type="number"
                                                                             formControlName="operatingTempMin" class="form-control form-control-nb"
                                                                             placeholder="Enter min temp" />
@@ -552,7 +552,7 @@
                                                                 <!-- Inventory Volume -->
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="inventoryVolume" class="form-label">Inventory Volume:</label>
+                                                                        <label for="inventoryVolume" class="form-label">Inventory Volume(M3):</label>
                                                                         <input id="inventoryVolume" type="number" formControlName="inventoryVolume"
                                                                             class="form-control form-control-nb" placeholder="Enter volume" />
                                                                     </div>
@@ -561,7 +561,7 @@
                                                                 <!-- Density -->
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="density" class="form-label">Density:</label>
+                                                                        <label for="density" class="form-label">Density()Kg/M3:</label>
                                                                         <input id="density" type="number" formControlName="density"
                                                                             class="form-control form-control-nb" placeholder="Enter density" />
                                                                     </div>
@@ -589,7 +589,7 @@
                                                                 <!-- Flow Rate -->
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="flowRate" class="form-label">Flow Rate:</label>
+                                                                        <label for="flowRate" class="form-label">Flow Rate(M3/s):</label>
                                                                         <input id="flowRate" type="number" formControlName="flowRate"
                                                                             class="form-control form-control-nb" placeholder="Enter flow rate" />
                                                                     </div>
@@ -598,7 +598,7 @@
                                                                 <!-- Velocity -->
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="velocity" class="form-label">Velocity:</label>
+                                                                        <label for="velocity" class="form-label">Velocity(m/s):</label>
                                                                         <input id="velocity" type="number" formControlName="velocity"
                                                                             class="form-control form-control-nb" placeholder="Enter velocity" />
                                                                     </div>
@@ -687,7 +687,7 @@
                                                                 <!-- Operating Weight -->
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="operatingWeight" class="form-label">Operating Weight:</label>
+                                                                        <label for="operatingWeight" class="form-label">Operating Weight(Kg):</label>
                                                                         <input id="operatingWeight" type="number" formControlName="operatingWeight"
                                                                             class="form-control form-control-nb" placeholder="Enter weight" />
                                                                     </div>
@@ -710,7 +710,7 @@
                                                                 <!-- Humidity Level -->
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="humidityLevel" class="form-label">Humidity Level:</label>
+                                                                        <label for="humidityLevel" class="form-label">Humidity Level(%):</label>
                                                                         <input id="humidityLevel" type="number" formControlName="humidityLevel"
                                                                             class="form-control form-control-nb" placeholder="Enter humidity %" />
                                                                     </div>
@@ -775,7 +775,7 @@
                                                                 <div class="col-md-4">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="populationDensity" class="form-label">Population
-                                                                            Density:</label>
+                                                                            Density(/M2):</label>
                                                                         <input id="populationDensity" type="number"
                                                                             formControlName="populationDensity" class="form-control form-control-nb"
                                                                             placeholder="Enter population density" />
@@ -823,7 +823,7 @@
                                                                 <!-- Inside Diameter -->
                                                                 <div class="col-md-12">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="insideDiameter" class="form-label">Inside Diameter:</label>
+                                                                        <label for="insideDiameter" class="form-label">Inside Diameter(mm):</label>
                                                                         <input id="insideDiameter" type="number" formControlName="insideDiameter"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter inside diameter" />
@@ -833,7 +833,7 @@
                                                                 <!-- Outside Diameter -->
                                                                 <div class="col-md-12">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="outsideDiameter" class="form-label">Outside Diameter:</label>
+                                                                        <label for="outsideDiameter" class="form-label">Outside Diameter(mm):</label>
                                                                         <input id="outsideDiameter" type="number" formControlName="outsideDiameter"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter outside diameter" />
@@ -843,7 +843,7 @@
                                                                 <!-- Length or Height -->
                                                                 <div class="col-md-12">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="lengthOrHeight" class="form-label">Length / Height:</label>
+                                                                        <label for="lengthOrHeight" class="form-label">Length / Height(mm):</label>
                                                                         <input id="lengthOrHeight" type="number" formControlName="lengthOrHeight"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter length or height" />
@@ -853,7 +853,7 @@
                                                                 <!-- Fill Height -->
                                                                 <div class="col-md-12">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="fillHeight" class="form-label">Fill Height:</label>
+                                                                        <label for="fillHeight" class="form-label">Fill Height(mm):</label>
                                                                         <input id="fillHeight" type="number" formControlName="fillHeight"
                                                                             class="form-control form-control-nb" placeholder="Enter fill height" />
                                                                     </div>
@@ -876,7 +876,7 @@
                                                                 <!-- Empty Weight -->
                                                                 <div class="col-md-12">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="emptyWeight" class="form-label">Empty Weight:</label>
+                                                                        <label for="emptyWeight" class="form-label">Empty Weight(Kg):</label>
                                                                         <input id="emptyWeight" type="number" formControlName="emptyWeight"
                                                                             class="form-control form-control-nb" placeholder="Enter empty weight" />
                                                                     </div>
@@ -885,7 +885,7 @@
                                                                 <!-- Capacity -->
                                                                 <div class="col-md-12">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="capacity" class="form-label">Capacity:</label>
+                                                                        <label for="capacity" class="form-label">Capacity(M3):</label>
                                                                         <input id="capacity" type="number" formControlName="capacity"
                                                                             class="form-control form-control-nb" placeholder="Enter capacity" />
                                                                     </div>
@@ -935,7 +935,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="externalCoatingThickness" class="form-label">External Coating
-                                                                            Thickness:</label>
+                                                                            Thickness(mm):</label>
                                                                         <input id="externalCoatingThickness" type="number"
                                                                             formControlName="externalCoatingThickness"
                                                                             class="form-control form-control-nb" placeholder="Enter thickness" />
@@ -945,7 +945,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="externalCoatingAge" class="form-label">External Coating
-                                                                            Age:</label>
+                                                                            Age(Years):</label>
                                                                         <input id="externalCoatingAge" type="number"
                                                                             formControlName="externalCoatingAge"
                                                                             class="form-control form-control-nb" placeholder="Enter age in years" />
@@ -1298,7 +1298,7 @@
                             
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="allowableStress" class="form-label">Allowable Stress:</label>
+                                                                        <label for="allowableStress" class="form-label">Allowable Stress(Bar):</label>
                                                                         <input id="allowableStress" type="number" formControlName="allowableStress"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter allowable stress" />
@@ -1320,7 +1320,7 @@
                             
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="nominalThickness" class="form-label">Nominal Thickness:</label>
+                                                                        <label for="nominalThickness" class="form-label">Nominal Thickness(mm):</label>
                                                                         <input id="nominalThickness" type="number"
                                                                             formControlName="nominalThickness" class="form-control form-control-nb"
                                                                             placeholder="Enter nominal thickness" />
@@ -1330,7 +1330,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="corrosionAllowance" class="form-label">Corrosion
-                                                                            Allowance:</label>
+                                                                            Allowance(mm):</label>
                                                                         <input id="corrosionAllowance" type="number"
                                                                             formControlName="corrosionAllowance"
                                                                             class="form-control form-control-nb"
@@ -1381,7 +1381,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
                                                                         <label for="claddingThickness" class="form-label">Cladding
-                                                                            Thickness:</label>
+                                                                            Thickness(mm):</label>
                                                                         <input id="claddingThickness" type="number"
                                                                             formControlName="claddingThickness" class="form-control form-control-nb"
                                                                             placeholder="Enter cladding thickness" />
@@ -1470,7 +1470,7 @@
                                                                 <!-- PRD Set Pressure -->
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="prdSetPressure" class="form-label">PRD Set Pressure:</label>
+                                                                        <label for="prdSetPressure" class="form-label">PRD Set Pressure(Bar):</label>
                                                                         <input id="prdSetPressure" type="number" formControlName="prdSetPressure"
                                                                             class="form-control form-control-nb" placeholder="Enter set pressure" />
                                                                     </div>
@@ -1648,7 +1648,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernw">
                                                                         <label for="shutdownFrequency" class="form-label">Shutdown Frequency
-                                                                            (months):</label>
+                                                                            (Years):</label>
                                                                         <input id="shutdownFrequency" type="number"
                                                                             formControlName="shutdownFrequency" class="form-control form-control-nb"
                                                                             placeholder="Enter shutdown frequency" />
@@ -1679,7 +1679,7 @@
                             
                                                                 <!-- Subsequent Major Shutdown Date -->
                                                                 <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
+                                                                    <div class="m-1 field-containernw">
                                                                         <label for="subsequentMajorShutdownDate" class="form-label">Subsequent Major
                                                                             Shutdown
                                                                             Date:</label>
@@ -1692,7 +1692,7 @@
                                                                 <!-- MTBF -->
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="mtbf" class="form-label">MTBF (hrs):</label>
+                                                                        <label for="mtbf" class="form-label">MTBF (Year):</label>
                                                                         <input id="mtbf" type="number" formControlName="mtbf"
                                                                             class="form-control form-control-nb" placeholder="Enter MTBF" />
                                                                     </div>
@@ -1701,7 +1701,7 @@
                                                                 <!-- MTTR -->
                                                                 <div class="col-md-6">
                                                                     <div class="m-1 field-containernwsm">
-                                                                        <label for="mttr" class="form-label">MTTR (hrs):</label>
+                                                                        <label for="mttr" class="form-label">MTTR (year):</label>
                                                                         <input id="mttr" type="number" formControlName="mttr"
                                                                             class="form-control form-control-nb" placeholder="Enter MTTR" />
                                                                     </div>

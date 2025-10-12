@@ -2,13 +2,21 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { lastValueFrom, map, Observable } from 'rxjs';
-import { PlantService } from 'src/app/services/plant/plant.service';
+import { PlantService,PlantHierarchyCount } from 'src/app/services/plant/plant.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import Swal from 'sweetalert2';
 import { SharedDataService } from 'src/app/services/shared-data/shared-data.service';
 import { PlantDocs } from '../plant';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/common/loadingPanel/loading.service';
+interface DashboardCard {
+  title: string;
+  count: number;
+  icon: string;
+  color: string;
+  bgColor: string;
+    route: string;
+}
 
 @Component({
   selector: 'app-plant-edit',
@@ -18,6 +26,10 @@ import { LoadingService } from 'src/app/common/loadingPanel/loading.service';
   providers: [DatePipe]
 })
 export class PlantEditComponent {
+   plantData: PlantHierarchyCount | null = null;
+  dashboardCards: DashboardCard[] = [];
+  isLoading: boolean = true;
+  error: string = '';
    showGeneral = true;
   showDesign = false;
   showMaintenance = false;
@@ -139,7 +151,26 @@ export class PlantEditComponent {
     this.ls.showLoading();
     await this.loadDropdowns();
     await this.loaddetails();
+    this.loadPlantDashboard();
     this.ls.hideLoading();
+  }
+   loadPlantDashboard(): void {
+    this.isLoading = true;
+    this.error = '';
+
+    this.plantService.GetPlantHierarchyCountAsync(this.childValue)
+      .subscribe({
+        next: (data) => {
+          this.plantData = data;
+          this.prepareDashboardCards();
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.error = 'Failed to load plant dashboard data. Please try again.';
+          console.error('Error loading plant data:', err);
+          this.isLoading = false;
+        }
+      });
   }
   loaddetails() {
     this.plantService.getPlantDetails(this.childValue).subscribe((plantData: any) => {
@@ -442,6 +473,84 @@ export class PlantEditComponent {
     }
   backToPlant() {
     this.router.navigate(['/clientplant/list']);
+  }
+
+
+
+
+  prepareDashboardCards(): void {
+    if (!this.plantData) return;
+
+    this.dashboardCards = [
+      {
+        title: 'Areas',
+        count: this.plantData.areaCount,
+        icon: 'location_on',
+        color: '#3b82f6',
+        bgColor: '#dbeafe',
+        route: `/plant/${this.childValue}/areas`
+      },
+      {
+        title: 'Units',
+        count: this.plantData.unitCount,
+        icon: 'widgets',
+        color: '#8b5cf6',
+        bgColor: '#ede9fe',
+        route: `/plant/${this.childValue}/units`
+      },
+      {
+        title: 'Systems',
+        count: this.plantData.systemCount,
+        icon: 'settings',
+        color: '#ec4899',
+        bgColor: '#fce7f3',
+        route: `/plant/${this.childValue}/systems`
+      },
+      {
+        title: 'Circuits',
+        count: this.plantData.circuitCount,
+        icon: 'power',
+        color: '#f59e0b',
+        bgColor: '#fef3c7',
+        route: `/plant/${this.childValue}/circuits`
+      },
+      {
+        title: 'Equipment',
+        count: this.plantData.equipmentCount,
+        icon: 'precision_manufacturing',
+        color: '#10b981',
+        bgColor: '#d1fae5',
+        route: `/plant/${this.childValue  }/equipment`
+      }
+    ];
+  }
+
+  getTotalAssets(): number {
+    if (!this.plantData) return 0;
+    return this.plantData.areaCount + 
+           this.plantData.unitCount + 
+           this.plantData.systemCount + 
+           this.plantData.circuitCount + 
+           this.plantData.equipmentCount;
+  }
+
+  getPercentage(count: number): number {
+    const total = this.getTotalAssets();
+    return total > 0 ? (count / total) * 100 : 0;
+  }
+
+  navigateToDetail(route?: string): void {
+    if (route) {
+      this.router.navigate([route]);
+    }
+  }
+
+  refresh(): void {
+    this.loadPlantDashboard();
+  }
+
+  goBack(): void {
+    this.router.navigate(['/plants']);
   }
 
 }

@@ -141,7 +141,7 @@
         <div class="row">
           <!-- Add your fields for Design and Construction Data here -->
             <div class="col-lg-4"> <div class="m-1 field-containernwsm">
-                            <label for="designLife" class="form-label">Design Life:</label>
+                            <label for="designLife" class="form-label">Design Life(Years):</label>
                             <input type="number" id="designLife" formControlName="designLife"
                                 class="form-control form-control-nb" placeholder="Enter design life" />
                             <div *ngIf=" areaForm.controls['designLife'].invalid &&  areaForm.controls['designLife'].touched"
@@ -186,7 +186,7 @@
                         </div>
 
                         </div> <div class="col-lg-4"> <div class="m-1 field-containernwsm">
-                            <label for="capacity" class="form-label">Capacity:</label>
+                            <label for="capacity" class="form-label">Capacity(bpad):</label>
                             <input type="number" id="capacity" formControlName="capacity"
                                 class="form-control form-control-nb" placeholder="Enter capacity" />
                             <div *ngIf="  areaForm.controls['capacity'].invalid &&   areaForm.controls['capacity'].touched"
@@ -196,7 +196,7 @@
                         </div>
 
                         </div> <div class="col-lg-4"> <div class="m-1 field-containernwsm">
-                            <label for="marginPerDay" class="form-label">Margin Per Day:</label>
+                            <label for="marginPerDay" class="form-label">Margin Per Day($):</label>
                             <input type="number" id="marginPerDay" formControlName="marginPerDay"
                                 class="form-control form-control-nb" placeholder="Enter margin per day" />
                             <div *ngIf="  areaForm.controls['marginPerDay'].invalid &&   areaForm.controls['marginPerDay'].touched"
@@ -255,7 +255,7 @@
 
                         </div> <div class="col-lg-6"> <div class="m-1 field-containernw">
                             <label for="shutdownTurnaroundFrequency" class="form-label">Shutdown Turnaround
-                                Frequency:</label>
+                                Frequency(Years):</label>
                             <input type="number" id="shutdownTurnaroundFrequency"
                                 formControlName="shutdownTurnaroundFrequency" class="form-control form-control-nb"
                                 placeholder="Enter shutdown turnaround frequency" />
@@ -307,7 +307,7 @@
            
                         <div class="col-lg-4"> <div class="m-1 field-containernw">
                             <label for="operatingTemperatureRange" class="form-label">Operating Temperature
-                                Range:</label>
+                                Range(°C):</label>
                             <input type="number" id="operatingTemperatureRange"
                                 formControlName="operatingTemperatureRange" class="form-control form-control-nb"
                                 placeholder="Enter operating temperature range" />
@@ -317,8 +317,8 @@
                             </div>
                         </div>
 
-                        </div> <div class="col-lg-4"> <div class="m-1 field-containernwsm">
-                            <label for="operatingPressureRange" class="form-label">Operating Pressure Range:</label>
+                        </div> <div class="col-lg-4"> <div class="m-1 field-containernw">
+                            <label for="operatingPressureRange" class="form-label">Operating Pressure Range(Bar):</label>
                             <input type="number" id="operatingPressureRange" formControlName="operatingPressureRange"
                                 class="form-control form-control-nb" placeholder="Enter operating pressure range" />
                             <div *ngIf="  areaForm.controls['operatingPressureRange'].invalid &&   areaForm.controls['operatingPressureRange'].touched"
@@ -373,7 +373,7 @@
                         </div>
 
                         </div> <div class="col-lg-4"> <div class="m-1 field-containernwsm">
-                            <label for="populationDensity" class="form-label">Population Density:</label>
+                            <label for="populationDensity" class="form-label">Population Density(/M2):</label>
                             <input type="number" id="populationDensity" formControlName="populationDensity"
                                 class="form-control form-control-nb" placeholder="Enter population density" />
                             <div *ngIf="  areaForm.controls['populationDensity'].invalid &&   areaForm.controls['populationDensity'].touched"

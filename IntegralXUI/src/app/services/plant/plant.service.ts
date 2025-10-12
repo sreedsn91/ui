@@ -4,7 +4,15 @@ import { ConfigService } from '../config/config.service';
 import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs';
 import { Plant } from 'src/app/modules/plant/plant';
-
+export interface PlantHierarchyCount {
+  plantId: number;
+  plantName: string;
+  areaCount: number;
+  unitCount: number;
+  systemCount: number;
+  circuitCount: number;
+  equipmentCount: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +48,11 @@ export class PlantService {
    getPlantDetails(plantId:number): Observable<any> {
     const clientId =Number( this.authService.getClientId());
       return this.http.get(`${this.apiUrl}Plant/GetPlantDetails/${clientId}/${plantId}`,{ headers: this.getHeaders() }
+      );
+    }
+    GetPlantHierarchyCountAsync(plantId:number): Observable<any> {
+    const clientId =Number( this.authService.getClientId());
+      return this.http.get(`${this.apiUrl}Plant/GetPlantHierarchyCountAsync/${clientId}/${plantId}`,{ headers: this.getHeaders() }
       );
     }
    getPlantTypes() { 
