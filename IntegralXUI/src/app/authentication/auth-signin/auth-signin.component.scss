@@ -1,0 +1,380 @@
+// ==========================================
+// Login Page Styling
+// ==========================================
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  position: relative;
+  overflow: hidden;
+  
+  // Animated background shapes
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 20s infinite ease-in-out;
+  }
+  
+  &::before {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+  }
+  
+  &::after {
+    width: 400px;
+    height: 400px;
+    bottom: -150px;
+    right: -150px;
+    animation-delay: 5s;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.auth-content {
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.card-body {
+  padding: 3rem 2.5rem;
+  
+  .mb-4 {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+// Icon styling
+.auth-icon {
+  font-size: 64px;
+  color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// Heading
+h3 {
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 2rem !important;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+  }
+}
+
+// Input groups
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem !important;
+  
+}
+
+
+// Button styling
+.btn-primary {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    background: linear-gradient(135deg, #5568d3 0%, #6a4199 100%);
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Links styling
+.text-muted {
+  color: #6c757d !important;
+  font-size: 14px;
+  
+  a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      color: #5568d3;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Checkbox styling (if uncommented)
+.checkbox-fill {
+  input[type="checkbox"] {
+    display: none;
+    
+    &:checked + label::before {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-color: #667eea;
+    }
+    
+    &:checked + label::after {
+      opacity: 1;
+    }
+  }
+  
+  label {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #495057;
+    user-select: none;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #e0e0e0;
+      border-radius: 4px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+    
+    &::after {
+      content: '✓';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    &:hover::before {
+      border-color: #667eea;
+    }
+  }
+}
+
+// Form validation states
+.form-control {
+  &.ng-invalid.ng-touched {
+   // border-color: #dc3545 !important;
+    
+    &:focus {
+      box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1) !important;
+    }
+  }
+  
+  &.ng-valid.ng-touched {
+    border-color: #28a745 !important;
+  }
+}
+
+// Loading state for button
+.btn-primary {
+  &.loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin-left: -10px;
+      margin-top: -10px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive design
+@media (max-width: 576px) {
+  .auth-wrapper {
+    padding: 15px;
+  }
+  
+  .card-body {
+    padding: 2rem 1.5rem;
+  }
+  
+  h3 {
+    font-size: 24px;
+  }
+  
+  .auth-icon {
+    font-size: 52px;
+  }
+  
+  .form-control {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+  
+  .btn-primary {
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .card {
+    background: rgba(30, 30, 30, 0.95);
+  }
+  
+  h3 {
+    color: #f8f9fa;
+  }
+  
+  .form-control {
+    // background: #2c2c2c;
+    // color: #f8f9fa;
+    // border-color: #404040;
+    
+    &::placeholder {
+      color: #888;
+    }
+  }
+  
+  .text-muted {
+    color: #adb5bd !important;
+  }
+}
+
+// Error message styling (if you add validation messages)
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+// Focus trap for accessibility
+*:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}

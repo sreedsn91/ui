@@ -71,6 +71,9 @@ export class PlantService {
   addPlant(plant: FormData): Observable<Plant> {
      return this.http.post<Plant>(`${this.apiUrl}Plant/CreatePlant`, plant, { headers: this.getHeadersWithoutType() });
    }
+     addPlantReference(plant: FormData): Observable<Plant> {
+     return this.http.post<Plant>(`${this.apiUrl}Plant/addPlantReference`, plant, { headers: this.getHeadersWithoutType() });
+   }
    
   checkPlantExists(plantId: number,value:string): Observable<Plant> {
     const clientId = Number(this.authService.getClientId());

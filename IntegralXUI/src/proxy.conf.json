@@ -1,0 +1,14 @@
+{
+  "/Uploads": {
+    "target": "http://localhost:54579",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api": {
+    "target": "http://localhost:54579",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

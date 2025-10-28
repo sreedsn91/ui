@@ -1017,7 +1017,47 @@
 
                         </div>
                         <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-                            <p>Content for Tab 3</p>
+                         
+
+                             
+     <div class="">
+
+  <div class="toolbar">
+    <div class="action-buttons">
+        <input 
+        type="file" 
+        #fileInput
+        accept=".pdf" 
+        (change)="onFileUpload($event)"
+        style="display: none;"
+      >
+      
+         <button class="btn btn-primary" style="width: 200px;" (click)="fileInput.click()">
+        📁 Upload New PDF
+      </button>
+      
+      <button style="width: 200px;"
+        class="btn btn-success" 
+        (click)="saveMarkers()"
+        [disabled]="!currentMarkers || currentMarkers.markers.length === 0"
+      >
+        💾 Save Markers
+      </button>
+      
+     
+    </div>
+  </div>
+
+
+  <div class="viewer-wrapper" *ngIf="pdfPath">
+    <app-pdf-viewer
+      [pdfFilePath]="pdfPath"
+      [markerData]="existingMarkers"
+      (markersChanged)="onMarkersChanged($event)"
+    ></app-pdf-viewer>
+  </div>
+</div>
+
                         </div>
                     </div>
                 </div>

@@ -27,7 +27,7 @@ const routes: Routes = [
       { path: 'users', redirectTo: 'clientuser' },
 
       // Grouping Client-related routes
-      { path: 'clientdashboard', loadComponent: () => import('./modules/dashboard/dashboard.component').then(c => c.DashboardComponent), canActivate: [AuthGuard], data: { moduleid: 0} },
+      { path: 'clientdashboard', loadComponent: () => import('./modules/client-dashboard/client-dashboard.component').then(c => c.ClientDashboardComponent), canActivate: [AuthGuard], data: { moduleid: 0} },
       { path: 'clientuser', loadChildren: () => import('./modules/users/users.routes').then(c => c.USERS_ROUTES), canActivate: [AuthGuard], data: { moduleid: 3 } },
       { path: 'clientroles', loadChildren: () => import('./modules/roles/roles.routes').then(c => c.ROLE_ROUTES), canActivate: [AuthGuard], data: { moduleid: 4 } },
       { path: 'clientlogs', loadChildren: () => import('./modules/logs/logs.routes').then(c => c.LOG_ROUTES), canActivate: [AuthGuard], data: { moduleid: 2 } },

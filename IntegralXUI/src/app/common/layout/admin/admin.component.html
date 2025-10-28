@@ -41,22 +41,23 @@
   <span *ngIf="isFullScreen">⊡</span>
 </button>
     </div>
-     <div class="dropdown">
-        <img [src]="((img && img !== 'null')) ? img : 'assets/user.jpg'" alt="User"
-          class="user-img mx-2 dropdown-toggle user-avatar" id="userDropdown" data-bs-toggle="dropdown" />
-        <ul class="dropdown-menu dropdown-menu-end" style="width: 200px;" aria-labelledby="userDropdown">
-          <li>Hi, <b>{{usernName}}</b> </li>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-          <li><a class="dropdown-item" (click)="viewProfile()">Profile</a></li>
-          <li><a class="dropdown-item" (click)="changePassword()">Change Password</a></li>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-          <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
-        </ul>
-      </div>
+   <div class="dropdown">
+  <img [src]="((img && img !== 'null')) ? img : 'assets/user.jpg'" alt="User"
+    class="user-img mx-2 dropdown-toggle user-avatar" id="userDropdown" data-bs-toggle="dropdown" 
+    aria-expanded="false" />
+  <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="userDropdown">
+    <li class="dropdown-header">Hi, <b>{{usernName}}</b></li>
+    <li>
+      <hr class="dropdown-divider" />
+    </li>
+    <li><a class="dropdown-item" (click)="viewProfile()"><i class="feather icon-user"></i> Profile</a></li>
+    <li><a class="dropdown-item" (click)="changePassword()"><i class="feather icon-lock"></i> Change Password</a></li>
+    <li>
+      <hr class="dropdown-divider" />
+    </li>
+    <li><a class="dropdown-item text-danger" (click)="logout()"><i class="feather icon-log-out"></i> Logout</a></li>
+  </ul>
+</div>
      
   </div>
 </div>

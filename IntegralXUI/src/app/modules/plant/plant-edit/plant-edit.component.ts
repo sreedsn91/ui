@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators,FormsModule } from '@angular/forms';
 import { lastValueFrom, map, Observable } from 'rxjs';
 import { PlantService,PlantHierarchyCount } from 'src/app/services/plant/plant.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -9,6 +9,9 @@ import { SharedDataService } from 'src/app/services/shared-data/shared-data.serv
 import { PlantDocs } from '../plant';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/common/loadingPanel/loading.service';
+import { PdfViewerComponent } from '../../pdf-viewer/pdf-viewer.component';
+import { MarkerData,Marker } from 'src/app/services/models/marker.model';
+
 interface DashboardCard {
   title: string;
   count: number;
@@ -18,18 +21,252 @@ interface DashboardCard {
     route: string;
 }
 
+
 @Component({
   selector: 'app-plant-edit',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, PdfViewerComponent,FormsModule],
   templateUrl: './plant-edit.component.html',
   styleUrl: './plant-edit.component.scss',
   providers: [DatePipe]
 })
 export class PlantEditComponent {
+
+pdfFile: File | null = null;
+ 
+  // Track if a file has been uploaded
+  isFileUploaded: boolean = false;
+  
+  // Store uploaded file name
+  uploadedFileName: string = '';
+    // PDF file path
+  pdfPath = '';
+  
+  // Load existing markers from backend or localStorage
+  existingMarkers: MarkerData | null = null;
+  
+  // Store current markers
+  currentMarkers: MarkerData | null = null;
+  successMessage: string;
+  errorMessage: string;
+
+  loadExistingMarkers() {
+    // Example: Load from localStorage
+    const saved = this.receivedrefdocmappings;
+    if (saved) {
+      this.existingMarkers = JSON.parse(saved);
+    }
+    
+    // OR load from API
+    // this.http.get<MarkerData>('/api/markers').subscribe(data => {
+    //   this.existingMarkers = data;
+    // });
+  }
+
+  onMarkersChanged(data: MarkerData) {
+    console.log('Markers updated:', data);
+    this.currentMarkers = data;
+    
+    // Auto-save to localStorage
+    localStorage.setItem('pdfMarkers', JSON.stringify(data));
+  }
+onFileUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (file && file.type === 'application/pdf') {
+      // Create a URL for the uploaded file
+      const fileUrl = URL.createObjectURL(file);
+      
+      // Update the PDF path
+      this.pdfPath = fileUrl;
+      this.isFileUploaded = true;
+      this.uploadedFileName = file.name;
+      this.pdfFile = file;
+
+      // Clear markers when new file is uploaded
+      this.existingMarkers = null;
+      this.currentMarkers = null;
+      
+      console.log('New PDF uploaded:', file.name);
+    } else {
+      alert('Please select a valid PDF file');
+    }
+  }
+
+
+  downloadMarkers() {
+    if (this.currentMarkers) {
+      const blob = new Blob([JSON.stringify(this.currentMarkers, null, 2)], 
+        { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `markers-${Date.now()}.json`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      
+      alert('Markers downloaded successfully!');
+    } else {
+      alert('No markers to download');
+    }
+  }
+
+  SaveMarkerss(): void {
+    // Clear previous messages
+    this.successMessage = '';
+    this.errorMessage = '';
+
+    // Create FormData matching your DTO
+   
+
+  }
+
+  resetToDefault() {
+    if (confirm('Reset to default PDF and clear all markers?')) {
+      this.pdfPath = 'assets/Sample Floor Plan (PDF).pdf';
+      this.isFileUploaded = false;
+      this.uploadedFileName = '';
+      this.existingMarkers = null;
+      this.currentMarkers = null;
+      localStorage.removeItem('pdfMarkers');
+    }
+  }
+saveMarkers() {
+  // Validation
+  if (!this.pdfFile && !this.pdfPath) {
+    Swal.fire({
+      title: 'Error!',
+      text: 'Please select a PDF file first',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
+    return;
+  }
+
+  if (!this.currentMarkers || this.currentMarkers.markers?.length === 0) {
+    Swal.fire({
+      title: 'Warning!',
+      text: 'No markers to save. Please add at least one marker on the PDF.',
+      icon: 'warning',
+      confirmButtonText: 'Ok'
+    });
+    return;
+  }
+
+  console.log('Saving to server:', this.currentMarkers);
+
+  const formDatareference = new FormData();
+  formDatareference.append('ClientId', this.au.getClientId().toString());
+  formDatareference.append('PlantId', this.childValue.toString());
+  formDatareference.append('PdfFile', this.pdfFile);
+  formDatareference.append('isFileUploaded', this.isFileUploaded.toString());
+  formDatareference.append('Markers', JSON.stringify(this.currentMarkers));
+
+  // Show loading state
+  this.isLoading = true;
+  this.ls.showLoading();
+
+  this.plantService.addPlantReference(formDatareference).subscribe({
+    next: (response) => {
+      this.isLoading = false;
+      this.ls.hideLoading();
+
+      Swal.fire({
+        title: 'Success!',
+        text: 'Markers saved successfully',
+        icon: 'success',
+        confirmButtonText: 'Ok',
+        timer: 2000,
+        timerProgressBar: true
+      }).then(() => {
+        // Optional: Reset form or navigate
+        // this.backToPlant();
+        // this.resetMarkers();
+      });
+
+      console.log('Markers saved successfully:', response);
+    },
+    error: (error) => {
+      this.isLoading = false;
+      this.ls.hideLoading();
+
+      console.error('Error saving markers:', error);
+
+      // Extract error message
+      let errorTitle = 'Error!';
+      let errorMessage = 'Failed to save markers. Please try again.';
+
+      if (error.status === 0) {
+        errorTitle = 'Connection Error';
+        errorMessage = 'Unable to connect to the server. Please check your internet connection.';
+      } else if (error.status === 400) {
+        errorTitle = 'Validation Error';
+        if (error.error?.message) {
+          errorMessage = error.error.message;
+        } else if (error.error?.errors) {
+          const validationErrors = Object.entries(error.error.errors)
+            .map(([field, messages]: [string, any]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
+            .join('\n');
+          errorMessage = validationErrors || 'Please check your input and try again.';
+        } else {
+          errorMessage = 'Invalid data. Please check all fields.';
+        }
+      } else if (error.status === 401) {
+        errorTitle = 'Unauthorized';
+        errorMessage = 'Your session has expired. Please login again.';
+      } else if (error.status === 403) {
+        errorTitle = 'Access Denied';
+        errorMessage = 'You do not have permission to perform this action.';
+      } else if (error.status === 404) {
+        errorTitle = 'Not Found';
+        errorMessage = 'The requested resource was not found.';
+      } else if (error.status === 413) {
+        errorTitle = 'File Too Large';
+        errorMessage = 'The PDF file is too large. Please upload a smaller file.';
+      } else if (error.status === 500) {
+        errorTitle = 'Server Error';
+        errorMessage = 'An internal server error occurred. Please try again later.';
+      } else if (error.error?.message) {
+        errorMessage = error.error.message;
+      } else if (typeof error.error === 'string') {
+        errorMessage = error.error;
+      }
+
+      Swal.fire({
+        title: errorTitle,
+        text: errorMessage,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#dc3545'
+      });
+    },
+    complete: () => {
+      // Cleanup code if needed
+      console.log('Save markers request completed');
+    }
+  });
+}
+
+  downloadJson() {
+    if (this.currentMarkers) {
+      const blob = new Blob([JSON.stringify(this.currentMarkers, null, 2)], 
+        { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `markers-${Date.now()}.json`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+  }
+
+
+
    plantData: PlantHierarchyCount | null = null;
   dashboardCards: DashboardCard[] = [];
   isLoading: boolean = true;
   error: string = '';
+
    showGeneral = true;
   showDesign = false;
   showMaintenance = false;
@@ -40,6 +277,8 @@ export class PlantEditComponent {
   showAudit = false;
   expand = false;
   receivedData: any;
+  receivedrefdoc: any;
+  receivedrefdocmappings: any;
   clientData: any;
   childValue: number = 0;
   plantForm: FormGroup;
@@ -233,7 +472,11 @@ export class PlantEditComponent {
         addedByName : plantData.addedByName || '',
         modifiedByName: plantData.modifiedByName || '',
       });
-  
+      alert(plantData.refdocpoint);
+  this.receivedrefdoc  = (plantData.refdocloc);
+  this.receivedrefdocmappings = plantData.refdocpoint ;
+  this.existingMarkers = plantData.refdocpoint ;
+  this.pdfPath = plantData.refdocloc;
       this.documents = plantData.docs || [];
     });
   }
@@ -413,21 +656,56 @@ export class PlantEditComponent {
     this.documentPreviews.forEach(file => {
       formData.append('documents', file);
     });
+this.plantService.addPlant(formData).subscribe({
+  next: (response) => {
+    this.ls.hideLoading();
+    
+    Swal.fire({
+      title: 'Success!',
+      text: 'Plant details updated successfully',
+      icon: 'success',
+       confirmButtonText: 'Ok',
+        timer: 2000,
+        timerProgressBar: true
+      }).then(() => {
+        // Optional: Reset form or navigate
+         this.backToPlant();
+        // this.resetMarkers();
+      });
 
-    this.plantService.addPlant(formData).subscribe(
-      (response) => {
-        this.ls.hideLoading();
-
-        Swal.fire({
-          title: 'Success!',
-          text: 'Plant details updated successfully',
-          icon: 'success',
-          confirmButtonText: 'Ok'
-        });
-        this.backToPlant();
-        this.ls.hideLoading();
-      }
-    );
+  },
+  error: (error) => {
+    this.ls.hideLoading();
+    
+    // Extract error message
+    let errorMessage = 'An error occurred while saving plant details';
+    
+    if (error.error?.message) {
+      errorMessage = error.error.message;
+    } else if (error.error?.errors) {
+      // Handle validation errors
+      const validationErrors = Object.values(error.error.errors).flat();
+      errorMessage = validationErrors.join(', ');
+    } else if (error.message) {
+      errorMessage = error.message;
+    } else if (typeof error.error === 'string') {
+      errorMessage = error.error;
+    }
+    
+    Swal.fire({
+      title: 'Error!',
+      text: errorMessage,
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
+    
+    console.error('Plant save error:', error);
+  },
+  complete: () => {
+    // Optional: Any cleanup code
+    console.log('Plant save request completed');
+  }
+});
   }
 
   downloadFileExisting(documentId: number, fileName: string) {
@@ -552,5 +830,6 @@ export class PlantEditComponent {
   goBack(): void {
     this.router.navigate(['/plants']);
   }
+
 
 }

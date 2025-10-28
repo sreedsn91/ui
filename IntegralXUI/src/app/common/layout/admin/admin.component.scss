@@ -675,3 +675,88 @@ app-breadcrumb {
 .breadcrumb-item a:hover {
   color: #764ba2;
 }
+
+
+// pdf
+.container {
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .actions button {
+      padding: 12px 24px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    // Fix dropdown positioning with scaling
+.dropdown {
+  position: relative;
+}
+
+.user-dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  left: auto !important;
+  transform: none !important;
+  margin-top: 0.5rem !important;
+  width: 200px;
+  
+  // Account for body scaling
+  transform-origin: top right;
+  
+  .dropdown-header {
+    padding: 0.75rem 1.25rem;
+    color: var(--text-primary);
+    font-size: 14px;
+  }
+  
+  .dropdown-item {
+    font-size: 13px;
+      width: 180px;
+    &.text-danger {
+      color: var(--danger) !important;
+      
+      &:hover {
+        background: rgba(220, 53, 69, 0.1);
+      }
+    }
+  }
+}
+
+// Fix Bootstrap dropdown in scaled environment
+.dropdown-menu {
+  position: absolute;
+  z-index: 1050;
+  will-change: transform;
+  
+  // Override Bootstrap's transform with proper scaling consideration
+  &.show {
+    transform: scale(calc(1 / var(--scale-value))) !important;
+    transform-origin: top right;
+    right: 0;
+  }
+}
+
+// Alternative fix: Remove scaling for dropdown
+.header .dropdown-menu {
+  transform: scale(calc(1 / var(--scale-value)));
+  transform-origin: top right;
+}
