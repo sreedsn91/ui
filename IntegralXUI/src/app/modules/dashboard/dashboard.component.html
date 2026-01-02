@@ -1,4 +1,118 @@
-<hr>
-<p></p>
-<hr>
-<p>dashboard works c!</p>
+<div class="client-chart-container">
+  <!-- Header -->
+  <div class="chart-header">
+    <h2>Client Subscription Status</h2>
+    <button class="btn-refresh" (click)="refresh()" [disabled]="loading">
+      <i class="feather icon-refresh-cw" [class.spinning]="loading"></i>
+      Refresh
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading chart data...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-state">
+    <i class="feather icon-alert-circle"></i>
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="refresh()">Retry</button>
+  </div>
+
+  <!-- Charts & Data -->
+  <div *ngIf="!loading && !error && chartData" class="charts-wrapper">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="summary-card active">
+        <div class="card-icon">✓</div>
+        <div class="card-content">
+          <h3>{{ chartData.active }}</h3>
+          <p>Active Clients</p>
+        </div>
+      </div>
+
+      <div class="summary-card expiring">
+        <div class="card-icon">⚠</div>
+        <div class="card-content">
+          <h3>{{ chartData.expiring }}</h3>
+          <p>Expiring Soon</p>
+        </div>
+      </div>
+
+      <div class="summary-card expired">
+        <div class="card-icon">✕</div>
+        <div class="card-content">
+          <h3>{{ chartData.expired }}</h3>
+          <p>Expired</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="chart-grid">
+      <!-- Pie Chart -->
+      <div class="chart-card">
+        <h3>Distribution (Pie Chart)</h3>
+        <div class="chart-container">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [type]="pieChartType"
+                  [options]="pieChartOptions">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="client-list-card">
+        <h3>Client Details</h3>
+        <div class="table-responsive">
+          <table class="client-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Client Name</th>
+                <th>Purchase Date</th>
+                <th>Expiry Date</th>
+                <th>Days Remaining</th>
+                <th>User Limit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let client of chartData.clients" [class]="getStatusClass(client.status)">
+                <td>
+                  <span class="status-badge" [class]="getStatusClass(client.status)">
+                    <span class="status-icon">{{ getStatusIcon(client.status) }}</span>
+                    {{ client.status }}
+                  </span>
+                </td>
+                <td class="client-name">{{ client.name }}</td>
+                <td>{{ client.purchaseDate | date:'MMM d, y' }}</td>
+                <td>{{ client.expiryDate | date:'MMM d, y' }}</td>
+                <td>
+                  <span class="days-remaining" [class]="getStatusClass(client.status)">
+                    {{ getDaysRemainingText(client.daysRemaining) }}
+                  </span>
+                </td>
+                <td>
+                  <span class="user-count" [ngClass]="getUserLimitClass(client)">
+                    <span class="count-text">{{ client.activeUserCount }} / {{ client.numberOfUsers }}</span>
+                    <span class="remaining-text" *ngIf="!isUserLimitReached(client)">
+                      ({{ getRemainingUsers(client) }} left)
+                    </span>
+                    <span class="limit-icon" *ngIf="isUserLimitReached(client)">⚠</span>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div *ngIf="chartData.clients.length === 0" class="no-data">
+            <i class="feather icon-inbox"></i>
+            <p>No clients found</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

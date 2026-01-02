@@ -988,7 +988,7 @@ input[type="number"] {
   textarea,
   select {
     flex: 2;
-    width: 100%;
+    width: 140%;
     border: none;
     background: transparent;
     
@@ -1043,6 +1043,16 @@ input[type="number"] {
     min-width: 135px;
   }
 }
+.field-container .input-container {
+  width: 100%;
+}
+
+.field-container .form-control,
+.field-container .form-control-nb {
+  width: 100% !important;
+  max-width: 100%;
+}
+
 
 // ==========================================
 // ACCORDION

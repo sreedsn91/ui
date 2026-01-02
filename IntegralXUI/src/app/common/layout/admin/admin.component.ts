@@ -64,6 +64,7 @@ export class AdminComponent {
   navCollapsedMob: boolean;
   windowWidth: number;
   showDropdown: boolean = false;
+    isAdmin: boolean = false;
   activeMenu: string = 'Dashboard';
   navigations!: any[];
   filteredMenuItems: any[] = [];
@@ -157,7 +158,8 @@ navigateToDetails(type: string, id: number) {
       }
     );
     this.getUser();
-   // this.usernName = this.userInfo.getUserName();
+   
+    this.isAdmin = !this.userInfo.getSuper();
     this.usernRole = this.userInfo.getUserRole();
     this.logo = this.userInfo.getLogo();
     this.img = this.userInfo.getUserImage();

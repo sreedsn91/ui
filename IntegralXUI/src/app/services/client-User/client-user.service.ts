@@ -10,28 +10,6 @@ import { Role } from 'src/app/modules/roles/role';
 @Injectable({
   providedIn: 'root'
 })
-export interface Client {
-  id: number;
-  name: string;
-  purchaseDate: Date;
-  expiryDate: Date;
-}
-
-export interface ClientStatus {
-  id: number;
-  name: string;
-  purchaseDate: Date;
-  expiryDate: Date;
-  status: 'Active' | 'Expiring' | 'Expired';
-  daysRemaining: number;
-}
-
-export interface ClientChartData {
-  active: number;
-  expiring: number;
-  expired: number;
-  clients: ClientStatus[];
-}
 export class ClientUserService {
   private apiUrl: string;
   constructor(private http: HttpClient, private configService: ConfigService, private authService: AuthService) {
@@ -129,6 +107,12 @@ export class ClientUserService {
     });
 
     return this.http.delete(`${this.apiUrl}ClientUser/DeleteUser/${id}`, { headers: this.getHeadersWithoutType() });
+  }
+    
+  getClientChart(): Observable<any> {
+    const clientId = Number(this.authService.getClientId());
+    return this.http.get(`${this.apiUrl}Client/ClientChartData`, { headers: this.getHeaders() }
+    );
   }
 
 }

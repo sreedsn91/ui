@@ -28,33 +28,51 @@ export  class AuthSigninComponent {
     });
   }
   
-  onLogin(): void {
-    if (this.loginForm.valid) {
-      this.ls.showLoading();
-      const button = document.querySelector('.btn-primary');
-  button?.classList.add('loading');
-      const { username, password } = this.loginForm.value;
+onLogin(): void {
+  if (this.loginForm.valid) {
+    this.ls.showLoading();
+    const button = document.querySelector('.btn-primary');
+    button?.classList.add('loading');
+    const { username, password } = this.loginForm.value;
 
-      this.authService.login(username, password).subscribe(
-        (response) => {
-           this.ls.hideLoading();
-          if(this.authService.getSuper())
-          {
-            this.router.navigate(['/dashboard']);
-          }
-          else{this.router.navigate(['/clientdashboard']);}
-          
-        },
-        (error) => {
-           this.ls.hideLoading();
-          Swal.fire({
-            title: 'Error!',
-            text:  'Login failed!, Invalid username or password',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-                 });
+    this.authService.login(username, password).subscribe(
+      (response) => {
+        this.ls.hideLoading();
+        button?.classList.remove('loading');
+        
+        if(this.authService.getSuper()) {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/clientdashboard']);
         }
-      );
-    }
+      },
+      (error) => {
+        this.ls.hideLoading();
+        button?.classList.remove('loading');
+        
+        // Get the error message from API response
+        const errorMessage = error?.error?.message || 'Login failed! Invalid username or password';
+        
+        // Determine the title and icon based on the error message
+        let title = 'Error!';
+        let icon: 'error' | 'warning' | 'info' = 'error';
+        
+        if (errorMessage.includes('subscription has expired')) {
+          title = 'Subscription Expired';
+          icon = 'warning';
+        } else if (errorMessage.includes('Contact administrator')) {
+          title = 'Account Inactive';
+          icon = 'warning';
+        }
+        
+        Swal.fire({
+          title: title,
+          text: errorMessage,
+          icon: icon,
+          confirmButtonText: 'Ok'
+        });
+      }
+    );
   }
+} 
 }

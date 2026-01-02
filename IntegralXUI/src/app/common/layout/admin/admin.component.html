@@ -271,10 +271,22 @@
   <app-breadcrumb />
 
 
-   <div class="side-menu">
+   <div *ngIf="isAdmin" class="side-menu">
         <ng-container *ngFor="let item of navigations">
           <a class="side-menu-item"
              *ngIf="!['User','Roles','Logs','Import'].includes(item.title)"
+             [routerLink]="item.url"
+             routerLinkActive="active">
+            <i class="bi"
+               [ngClass]="'feather icon-' + item.icon"></i>
+            <span class="side-menu-text">{{ item.title }}</span>
+          </a>
+        </ng-container>
+        </div>
+         <div *ngIf="!isAdmin" class="side-menu">
+        <ng-container *ngFor="let item of navigations">
+          <a class="side-menu-item"
+             *ngIf="!['Roles','Logs','Import'].includes(item.title)"
              [routerLink]="item.url"
              routerLinkActive="active">
             <i class="bi"
