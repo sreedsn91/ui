@@ -47,7 +47,7 @@ export class PdfViewerComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
     debugger;
     if (changes['markerData'] && this.markerData) {
-      alert("mark");
+      
       this.loadMarkers(this.markerData);
     }
   }

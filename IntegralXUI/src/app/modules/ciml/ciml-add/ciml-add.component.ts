@@ -337,7 +337,7 @@ export class CimlAddComponent {
   
   ngOnInit() {
     this.cimlForm.get('plantId')?.valueChanges.subscribe((plantId) => {
-      alert();
+    
       this.cimlForm.get('name')?.updateValueAndValidity();
       if (plantId) {
         this.loadAreasByPlant(plantId);

@@ -305,7 +305,6 @@ corrosionLoops: [[]],
   
   onCorrosionLoopsChange(selectedIds: any[]): void {
     debugger;
-    alert(selectedIds);
     this.selectedCorrosionLoops = selectedIds;
 
      this.corrosionLoopIds = selectedIds && selectedIds.length > 0 
@@ -322,7 +321,7 @@ corrosionLoops: [[]],
   }
   ngOnInit() {
     this.componentForm.get('plantId')?.valueChanges.subscribe((plantId) => {
-      alert();
+     
       this.componentForm.get('name')?.updateValueAndValidity();
       if (plantId) {
         this.loadAreasByPlant(plantId);

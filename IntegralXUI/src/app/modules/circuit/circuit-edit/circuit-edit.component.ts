@@ -360,7 +360,7 @@ export class CircuitEditComponent {
     saveCircuit() {
     
       if (this.circuitForm.invalid) {
-        alert();
+      
         return;
       }
       const formData = new FormData();

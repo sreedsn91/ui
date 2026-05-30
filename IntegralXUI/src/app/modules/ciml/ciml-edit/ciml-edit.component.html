@@ -2,7 +2,41 @@
     <div class="card">
         <div class="card-body" *ngIf="dataLoaded">
             <div class="d-flex justify-content-between align-items-center mt-2">
-                <h3 class="m-0">New CIML</h3>
+                <div class="d-flex align-items-center gap-3">
+                    <h3 class="m-0">New CIML</h3>
+                    <div class="floating-button-panel">
+                        <div *ngIf="!this.expand">
+                            <button class="btn-commonIcon" (click)="expandAll()" title="Expand all sections">
+                                <i class="bi feather icon-maximize-2"></i>
+                            </button>
+                        </div>
+                        <div *ngIf="this.expand">
+                            <button class="btn-commonIcon" (click)="collapseAll()" title="Collapse all sections">
+                                <i class="bi feather icon-minimize-2"></i>
+                            </button>
+                        </div>
+                        <div *ngIf="this.canEdit">
+                            <button type="submit" [disabled]="cimlForm.invalid" title="Save data" class="btn-saveIcon">
+                                <i class="bi feather icon-save"></i>
+                            </button>
+                        </div>
+                        <div *ngIf="!this.canEdit">
+                            <button type="submit" disabled class="btn-saveIcon" title="Save data-disabled">
+                                <i class="bi feather icon-save"></i>
+                            </button>
+                        </div>
+                        <div *ngIf="this.canDelete">
+                            <button type="button" class="btn-deleteIcon" (click)="DeleteCIML()">
+                                <i class="bi feather icon-trash"></i>
+                            </button>
+                        </div>
+                        <div *ngIf="!this.canDelete">
+                            <button type="button" disabled class="btn-deleteIcon">
+                                <i class="bi feather icon-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <a class="" (click)="backToCIML()">
                     <i class="feather styleIcon icon-arrow-left" style="font-size: xx-large;"
                         title="Back to CIML"></i>
@@ -11,21 +45,41 @@
             <hr class="mt-0">
             <form [formGroup]="cimlForm" (ngSubmit)="saveCIML()">
                  <input id="id" formControlName="id" hidden />
-                 <div class="floating-button-panel text-center">
-                            
-                                                <div *ngIf="!this.expand" > <button class="btn-commonIcon" (click)="expandAll()"      title="Expand all sections"
-                                                    > <i class="bi feather  icon-maximize-2"></i> </button> </div>
-                                                <div *ngIf="this.expand" >  <button class="btn-commonIcon" (click)="collapseAll()"     title="Collapse all sections"
-                                                    >  <i class="bi feather icon-minimize-2"></i> </button> </div>
-                                              
-                                                    <div *ngIf="this.canEdit" > <button type="submit" [disabled]="cimlForm.invalid" title="Save data" class="btn-saveIcon">   <i class="bi  feather icon-save"></i></button> </div>
-                                                    <div *ngIf="!this.canEdit" > <button type="submit"   disabled class="btn-saveIcon" title="Save data-disabled">  <i  class="bi  feather icon-save"></i></button> </div>
-                                                    <div *ngIf="this.canDelete"> <button type="button" *ngIf="this.canDelete"
-                                                        class="btn-deleteIcon" (click)="DeleteCIML()"> <i class="bi  feather icon-trash"></i></button></div>
-                                                <div *ngIf="!this.canDelete"> <button type="button" disabled
-                                                        *ngIf="this.canDelete" class="btn-deleteIcon"> <i class="bi  feather icon-trash"></i></button></div>
-                                                </div>
-                <div class="row">
+                
+                <!-- Tabs -->
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" [class.active]="activeTab === 'summary'" type="button" role="tab" (click)="activeTab = 'summary'">
+                            Summary
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" [class.active]="activeTab === 'data'" type="button" role="tab" (click)="activeTab = 'data'">
+                            Data
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" [class.active]="activeTab === 'inspections'" type="button" role="tab" (click)="activeTab = 'inspections'">
+                            Inspections
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Summary Tab -->
+                    <div class="tab-pane" [class.active]="activeTab === 'summary'" [class.show]="activeTab === 'summary'">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Summary</h4>
+                                <p>Summary content will be displayed here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Tab -->
+                    <div class="tab-pane" [class.active]="activeTab === 'data'" [class.show]="activeTab === 'data'">
+                        <div class="row">
                     <!-- General -->
 <div class="col-md-12">
     <div class="accordion-item">
@@ -107,7 +161,7 @@
 </div>
 
 <!-- Location -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showLocation')">
             Location
@@ -117,7 +171,7 @@
             <!-- Content for Location -->
              <div class="row">
     <!-- Plant ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="plantId" class="form-label">Plant ID:</label>
             <select id="plantId" formControlName="plantId" class="form-control form-control-nb">
@@ -128,7 +182,7 @@
     </div>
 
     <!-- Area ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="areaId" class="form-label">Area ID:</label>
             <select id="areaId" formControlName="areaId" class="form-control form-control-nb">
@@ -139,7 +193,7 @@
     </div>
 
     <!-- Unit ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="unitId" class="form-label">Unit ID:</label>
             <select id="unitId" formControlName="unitId" class="form-control form-control-nb">
@@ -150,7 +204,7 @@
     </div>
 
     <!-- System ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="systemId" class="form-label">System ID:</label>
             <select id="systemId" formControlName="systemId" class="form-control form-control-nb">
@@ -161,7 +215,7 @@
     </div>
 
     <!-- Circuit ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="circuitId" class="form-label">Circuit ID:</label>
             <select id="circuitId" formControlName="circuitId" class="form-control form-control-nb">
@@ -172,7 +226,7 @@
     </div>
 
     <!-- Corrosion Loop ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="corrosionLoopId" class="form-label">Corrosion Loop ID:</label>
             <select id="corrosionLoopId" formControlName="corrosionLoopId" class="form-control form-control-nb">
@@ -183,7 +237,7 @@
     </div>
 
     <!-- Equipment ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="equipmentId" class="form-label">Equipment ID:</label>
             <select id="equipmentId" formControlName="equipmentId" class="form-control form-control-nb">
@@ -194,7 +248,7 @@
     </div>
 
     <!-- Component ID (Long) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="componentId" class="form-label">Component ID:</label>
             <select id="componentId" formControlName="componentId" class="form-control form-control-nb">
@@ -205,7 +259,7 @@
     </div>
 
     <!-- Specific Location (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="specificLocation" class="form-label">Specific Location:</label>
             <input id="specificLocation" formControlName="specificLocation" type="text" class="form-control form-control-nb" placeholder="Enter Specific Location" />
@@ -213,7 +267,7 @@
     </div>
 
     <!-- Equipment From (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="equipmentFrom" class="form-label">Equipment From:</label>
             <input id="equipmentFrom" formControlName="equipmentFrom" type="text" class="form-control form-control-nb" placeholder="Enter Equipment From" />
@@ -221,7 +275,7 @@
     </div>
 
     <!-- Equipment To (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="equipmentTo" class="form-label">Equipment To:</label>
             <input id="equipmentTo" formControlName="equipmentTo" type="text" class="form-control form-control-nb" placeholder="Enter Equipment To" />
@@ -229,7 +283,7 @@
     </div>
 
     <!-- PFD (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="pfd" class="form-label">PFD:</label>
             <input id="pfd" formControlName="pfd" type="text" class="form-control form-control-nb" placeholder="Enter PFD" />
@@ -237,7 +291,7 @@
     </div>
 
     <!-- P&ID (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="pid" class="form-label">P&ID:</label>
             <input id="pid" formControlName="pid" type="text" class="form-control form-control-nb" placeholder="Enter P&ID" />
@@ -245,7 +299,7 @@
     </div>
 
     <!-- GA Drawing (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="gaDrawing" class="form-label">GA Drawing:</label>
             <input id="gaDrawing" formControlName="gaDrawing" type="text" class="form-control form-control-nb" placeholder="Enter GA Drawing" />
@@ -258,7 +312,7 @@
 </div>
 
 <!-- Design -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showDesign')">
             Design
@@ -268,7 +322,7 @@
             <!-- Content for Design -->
              <div class="row">
     <!-- Design Code (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="designCode" class="form-label">Design Code:</label>
             <select id="designCode" formControlName="designCode" class="form-control form-control-nb">
@@ -279,7 +333,7 @@
     </div>
 
     <!-- Edition & Addendum (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="editionAddendum" class="form-label">Edition & Addendum:</label>
             <select id="editionAddendum" formControlName="editionAddendum" class="form-control form-control-nb">
@@ -290,7 +344,7 @@
     </div>
 
     <!-- Design Pressure (Internal) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="designPressureInternal" class="form-label">Design Pressure (Internal):</label>
             <input id="designPressureInternal" formControlName="designPressureInternal" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Internal Pressure" />
@@ -298,7 +352,7 @@
     </div>
 
     <!-- Design Pressure (External) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="designPressureExternal" class="form-label">Design Pressure (External):</label>
             <input id="designPressureExternal" formControlName="designPressureExternal" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter External Pressure" />
@@ -306,7 +360,7 @@
     </div>
 
     <!-- Design Temperature (Max) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="designTemperatureMax" class="form-label">Design Temperature (Max):</label>
             <input id="designTemperatureMax" formControlName="designTemperatureMax" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max Temperature" />
@@ -314,7 +368,7 @@
     </div>
 
     <!-- Design Temperature (MDMT) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="designTemperatureMDMT" class="form-label">Design Temperature (MDMT):</label>
             <input id="designTemperatureMDMT" formControlName="designTemperatureMDMT" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter MDMT Temperature" />
@@ -322,7 +376,7 @@
     </div>
 
     <!-- MAWP (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="mawp" class="form-label">MAWP:</label>
             <input id="mawp" formControlName="mawp" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter MAWP" />
@@ -330,7 +384,7 @@
     </div>
 
     <!-- Design Life (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="designLife" class="form-label">Design Life:</label>
             <input id="designLife" formControlName="designLife" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Design Life" />
@@ -338,7 +392,7 @@
     </div>
 
     <!-- Primary Products (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="primaryProducts" class="form-label">Primary Products:</label>
             <input id="primaryProducts" formControlName="primaryProducts" type="text" class="form-control form-control-nb" placeholder="Enter Primary Products" />
@@ -346,7 +400,7 @@
     </div>
 
     <!-- Margin (Per Day) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="marginPerDay" class="form-label">Margin (Per Day):</label>
             <input id="marginPerDay" formControlName="marginPerDay" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Margin Per Day" />
@@ -354,7 +408,7 @@
     </div>
 
     <!-- Compliance Certification (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="complianceCertification" class="form-label">Compliance Certification:</label>
             <select id="complianceCertification" formControlName="complianceCertification" class="form-control form-control-nb">
@@ -365,7 +419,7 @@
     </div>
 
     <!-- Governing Regulatory Body (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="governingRegulatoryBody" class="form-label">Governing Regulatory Body:</label>
             <input id="governingRegulatoryBody" formControlName="governingRegulatoryBody" type="text" class="form-control form-control-nb" placeholder="Enter Regulatory Body" />
@@ -378,7 +432,7 @@
 </div>
 
 <!-- Geometry -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showGeometry')">
             Geometry
@@ -388,7 +442,7 @@
             <!-- Content for Geometry -->
              <div class="row">
     <!-- Geometry (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="geometry" class="form-label">Geometry:</label>
             <select id="geometry" formControlName="geometry" class="form-control form-control-nb">
@@ -399,7 +453,7 @@
     </div>
 
     <!-- NPS (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="nps" class="form-label">NPS:</label>
             <input id="nps" formControlName="nps" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter NPS" />
@@ -407,7 +461,7 @@
     </div>
 
     <!-- Inside Diameter (ID) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="insideDiameter" class="form-label">Inside Diameter (ID):</label>
             <input id="insideDiameter" formControlName="insideDiameter" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Inside Diameter" />
@@ -415,7 +469,7 @@
     </div>
 
     <!-- Outside Diameter (OD) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="outsideDiameter" class="form-label">Outside Diameter (OD):</label>
             <input id="outsideDiameter" formControlName="outsideDiameter" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Outside Diameter" />
@@ -423,7 +477,7 @@
     </div>
 
     <!-- Length / Height (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="lengthHeight" class="form-label">Length / Height:</label>
             <input id="lengthHeight" formControlName="lengthHeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Length / Height" />
@@ -431,7 +485,7 @@
     </div>
 
     <!-- Fill Height (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="fillHeight" class="form-label">Fill Height:</label>
             <input id="fillHeight" formControlName="fillHeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Fill Height" />
@@ -439,7 +493,7 @@
     </div>
 
     <!-- Orientation (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="orientation" class="form-label">Orientation:</label>
             <select id="orientation" formControlName="orientation" class="form-control form-control-nb">
@@ -450,7 +504,7 @@
     </div>
 
     <!-- Empty Weight (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="emptyWeight" class="form-label">Empty Weight:</label>
             <input id="emptyWeight" formControlName="emptyWeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Empty Weight" />
@@ -458,7 +512,7 @@
     </div>
 
     <!-- Capacity (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="capacity" class="form-label">Capacity:</label>
             <input id="capacity" formControlName="capacity" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Capacity" />
@@ -471,7 +525,7 @@
 </div>
 
 <!-- Operation and Process -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showOperationProcess')">
             Operation and Process
@@ -481,7 +535,7 @@
             <!-- Content for Operation and Process -->
              <div class="row">
     <!-- Operating Pressure (max) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="operatingPressureMax" class="form-label">Operating Pressure (max):</label>
             <input id="operatingPressureMax" formControlName="operatingPressureMax" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max Operating Pressure" />
@@ -489,7 +543,7 @@
     </div>
 
     <!-- Operating Pressure (avg) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="operatingPressureAvg" class="form-label">Operating Pressure (avg):</label>
             <input id="operatingPressureAvg" formControlName="operatingPressureAvg" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Avg Operating Pressure" />
@@ -497,7 +551,7 @@
     </div>
 
     <!-- Operating Temp. (max) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="operatingTempMax" class="form-label">Operating Temp. (max):</label>
             <input id="operatingTempMax" formControlName="operatingTempMax" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max Operating Temp" />
@@ -505,7 +559,7 @@
     </div>
 
     <!-- Operating Temp. (min) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="operatingTempMin" class="form-label">Operating Temp. (min):</label>
             <input id="operatingTempMin" formControlName="operatingTempMin" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Min Operating Temp" />
@@ -513,7 +567,7 @@
     </div>
 
     <!-- Process Fluid (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="processFluid" class="form-label">Process Fluid:</label>
             <input id="processFluid" formControlName="processFluid" type="text" class="form-control form-control-nb" placeholder="Enter Process Fluid" />
@@ -521,7 +575,7 @@
     </div>
 
     <!-- Fluid Composition (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="fluidComposition" class="form-label">Fluid Composition:</label>
             <input id="fluidComposition" formControlName="fluidComposition" type="text" class="form-control form-control-nb" placeholder="Enter Fluid Composition" />
@@ -529,7 +583,7 @@
     </div>
 
     <!-- Fluid Phase (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="fluidPhase" class="form-label">Fluid Phase:</label>
             <select id="fluidPhase" formControlName="fluidPhase" class="form-control form-control-nb">
@@ -540,7 +594,7 @@
     </div>
 
     <!-- Inventory Volume (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="inventoryVolume" class="form-label">Inventory Volume:</label>
             <input id="inventoryVolume" formControlName="inventoryVolume" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Inventory Volume" />
@@ -548,7 +602,7 @@
     </div>
 
     <!-- Density (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="density" class="form-label">Density:</label>
             <input id="density" formControlName="density" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Density" />
@@ -556,7 +610,7 @@
     </div>
 
     <!-- Viscosity (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="viscosity" class="form-label">Viscosity:</label>
             <input id="viscosity" formControlName="viscosity" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Viscosity" />
@@ -564,7 +618,7 @@
     </div>
 
     <!-- Specific Gravity (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="specificGravity" class="form-label">Specific Gravity:</label>
             <input id="specificGravity" formControlName="specificGravity" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Specific Gravity" />
@@ -572,7 +626,7 @@
     </div>
 
     <!-- Flow Rate (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="flowRate" class="form-label">Flow Rate:</label>
             <input id="flowRate" formControlName="flowRate" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Flow Rate" />
@@ -580,7 +634,7 @@
     </div>
 
     <!-- Velocity (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="velocity" class="form-label">Velocity:</label>
             <input id="velocity" formControlName="velocity" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Velocity" />
@@ -588,7 +642,7 @@
     </div>
 
     <!-- Corrosivity (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="corrosivity" class="form-label">Corrosivity:</label>
             <select id="corrosivity" formControlName="corrosivity" class="form-control form-control-nb">
@@ -599,7 +653,7 @@
     </div>
 
     <!-- pH (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="pH" class="form-label">pH:</label>
             <input id="pH" formControlName="pH" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter pH" />
@@ -607,7 +661,7 @@
     </div>
 
     <!-- Process Environment (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="processEnvironment" class="form-label">Process Environment:</label>
             <select id="processEnvironment" formControlName="processEnvironment" class="form-control form-control-nb">
@@ -618,7 +672,7 @@
     </div>
 
     <!-- Toxic Mixture (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="toxicMixture" class="form-label">Toxic Mixture:</label>
             <select id="toxicMixture" formControlName="toxicMixture" class="form-control form-control-nb">
@@ -629,7 +683,7 @@
     </div>
 
     <!-- Toxic Fluid (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="toxicFluid" class="form-label">Toxic Fluid:</label>
             <select id="toxicFluid" formControlName="toxicFluid" class="form-control form-control-nb">
@@ -640,7 +694,7 @@
     </div>
 
     <!-- Flammability (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="flammability" class="form-label">Flammability:</label>
             <select id="flammability" formControlName="flammability" class="form-control form-control-nb">
@@ -651,7 +705,7 @@
     </div>
 
     <!-- Operating Weight (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="operatingWeight" class="form-label">Operating Weight:</label>
             <input id="operatingWeight" formControlName="operatingWeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Operating Weight" />
@@ -659,7 +713,7 @@
     </div>
 
     <!-- Criticality (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="criticality" class="form-label">Criticality:</label>
             <select id="criticality" formControlName="criticality" class="form-control form-control-nb">
@@ -670,7 +724,7 @@
     </div>
 
     <!-- Humidity Level (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="humidityLevel" class="form-label">Humidity Level:</label>
             <input id="humidityLevel" formControlName="humidityLevel" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Humidity Level" />
@@ -678,7 +732,7 @@
     </div>
 
     <!-- Seismic Zone Classification (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="seismicZoneClassification" class="form-label">Seismic Zone Classification:</label>
             <select id="seismicZoneClassification" formControlName="seismicZoneClassification" class="form-control form-control-nb">
@@ -689,7 +743,7 @@
     </div>
 
     <!-- Fire & Explosion Risk (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="fireExplosionRisk" class="form-label">Fire & Explosion Risk:</label>
             <select id="fireExplosionRisk" formControlName="fireExplosionRisk" class="form-control form-control-nb">
@@ -700,7 +754,7 @@
     </div>
 
     <!-- Toxic Risk (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="toxicRisk" class="form-label">Toxic Risk:</label>
             <select id="toxicRisk" formControlName="toxicRisk" class="form-control form-control-nb">
@@ -711,7 +765,7 @@
     </div>
 
     <!-- Total Population (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="totalPopulation" class="form-label">Total Population:</label>
             <input id="totalPopulation" formControlName="totalPopulation" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Total Population" />
@@ -719,7 +773,7 @@
     </div>
 
     <!-- Population Density (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="populationDensity" class="form-label">Population Density:</label>
             <input id="populationDensity" formControlName="populationDensity" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Population Density" />
@@ -732,7 +786,7 @@
 </div>
 
 <!-- Fabrication -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showFabrication')">
             Fabrication
@@ -742,7 +796,7 @@
             <!-- Content for Fabrication -->
              <div class="row">
     <!-- Manufacturer (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="manufacturer" class="form-label">Manufacturer:</label>
             <input id="manufacturer" formControlName="manufacturer" type="text" class="form-control form-control-nb" placeholder="Enter Manufacturer" />
@@ -750,7 +804,7 @@
     </div>
 
     <!-- Serial Number (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="serialNumber" class="form-label">Serial Number:</label>
             <input id="serialNumber" formControlName="serialNumber" type="text" class="form-control form-control-nb" placeholder="Enter Serial Number" />
@@ -758,7 +812,7 @@
     </div>
 
     <!-- Warranty Date (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="warrantyDate" class="form-label">Warranty Date:</label>
             <input id="warrantyDate" formControlName="warrantyDate" type="text" class="form-control form-control-nb" placeholder="Enter Warranty Date" />
@@ -766,7 +820,7 @@
     </div>
 
     <!-- Heat Treatment (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="heatTreatment" class="form-label">Heat Treatment:</label>
             <select id="heatTreatment" formControlName="heatTreatment" class="form-control form-control-nb">
@@ -777,7 +831,7 @@
     </div>
 
     <!-- Heat Treatment Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="heatTreatmentType" class="form-label">Heat Treatment Type:</label>
             <select id="heatTreatmentType" formControlName="heatTreatmentType" class="form-control form-control-nb">
@@ -788,7 +842,7 @@
     </div>
 
     <!-- Impact Test (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="impactTest" class="form-label">Impact Test:</label>
             <select id="impactTest" formControlName="impactTest" class="form-control form-control-nb">
@@ -799,7 +853,7 @@
     </div>
 
     <!-- Pressure Test (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="pressureTest" class="form-label">Pressure Test:</label>
             <select id="pressureTest" formControlName="pressureTest" class="form-control form-control-nb">
@@ -810,7 +864,7 @@
     </div>
 
     <!-- Pressure Test Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="pressureTestType" class="form-label">Pressure Test Type:</label>
             <select id="pressureTestType" formControlName="pressureTestType" class="form-control form-control-nb">
@@ -821,7 +875,7 @@
     </div>
 
     <!-- Test Pressure (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="testPressure" class="form-label">Test Pressure:</label>
             <input id="testPressure" formControlName="testPressure" type="text" class="form-control form-control-nb" placeholder="Enter Test Pressure" />
@@ -829,7 +883,7 @@
     </div>
 
     <!-- Radiography (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="radiography" class="form-label">Radiography:</label>
             <select id="radiography" formControlName="radiography" class="form-control form-control-nb">
@@ -840,7 +894,7 @@
     </div>
 
     <!-- Radiography Category (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="radiographyCategory" class="form-label">Radiography Category:</label>
             <select id="radiographyCategory" formControlName="radiographyCategory" class="form-control form-control-nb">
@@ -851,7 +905,7 @@
     </div>
 
     <!-- Joint Efficiency (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="jointEfficiency" class="form-label">Joint Efficiency:</label>
             <input id="jointEfficiency" formControlName="jointEfficiency" type="text" class="form-control form-control-nb" placeholder="Enter Joint Efficiency" />
@@ -859,7 +913,7 @@
     </div>
 
     <!-- Other NDE (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="otherNDE" class="form-label">Other NDE:</label>
             <input id="otherNDE" formControlName="otherNDE" type="text" class="form-control form-control-nb" placeholder="Enter Other NDE" />
@@ -872,7 +926,7 @@
 </div>
 
 <!-- Material -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showMaterial')">
             Material
@@ -882,7 +936,7 @@
             <!-- Content for Material -->
              <div class="row">
     <!-- General Material (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="generalMaterial" class="form-label">General Material:</label>
             <select id="generalMaterial" formControlName="generalMaterial" class="form-control form-control-nb">
@@ -893,7 +947,7 @@
     </div>
 
     <!-- Material Specification (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="materialSpecification" class="form-label">Material Specification:</label>
             <input id="materialSpecification" formControlName="materialSpecification" type="text" class="form-control form-control-nb" placeholder="Enter Material Specification" />
@@ -901,7 +955,7 @@
     </div>
 
     <!-- Allowable Stress (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="allowableStress" class="form-label">Allowable Stress:</label>
             <input id="allowableStress" formControlName="allowableStress" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Allowable Stress" />
@@ -909,7 +963,7 @@
     </div>
 
     <!-- Nominal Thickness (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="nominalThickness" class="form-label">Nominal Thickness:</label>
             <input id="nominalThickness" formControlName="nominalThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Nominal Thickness" />
@@ -917,7 +971,7 @@
     </div>
 
     <!-- Corrosion Allowance (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="corrosionAllowance" class="form-label">Corrosion Allowance:</label>
             <input id="corrosionAllowance" formControlName="corrosionAllowance" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Corrosion Allowance" />
@@ -925,7 +979,7 @@
     </div>
 
     <!-- Cladding (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="cladding" class="form-label">Cladding:</label>
             <select id="cladding" formControlName="cladding" class="form-control form-control-nb">
@@ -936,7 +990,7 @@
     </div>
 
     <!-- Cladding Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="claddingType" class="form-label">Cladding Type:</label>
             <select id="claddingType" formControlName="claddingType" class="form-control form-control-nb">
@@ -947,7 +1001,7 @@
     </div>
 
     <!-- Cladding Material (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="claddingMaterial" class="form-label">Cladding Material:</label>
             <select id="claddingMaterial" formControlName="claddingMaterial" class="form-control form-control-nb">
@@ -958,7 +1012,7 @@
     </div>
 
     <!-- Cladding Thickness (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="claddingThickness" class="form-label">Cladding Thickness:</label>
             <input id="claddingThickness" formControlName="claddingThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Cladding Thickness" />
@@ -966,7 +1020,7 @@
     </div>
 
     <!-- Lining (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="lining" class="form-label">Lining:</label>
             <select id="lining" formControlName="lining" class="form-control form-control-nb">
@@ -977,7 +1031,7 @@
     </div>
 
     <!-- Lining Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="liningType" class="form-label">Lining Type:</label>
             <select id="liningType" formControlName="liningType" class="form-control form-control-nb">
@@ -988,7 +1042,7 @@
     </div>
 
     <!-- Material Certification (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="materialCertification" class="form-label">Material Certification:</label>
             <select id="materialCertification" formControlName="materialCertification" class="form-control form-control-nb">
@@ -1004,7 +1058,7 @@
 </div>
 
 <!-- External -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showExternal')">
             External
@@ -1014,7 +1068,7 @@
             <!-- Content for External -->
              <div class="row">
     <!-- External Coating (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="externalCoating" class="form-label">External Coating:</label>
             <select id="externalCoating" formControlName="externalCoating" class="form-control form-control-nb">
@@ -1025,7 +1079,7 @@
     </div>
 
     <!-- External Coating Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="externalCoatingType" class="form-label">External Coating Type:</label>
             <select id="externalCoatingType" formControlName="externalCoatingType" class="form-control form-control-nb">
@@ -1036,7 +1090,7 @@
     </div>
 
     <!-- External Coating Thickness (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="externalCoatingThickness" class="form-label">External Coating Thickness:</label>
             <input id="externalCoatingThickness" formControlName="externalCoatingThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Coating Thickness" />
@@ -1044,7 +1098,7 @@
     </div>
 
     <!-- External Coating Age (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="externalCoatingAge" class="form-label">External Coating Age:</label>
             <input id="externalCoatingAge" formControlName="externalCoatingAge" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Coating Age" />
@@ -1052,7 +1106,7 @@
     </div>
 
     <!-- Insulation (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="insulation" class="form-label">Insulation:</label>
             <select id="insulation" formControlName="insulation" class="form-control form-control-nb">
@@ -1063,7 +1117,7 @@
     </div>
 
     <!-- Insulation Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="insulationType" class="form-label">Insulation Type:</label>
             <select id="insulationType" formControlName="insulationType" class="form-control form-control-nb">
@@ -1074,7 +1128,7 @@
     </div>
 
     <!-- Insulation Material (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="insulationMaterial" class="form-label">Insulation Material:</label>
             <select id="insulationMaterial" formControlName="insulationMaterial" class="form-control form-control-nb">
@@ -1085,7 +1139,7 @@
     </div>
 
     <!-- Insulation Thickness (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="insulationThickness" class="form-label">Insulation Thickness:</label>
             <input id="insulationThickness" formControlName="insulationThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Insulation Thickness" />
@@ -1093,7 +1147,7 @@
     </div>
 
     <!-- CUI Potential (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="cuiPotential" class="form-label">CUI Potential:</label>
             <select id="cuiPotential" formControlName="cuiPotential" class="form-control form-control-nb">
@@ -1104,7 +1158,7 @@
     </div>
 
     <!-- External Environment (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="externalEnvironment" class="form-label">External Environment:</label>
             <select id="externalEnvironment" formControlName="externalEnvironment" class="form-control form-control-nb">
@@ -1115,7 +1169,7 @@
     </div>
 
     <!-- Support Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="supportType" class="form-label">Support Type:</label>
             <select id="supportType" formControlName="supportType" class="form-control form-control-nb">
@@ -1126,7 +1180,7 @@
     </div>
 
     <!-- Heat Tracing (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="heatTracing" class="form-label">Heat Tracing:</label>
             <select id="heatTracing" formControlName="heatTracing" class="form-control form-control-nb">
@@ -1137,7 +1191,7 @@
     </div>
 
     <!-- Fire Proofing (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="fireProofing" class="form-label">Fire Proofing:</label>
             <select id="fireProofing" formControlName="fireProofing" class="form-control form-control-nb">
@@ -1148,7 +1202,7 @@
     </div>
 
     <!-- Buried (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="buried" class="form-label">Buried:</label>
             <select id="buried" formControlName="buried" class="form-control form-control-nb">
@@ -1159,7 +1213,7 @@
     </div>
 
     <!-- Cathodic Protection (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="cathodicProtection" class="form-label">Cathodic Protection:</label>
             <select id="cathodicProtection" formControlName="cathodicProtection" class="form-control form-control-nb">
@@ -1174,8 +1228,10 @@
     </div>
 </div>
 
+
+
 <!-- Deadleg -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showDeadleg')">
             Deadleg
@@ -1185,7 +1241,7 @@
             <!-- Content for Deadleg -->
              <div class="row">
     <!-- Is it a Deadleg? (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="isDeadleg" class="form-label">Is it a Deadleg?</label>
             <select id="isDeadleg" formControlName="isDeadleg" class="form-control form-control-nb">
@@ -1196,7 +1252,7 @@
     </div>
 
     <!-- Deadleg ID (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="deadlegId" class="form-label">Deadleg ID:</label>
             <input id="deadlegId" formControlName="deadlegId" type="text" class="form-control form-control-nb" placeholder="Enter Deadleg ID" />
@@ -1204,7 +1260,7 @@
     </div>
 
     <!-- Deadleg Description (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="deadlegDescription" class="form-label">Deadleg Description:</label>
             <input id="deadlegDescription" formControlName="deadlegDescription" type="text" class="form-control form-control-nb" placeholder="Enter Deadleg Description" />
@@ -1212,7 +1268,7 @@
     </div>
 
     <!-- Deadleg Category (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="deadlegCategory" class="form-label">Deadleg Category:</label>
             <select id="deadlegCategory" formControlName="deadlegCategory" class="form-control form-control-nb">
@@ -1223,7 +1279,7 @@
     </div>
 
     <!-- Deadleg Criticality (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="deadlegCriticality" class="form-label">Deadleg Criticality:</label>
             <select id="deadlegCriticality" formControlName="deadlegCriticality" class="form-control form-control-nb">
@@ -1234,7 +1290,7 @@
     </div>
 
     <!-- Injection Point (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="injectionPoint" class="form-label">Injection Point:</label>
             <select id="injectionPoint" formControlName="injectionPoint" class="form-control form-control-nb">
@@ -1245,7 +1301,7 @@
     </div>
 
     <!-- Soil to Air Interface (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="soilToAirInterface" class="form-label">Soil to Air Interface:</label>
             <select id="soilToAirInterface" formControlName="soilToAirInterface" class="form-control form-control-nb">
@@ -1256,7 +1312,7 @@
     </div>
 
     <!-- Buried (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="buried" class="form-label">Buried:</label>
             <select id="buried" formControlName="buried" class="form-control form-control-nb">
@@ -1272,7 +1328,7 @@
 </div>
 
 <!-- Safety and Process Control -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showSafetyProcessControl')">
             Safety and Process Control
@@ -1282,7 +1338,7 @@
             <!-- Content for Safety and Process Control -->
              <div class="row">
     <!-- Pressure Relief Devices (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="pressureReliefDevices" class="form-label">Pressure Relief Devices:</label>
             <select id="pressureReliefDevices" formControlName="pressureReliefDevices" class="form-control form-control-nb">
@@ -1293,7 +1349,7 @@
     </div>
 
     <!-- PRD ID (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="prd_Id" class="form-label">PRD ID:</label>
             <input id="prd_Id" formControlName="prd_Id" type="text" class="form-control form-control-nb" placeholder="Enter PRD ID" />
@@ -1301,7 +1357,7 @@
     </div>
 
     <!-- PRD Set Pressure (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="prd_SetPressure" class="form-label">PRD Set Pressure:</label>
             <input id="prd_SetPressure" formControlName="prd_SetPressure" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter PRD Set Pressure" />
@@ -1309,7 +1365,7 @@
     </div>
 
     <!-- Chemical Injection (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="chemicalInjection" class="form-label">Chemical Injection:</label>
             <select id="chemicalInjection" formControlName="chemicalInjection" class="form-control form-control-nb">
@@ -1320,7 +1376,7 @@
     </div>
 
     <!-- Detection System (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="detectionSystem" class="form-label">Detection System:</label>
             <select id="detectionSystem" formControlName="detectionSystem" class="form-control form-control-nb">
@@ -1331,7 +1387,7 @@
     </div>
 
     <!-- Isolation System (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="isolationSystem" class="form-label">Isolation System:</label>
             <select id="isolationSystem" formControlName="isolationSystem" class="form-control form-control-nb">
@@ -1342,7 +1398,7 @@
     </div>
 
     <!-- Mitigation System (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="mitigationSystem" class="form-label">Mitigation System:</label>
             <select id="mitigationSystem" formControlName="mitigationSystem" class="form-control form-control-nb">
@@ -1353,7 +1409,7 @@
     </div>
 
     <!-- Online Corrosion Monitoring (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="onlineCorrosionMonitoring" class="form-label">Online Corrosion Monitoring:</label>
             <select id="onlineCorrosionMonitoring" formControlName="onlineCorrosionMonitoring" class="form-control form-control-nb">
@@ -1364,7 +1420,7 @@
     </div>
 
     <!-- Corrosion Monitoring Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="corrosionMonitoringType" class="form-label">Corrosion Monitoring Type:</label>
             <select id="corrosionMonitoringType" formControlName="corrosionMonitoringType" class="form-control form-control-nb">
@@ -1375,7 +1431,7 @@
     </div>
 
     <!-- Hazard Classification (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="hazardClassification" class="form-label">Hazard Classification:</label>
             <select id="hazardClassification" formControlName="hazardClassification" class="form-control form-control-nb">
@@ -1386,7 +1442,7 @@
     </div>
 
     <!-- Safety & Environmental Permits (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="safetyEnvironmentalPermits" class="form-label">Safety & Environmental Permits:</label>
             <input id="safetyEnvironmentalPermits" formControlName="safetyEnvironmentalPermits" type="text" class="form-control form-control-nb" placeholder="Enter Permits" />
@@ -1394,7 +1450,7 @@
     </div>
 
     <!-- Incident History (If Any) (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="incidentHistory" class="form-label">Incident History (If Any):</label>
             <select id="incidentHistory" formControlName="incidentHistory" class="form-control form-control-nb">
@@ -1410,7 +1466,7 @@
 </div>
 
 <!-- Integrity & Inspection -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showIntegrityInspection')">
             Integrity & Inspection
@@ -1420,7 +1476,7 @@
             <!-- Content for Integrity & Inspection -->
              <div class="row">
     <!-- Current Inspection Strategy (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="inspectionStrategy" class="form-label">Current Inspection Strategy:</label>
             <select id="inspectionStrategy" formControlName="inspectionStrategy" class="form-control form-control-nb">
@@ -1431,7 +1487,7 @@
     </div>
 
     <!-- Damage Mechanisms (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="damageMechanisms" class="form-label">Damage Mechanisms:</label>
             <input id="damageMechanisms" formControlName="damageMechanisms" type="text" class="form-control form-control-nb" placeholder="Enter Damage Mechanisms" />
@@ -1439,7 +1495,7 @@
     </div>
 
     <!-- Shutdown/ Turnaround Frequency (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="shutdownFrequency" class="form-label">Shutdown/ Turnaround Frequency:</label>
             <input id="shutdownFrequency" formControlName="shutdownFrequency" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Frequency" />
@@ -1447,7 +1503,7 @@
     </div>
 
     <!-- Last Major Shutdown Date (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="lastShutdownDate" class="form-label">Last Major Shutdown Date:</label>
             <input id="lastShutdownDate" formControlName="lastShutdownDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Last Shutdown Date" />
@@ -1455,7 +1511,7 @@
     </div>
 
     <!-- Next Major Shutdown Date (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="nextShutdownDate" class="form-label">Next Major Shutdown Date:</label>
             <input id="nextShutdownDate" formControlName="nextShutdownDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Next Shutdown Date" />
@@ -1463,7 +1519,7 @@
     </div>
 
     <!-- Subsequent Major Shutdown Date (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="subsequentShutdownDate" class="form-label">Subsequent Major Shutdown Date:</label>
             <input id="subsequentShutdownDate" formControlName="subsequentShutdownDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Subsequent Shutdown Date" />
@@ -1471,7 +1527,7 @@
     </div>
 
     <!-- Mean Time Between Failures (MTBF) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="mtbf" class="form-label">Mean Time Between Failures (MTBF):</label>
             <input id="mtbf" formControlName="mtbf" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter MTBF" />
@@ -1479,7 +1535,7 @@
     </div>
 
     <!-- Mean Time To Repair (MTTR) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="mttr" class="form-label">Mean Time To Repair (MTTR):</label>
             <input id="mttr" formControlName="mttr" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter MTTR" />
@@ -1487,7 +1543,7 @@
     </div>
 
     <!-- CML Drawing ID (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="cmlDrawingId" class="form-label">CML Drawing ID:</label>
             <input id="cmlDrawingId" formControlName="cmlDrawingId" type="text" class="form-control form-control-nb" placeholder="Enter CML Drawing ID" />
@@ -1495,7 +1551,7 @@
     </div>
 
     <!-- Inspection Supervisor (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="inspectionSupervisor" class="form-label">Inspection Supervisor:</label>
             <input id="inspectionSupervisor" formControlName="inspectionSupervisor" type="text" class="form-control form-control-nb" placeholder="Enter Inspection Supervisor" />
@@ -1503,7 +1559,7 @@
     </div>
 
     <!-- Inspector (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="inspector" class="form-label">Inspector:</label>
             <input id="inspector" formControlName="inspector" type="text" class="form-control form-control-nb" placeholder="Enter Inspector" />
@@ -1516,7 +1572,7 @@
 </div>
 
 <!-- Equipment Inspection Schedule -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showEquipmentInspectionSchedule')">
             Equipment Inspection Schedule
@@ -1529,7 +1585,7 @@
 </div>
 
 <!-- Maintenance schedule -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showMaintenanceSchedule')">
             Maintenance schedule
@@ -1539,7 +1595,7 @@
             <!-- Content for Maintenance schedule -->
              <div class="row">
     <!-- Scheduled Repair/ Replacement (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="scheduledRepairReplacement" class="form-label">Scheduled Repair/ Replacement:</label>
             <select id="scheduledRepairReplacement" formControlName="scheduledRepairReplacement" class="form-control form-control-nb">
@@ -1550,7 +1606,7 @@
     </div>
 
     <!-- Scheduled Repair/ Replacement Date (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="scheduledRepairReplacementDate" class="form-label">Scheduled Repair/ Replacement Date:</label>
             <input id="scheduledRepairReplacementDate" formControlName="scheduledRepairReplacementDate" type="text" class="form-control form-control-nb" placeholder="Enter Scheduled Date" />
@@ -1558,8 +1614,8 @@
     </div>
 
     <!-- Repair/ Replacement during next shutdown (Integer) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
+    <div class="col-md-6">
+        <div class="m-1 field-containernw">
             <label for="repairDuringNextShutdown" class="form-label">Repair/ Replacement during next shutdown:</label>
             <select id="repairDuringNextShutdown" formControlName="repairDuringNextShutdown" class="form-control form-control-nb">
                 <option value=""  >-- Select Option --</option>
@@ -1574,7 +1630,7 @@
 </div>
 
 <!-- Integration & Metadata -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showIntegrationMetadata')">
             Integration & Metadata
@@ -1584,7 +1640,7 @@
             <!-- Content for Integration & Metadata -->
              <div class="row">
     <!-- ERP/CMMS Circuit Code (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="erpCmmsCircuitCode" class="form-label">ERP/CMMS Circuit Code:</label>
             <input id="erpCmmsCircuitCode" formControlName="erpCmmsCircuitCode" type="text" class="form-control form-control-nb" placeholder="Enter Circuit Code" />
@@ -1592,7 +1648,7 @@
     </div>
 
     <!-- ERP/CMMS System (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="erpCmmsSystem" class="form-label">ERP/CMMS System:</label>
             <input id="erpCmmsSystem" formControlName="erpCmmsSystem" type="text" class="form-control form-control-nb" placeholder="Enter System Name" />
@@ -1600,7 +1656,7 @@
     </div>
 
     <!-- Functional Location (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="functionalLocation" class="form-label">Functional Location:</label>
             <input id="functionalLocation" formControlName="functionalLocation" type="text" class="form-control form-control-nb" placeholder="Enter Functional Location" />
@@ -1608,7 +1664,7 @@
     </div>
 
     <!-- External System ID (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="externalSystemId" class="form-label">External System ID:</label>
             <input id="externalSystemId" formControlName="externalSystemId" type="text" class="form-control form-control-nb" placeholder="Enter External System ID" />
@@ -1616,7 +1672,7 @@
     </div>
 
     <!-- Sync Status (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="syncStatus" class="form-label">Sync Status:</label>
             <select id="syncStatus" formControlName="syncStatus" class="form-control form-control-nb">
@@ -1632,7 +1688,7 @@
 </div>
 
 <!-- Record Audit Information -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showRecordAuditInformation')">
             Record Audit Information
@@ -1642,7 +1698,7 @@
             <!-- Content for Record Audit Information -->
              <div class="row">
     <!-- Created By (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="createdBy" class="form-label">Created By:</label>
             <input id="createdBy" formControlName="createdBy" type="text" class="form-control form-control-nb" placeholder="Enter Creator's Name" />
@@ -1650,7 +1706,7 @@
     </div>
 
     <!-- Created Date (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="createdDate" class="form-label">Created Date:</label>
             <input id="createdDate" formControlName="createdDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Created Date" />
@@ -1658,7 +1714,7 @@
     </div>
 
     <!-- Last Modified By (String) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="lastModifiedBy" class="form-label">Last Modified By:</label>
             <input id="lastModifiedBy" formControlName="lastModifiedBy" type="text" class="form-control form-control-nb" placeholder="Enter Modifier's Name" />
@@ -1666,7 +1722,7 @@
     </div>
 
     <!-- Last Modified Date (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="lastModifiedDate" class="form-label">Last Modified Date:</label>
             <input id="lastModifiedDate" formControlName="lastModifiedDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Last Modified Date" />
@@ -1678,95 +1734,10 @@
     </div>
 </div>
 
-<!-- Minimum Required Thickness -->
-<div class="col-md-3">
-    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showMinimumRequiredThickness')">
-            Minimum Required Thickness
-            <span class="arrow" [class.open]="showMinimumRequiredThickness"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showMinimumRequiredThickness">
-            <!-- Content for Minimum Required Thickness -->
-             <div class="row">
-    <!-- Nominal Thickness - CA (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="nominalThicknessCA" class="form-label">Nominal Thickness - CA:</label>
-            <input id="nominalThicknessCA" formControlName="nominalThicknessCA" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Nominal Thickness - CA" />
-        </div>
-    </div>
 
-    <!-- Default Minimum Thickness (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="defaultMinimumThickness" class="form-label">Default Minimum Thickness:</label>
-            <input id="defaultMinimumThickness" formControlName="defaultMinimumThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Default Minimum Thickness" />
-        </div>
-    </div>
-
-    <!-- Structural Minimum Thickness (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="structuralMinimumThickness" class="form-label">Structural Minimum Thickness:</label>
-            <input id="structuralMinimumThickness" formControlName="structuralMinimumThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Structural Minimum Thickness" />
-        </div>
-    </div>
-
-    <!-- Calculated (Internal Pressure) (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="calculatedInternalPressure" class="form-label">Calculated (Internal Pressure):</label>
-            <input id="calculatedInternalPressure" formControlName="calculatedInternalPressure" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Calculated Internal Pressure" />
-        </div>
-    </div>
-
-    <!-- Calculated (External Pressure) (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="calculatedExternalPressure" class="form-label">Calculated (External Pressure):</label>
-            <input id="calculatedExternalPressure" formControlName="calculatedExternalPressure" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Calculated External Pressure" />
-        </div>
-    </div>
-
-    <!-- Max (Structural, Calculated) (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="maxStructuralCalculated" class="form-label">Max (Structural, Calculated):</label>
-            <input id="maxStructuralCalculated" formControlName="maxStructuralCalculated" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max (Structural, Calculated)" />
-        </div>
-    </div>
-
-    <!-- Maximum of Above (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="maximumOfAbove" class="form-label">Maximum of Above:</label>
-            <input id="maximumOfAbove" formControlName="maximumOfAbove" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Maximum of Above" />
-        </div>
-    </div>
-
-    <!-- Manual (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="manual" class="form-label">Manual:</label>
-            <input id="manual" formControlName="manual" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Manual Value" />
-        </div>
-    </div>
-
-    <!-- Selected Min Req Thk (Decimal) -->
-    <div class="col-md-12">
-        <div class="m-1 field-containernwsm">
-            <label for="selectedMinReqThk" class="form-label">Selected Min Req Thk:</label>
-            <input id="selectedMinReqThk" formControlName="selectedMinReqThk" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Selected Min Req Thk" />
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-</div>
 
 <!-- Required Inspection Methode -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showRequiredInspectionMethode')">
             Required Inspection Methode
@@ -1776,7 +1747,7 @@
             <!-- Content for Required Inspection Methode -->
              <div class="row">
     <!-- CVI (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="cvi" class="form-label">CVI:</label>
             <input id="cvi" formControlName="cvi" type="checkbox" class="form-check-input" />
@@ -1784,7 +1755,7 @@
     </div>
 
     <!-- UTG (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="utg" class="form-label">UTG:</label>
             <input id="utg" formControlName="utg" type="checkbox" class="form-check-input" />
@@ -1792,7 +1763,7 @@
     </div>
 
     <!-- UTS (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="uts" class="form-label">UTS:</label>
             <input id="uts" formControlName="uts" type="checkbox" class="form-check-input" />
@@ -1800,7 +1771,7 @@
     </div>
 
     <!-- RT (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="rt" class="form-label">RT:</label>
             <input id="rt" formControlName="rt" type="checkbox" class="form-check-input" />
@@ -1808,7 +1779,7 @@
     </div>
 
     <!-- PRT (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="prt" class="form-label">PRT:</label>
             <input id="prt" formControlName="prt" type="checkbox" class="form-check-input" />
@@ -1816,7 +1787,7 @@
     </div>
 
     <!-- MFL (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="mfl" class="form-label">MFL:</label>
             <input id="mfl" formControlName="mfl" type="checkbox" class="form-check-input" />
@@ -1824,7 +1795,7 @@
     </div>
 
     <!-- PEC (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="pec" class="form-label">PEC:</label>
             <input id="pec" formControlName="pec" type="checkbox" class="form-check-input" />
@@ -1832,7 +1803,7 @@
     </div>
 
     <!-- Other (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="other" class="form-label">Other:</label>
             <input id="other" formControlName="other" type="checkbox" class="form-check-input" />
@@ -1845,7 +1816,7 @@
 </div>
 
 <!-- CR -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showCR')">
             CR
@@ -1855,7 +1826,7 @@
             <!-- Content for CR -->
              <div class="row">
     <!-- LTCR (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="ltcr" class="form-label">LTCR:</label>
             <input id="ltcr" formControlName="ltcr" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter LTCR" />
@@ -1863,7 +1834,7 @@
     </div>
 
     <!-- STCR (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="stcr" class="form-label">STCR:</label>
             <input id="stcr" formControlName="stcr" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter STCR" />
@@ -1871,7 +1842,7 @@
     </div>
 
     <!-- Max (Above 2) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="maxAboveTwo" class="form-label">Max (Above 2):</label>
             <input id="maxAboveTwo" formControlName="maxAboveTwo" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max (Above 2)" />
@@ -1879,7 +1850,7 @@
     </div>
 
     <!-- Design CR (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="designCr" class="form-label">Design CR:</label>
             <input id="designCr" formControlName="designCr" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Design CR" />
@@ -1887,7 +1858,7 @@
     </div>
 
     <!-- Min or Default CR (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="minOrDefaultCr" class="form-label">Min or Default CR:</label>
             <input id="minOrDefaultCr" formControlName="minOrDefaultCr" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Min or Default CR" />
@@ -1895,7 +1866,7 @@
     </div>
 
     <!-- CR for RL (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="crForRl" class="form-label">CR for RL:</label>
             <input id="crForRl" formControlName="crForRl" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter CR for RL" />
@@ -1908,7 +1879,7 @@
 </div>
 
 <!-- RL -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showRL')">
             RL
@@ -1918,7 +1889,7 @@
             <!-- Content for RL -->
              <div class="row">
     <!-- Calculated Remaining Life (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="calculatedRemainingLife" class="form-label">Calculated Remaining Life:</label>
             <input id="calculatedRemainingLife" formControlName="calculatedRemainingLife" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Calculated Remaining Life" />
@@ -1926,7 +1897,7 @@
     </div>
 
     <!-- Max Remaining Life (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="maxRemainingLife" class="form-label">Max Remaining Life:</label>
             <input id="maxRemainingLife" formControlName="maxRemainingLife" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max Remaining Life" />
@@ -1934,7 +1905,7 @@
     </div>
 
     <!-- Min (Above 2) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="minAboveTwo" class="form-label">Min (Above 2):</label>
             <input id="minAboveTwo" formControlName="minAboveTwo" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Min (Above 2)" />
@@ -1942,7 +1913,7 @@
     </div>
 
     <!-- Remaining Life (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="remainingLife" class="form-label">Remaining Life:</label>
             <input id="remainingLife" formControlName="remainingLife" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Remaining Life" />
@@ -1955,7 +1926,7 @@
 </div>
 
 <!-- Inspection interval -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showInspectionInterval')">
             Inspection interval
@@ -1965,7 +1936,7 @@
             <!-- Content for Inspection interval -->
              <div class="row">
     <!-- Per API (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="perApi" class="form-label">Per API:</label>
             <input id="perApi" formControlName="perApi" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Per API" />
@@ -1973,7 +1944,7 @@
     </div>
 
     <!-- Half Remaining Life (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="halfRemainingLife" class="form-label">Half Remaining Life:</label>
             <input id="halfRemainingLife" formControlName="halfRemainingLife" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Half Remaining Life" />
@@ -1981,7 +1952,7 @@
     </div>
 
     <!-- Min (Above 2) (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="minAboveTwo" class="form-label">Min (Above 2):</label>
             <input id="minAboveTwo" formControlName="minAboveTwo" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Min (Above 2)" />
@@ -1989,7 +1960,7 @@
     </div>
 
     <!-- Default Minimum (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="defaultMinimum" class="form-label">Default Minimum:</label>
             <input id="defaultMinimum" formControlName="defaultMinimum" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Default Minimum" />
@@ -1997,7 +1968,7 @@
     </div>
 
     <!-- Manual Entry (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="manualEntry" class="form-label">Manual Entry:</label>
             <input id="manualEntry" formControlName="manualEntry" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Manual Entry" />
@@ -2005,7 +1976,7 @@
     </div>
 
     <!-- Selected Inspection Interval (Decimal) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="selectedInspectionInterval" class="form-label">Selected Inspection Interval:</label>
             <input id="selectedInspectionInterval" formControlName="selectedInspectionInterval" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Selected Inspection Interval" />
@@ -2018,7 +1989,7 @@
 </div>
 
 <!-- Thickness Inspection Schedule -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showThicknessInspectionSchedule')">
             Thickness Inspection Schedule
@@ -2028,7 +1999,7 @@
             <!-- Content for Thickness Inspection Schedule -->
              <div class="row">
     <!-- TM Inspection (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="tmInspection" class="form-label">TM Inspection:</label>
             <input id="tmInspection" formControlName="tmInspection" type="datetime-local" class="form-control form-control-nb" placeholder="Enter TM Inspection Date" />
@@ -2036,7 +2007,7 @@
     </div>
 
     <!-- Next Shutdown (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="nextShutdown" class="form-label">Next Shutdown:</label>
             <input id="nextShutdown" formControlName="nextShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Next Shutdown Date" />
@@ -2044,7 +2015,7 @@
     </div>
 
     <!-- Subsequent Shutdown (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="subsequentShutdown" class="form-label">Subsequent Shutdown:</label>
             <input id="subsequentShutdown" formControlName="subsequentShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Subsequent Shutdown Date" />
@@ -2052,7 +2023,7 @@
     </div>
 
     <!-- Prev TM Inspection (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="prevTmInspection" class="form-label">Prev TM Inspection:</label>
             <input id="prevTmInspection" formControlName="prevTmInspection" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous TM Inspection Date" />
@@ -2060,7 +2031,7 @@
     </div>
 
     <!-- Prev Next Shutdown (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="prevNextShutdown" class="form-label">Prev Next Shutdown:</label>
             <input id="prevNextShutdown" formControlName="prevNextShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous Next Shutdown Date" />
@@ -2068,7 +2039,7 @@
     </div>
 
     <!-- Prev Subsequent Shutdown (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="prevSubsequentShutdown" class="form-label">Prev Subsequent Shutdown:</label>
             <input id="prevSubsequentShutdown" formControlName="prevSubsequentShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous Subsequent Shutdown Date" />
@@ -2076,7 +2047,7 @@
     </div>
 
     <!-- Scheduled Repair/ Replacement (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="scheduledRepairReplacement" class="form-label">Scheduled Repair/ Replacement:</label>
             <select id="scheduledRepairReplacement" formControlName="scheduledRepairReplacement" class="form-control form-control-nb">
@@ -2087,7 +2058,7 @@
     </div>
 
     <!-- Scheduled Repair/ Replacement Date (Datetime) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="scheduledRepairReplacementDate" class="form-label">Scheduled Repair/ Replacement Date:</label>
             <input id="scheduledRepairReplacementDate" formControlName="scheduledRepairReplacementDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Scheduled Repair/ Replacement Date" />
@@ -2095,7 +2066,7 @@
     </div>
 
     <!-- Repair/ Replacement during next shutdown (Boolean) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="repairDuringNextShutdown" class="form-label">Repair/ Replacement during next shutdown:</label>
             <input id="repairDuringNextShutdown" formControlName="repairDuringNextShutdown" type="checkbox" class="form-check-input" />
@@ -2108,7 +2079,7 @@
 </div>
 
 <!-- Inspection Access -->
-<div class="col-md-3">
+<div class="col-md-6">
     <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showInspectionAccess')">
             Inspection Access
@@ -2118,7 +2089,7 @@
             <!-- Content for Inspection Access -->
              <div class="row">
     <!-- Accessible (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="accessible" class="form-label">Accessible:</label>
             <select id="accessible" formControlName="accessible" class="form-control form-control-nb">
@@ -2129,7 +2100,7 @@
     </div>
 
     <!-- Access Type (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="accessType" class="form-label">Access Type:</label>
             <select id="accessType" formControlName="accessType" class="form-control form-control-nb">
@@ -2140,7 +2111,7 @@
     </div>
 
     <!-- Internal Entry (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="internalEntry" class="form-label">Internal Entry:</label>
             <select id="internalEntry" formControlName="internalEntry" class="form-control form-control-nb">
@@ -2151,7 +2122,7 @@
     </div>
 
     <!-- Insulation Removal Required (Integer) -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="m-1 field-containernwsm">
             <label for="insulationRemovalRequired" class="form-label">Insulation Removal Required:</label>
             <select id="insulationRemovalRequired" formControlName="insulationRemovalRequired" class="form-control form-control-nb">
@@ -2166,7 +2137,141 @@
     </div>
 </div>
 
+<!-- Calculations Section -->
+<div class="col-md-12 mt-4">
+    <h4 class="mb-3">Calculations</h4>
+    <div class="row">
+        <!-- Minimum Required Thickness -->
+        <div class="col-md-6">
+            <div class="accordion-item">
+                <div class="accordion-header" (click)="toggle('showMinimumRequiredThickness')">
+                    Minimum Required Thickness
+                    <span class="arrow" [class.open]="showMinimumRequiredThickness"></span>
+                </div>
+                <div class="accordion-wrapper" [class.open]="showMinimumRequiredThickness">
+                    <!-- Content for Minimum Required Thickness -->
+                    <div class="row">
+                        <!-- Nominal Thickness - CA -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="nominalThicknessCA" class="form-label">Nominal Thickness - CA:</label>
+                                <input id="nominalThicknessCA" formControlName="nominalThicknessCA" type="number" step="0.01" class="form-control form-control-nb" placeholder="Auto-calculated" readonly />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('nominalThicknessCA')" [checked]="selectedMinThicknessOption === 'nominalThicknessCA'" />
+                            </div>
+                        </div>
+
+                        <!-- Default Minimum Thickness -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="defaultMinimumThickness" class="form-label">Default Minimum Thickness:</label>
+                                <input id="defaultMinimumThickness" formControlName="defaultMinimumThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('defaultMinimumThickness')" [checked]="selectedMinThicknessOption === 'defaultMinimumThickness'" />
+                            </div>
+                        </div>
+
+                        <!-- Structural Minimum thk -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="structuralMinimumThk" class="form-label">Structural Minimum thk:</label>
+                                <input id="structuralMinimumThk" formControlName="structuralMinimumThk" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('structuralMinimumThk')" [checked]="selectedMinThicknessOption === 'structuralMinimumThk'" />
+                            </div>
+                        </div>
+
+                        <!-- Calculated (Internal Pressure) -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="calculatedInternalPressure" class="form-label">Calculated (Internal Pressure):</label>
+                                <input id="calculatedInternalPressure" formControlName="calculatedInternalPressure" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('calculatedInternalPressure')" [checked]="selectedMinThicknessOption === 'calculatedInternalPressure'" />
+                            </div>
+                        </div>
+
+                        <!-- Calculated (External Pressure) -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="calculatedExternalPressure" class="form-label">Calculated (External Pressure):</label>
+                                <input id="calculatedExternalPressure" formControlName="calculatedExternalPressure" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('calculatedExternalPressure')" [checked]="selectedMinThicknessOption === 'calculatedExternalPressure'" />
+                            </div>
+                        </div>
+
+                        <!-- Max (Structural, Calculated) -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="maxStructuralCalculated" class="form-label">Max (Structural, Calculated):</label>
+                                <input id="maxStructuralCalculated" formControlName="maxStructuralCalculated" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('maxStructuralCalculated')" [checked]="selectedMinThicknessOption === 'maxStructuralCalculated'" />
+                            </div>
+                        </div>
+
+                        <!-- Maximum of above -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="maximumOfAbove" class="form-label">Maximum of above:</label>
+                                <input id="maximumOfAbove" formControlName="maximumOfAbove" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('maximumOfAbove')" [checked]="selectedMinThicknessOption === 'maximumOfAbove'" />
+                            </div>
+                        </div>
+
+                        <!-- Manual -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="manual" class="form-label">Manual:</label>
+                                <input id="manual" formControlName="manual" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('manual')" [checked]="selectedMinThicknessOption === 'manual'" />
+                            </div>
+                        </div>
+
+                        <!-- Selected Min Req Thk -->
+                        <div class="col-md-12">
+                            <div class="m-1 field-containernw d-flex align-items-center">
+                                <label for="selectedMinReqThk" class="form-label">Selected Min Req Thk:</label>
+                                <input id="selectedMinReqThk" formControlName="selectedMinReqThk" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter value" />
+                                <input type="checkbox" class="form-check-input ms-2" (change)="selectMinThicknessOption('selectedMinReqThk')" [checked]="selectedMinThicknessOption === 'selectedMinReqThk'" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                   </div>
+                    </div>
+                    <!-- End Data Tab -->
+
+                    <!-- Inspections Tab -->
+                    <div class="tab-pane" [class.active]="activeTab === 'inspections'" [class.show]="activeTab === 'inspections'">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4>Thickness Inspections</h4>
+                                    <button type="button" class="btn btn-primary" (click)="openInspectionModal()">
+                                        <i class="feather icon-plus"></i> Add Inspection
+                                    </button>
+                                </div>
+
+                                <!-- AG Grid -->
+                                <ag-grid-angular
+                                    style="width: 100%; height: 500px;"
+                                    class="ag-theme-alpine"
+                                    [rowData]="thicknessInspections"
+                                    [columnDefs]="columnDefs"
+                                    [defaultColDef]="defaultColDef"
+                                    [gridOptions]="gridOptions"
+                                    [pagination]="true"
+                                    [paginationPageSize]="10"
+                                    [paginationPageSizeSelector]="[10, 25, 50, 100]"
+                                    (gridReady)="onGridReady($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Inspections Tab -->
+                </div>
+                <!-- End Tab Content -->
                 
             </form>
 
@@ -2174,3 +2279,115 @@
         </div>
     </div>
 </div>
+
+<!-- Inspection Modal -->
+<div class="modal fade" [class.show]="showInspectionModal" [style.display]="showInspectionModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ isEditMode ? 'Edit' : 'Add' }} Thickness Inspection</h5>
+                <button type="button" class="close" (click)="closeInspectionModal()">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="inspectionForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="inspectionDate">Inspection Date <span class="text-danger">*</span></label>
+                                <input type="date" id="inspectionDate" formControlName="inspectionDate" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="reading">Reading</label>
+                                <input type="number" id="reading" formControlName="reading" class="form-control" step="0.01" placeholder="Enter Reading" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="temperature">Temperature</label>
+                                <input type="number" id="temperature" formControlName="temperature" class="form-control" step="0.01" placeholder="Enter Temperature" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="thickness">Thickness</label>
+                                <input type="number" id="thickness" formControlName="thickness" class="form-control" step="0.01" placeholder="Enter Thickness" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="nde">NDE</label>
+                                <input type="text" id="nde" formControlName="nde" class="form-control" placeholder="Enter NDE" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="inspectedBy">Inspected By</label>
+                                <select id="inspectedBy" formControlName="inspectedBy" class="form-control">
+                                    <option value="">-- Select Inspector --</option>
+                                    <option *ngFor="let user of inspectors" [value]="user.id">{{ user.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="verifiedBy">Verified By</label>
+                                <select id="verifiedBy" formControlName="verifiedBy" class="form-control">
+                                    <option value="">-- Select Verifier --</option>
+                                    <option *ngFor="let user of verifiers" [value]="user.id">{{ user.name }}</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <label for="comment">Comment</label>
+                                <textarea id="comment" formControlName="comment" class="form-control" rows="3" placeholder="Enter Comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeInspectionModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="saveInspection()" [disabled]="inspectionForm.invalid">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade" [class.show]="showInspectionModal" *ngIf="showInspectionModal"></div>
+
+<!-- Approval Modal -->
+<div class="modal fade" [class.show]="showApprovalModal" [style.display]="showApprovalModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ approvalAction === 'approve' ? 'Approve' : 'Reject' }} Inspection</h5>
+                <button type="button" class="close" (click)="closeApprovalModal()">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="approvalForm">
+                    <div class="form-group mb-3">
+                        <label for="approvalComment">{{ approvalAction === 'approve' ? 'Approval' : 'Rejection' }} Comments <span class="text-danger">*</span></label>
+                        <textarea id="approvalComment" formControlName="approvalComment" class="form-control" rows="4" 
+                                  [placeholder]="'Enter ' + (approvalAction === 'approve' ? 'approval' : 'rejection') + ' comments'"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeApprovalModal()">Cancel</button>
+                <button type="button" 
+                        [class]="approvalAction === 'approve' ? 'btn btn-success' : 'btn btn-danger'" 
+                        (click)="submitApproval()" 
+                        [disabled]="approvalForm.invalid">
+                    {{ approvalAction === 'approve' ? 'Approve' : 'Reject' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade" [class.show]="showApprovalModal" *ngIf="showApprovalModal"></div>

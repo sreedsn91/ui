@@ -220,7 +220,7 @@ export class SystemAddComponent {
     }
     return this.systemService.checkSystemExists(0,this.areaIdVal,this.unitIdVal ,this.plantIdVal, name).pipe(
       map((data: any) => {
-        alert(data);
+      
         if (data) {
           return { nameExists: true };
         }

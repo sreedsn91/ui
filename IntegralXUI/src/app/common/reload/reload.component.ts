@@ -189,7 +189,7 @@ export class ReloadComponent {
 
     
      this.type = this.receivedData.name;
-    alert(this.type)
+    
 
   if(this.type=='plant')
   {

@@ -490,10 +490,9 @@ async popolateloops(){
   
  loadCLByPlant(plantID: number) {
     this.service.getCorrosionLoopAll(plantID).subscribe((data: any[]) => {
-      debugger
+     
       this.cl = data;
    
-      alert();
     });
   }
 

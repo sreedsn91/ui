@@ -663,14 +663,89 @@ max-width: 180px;
 
 // Icon buttons
 .floating-button-panel {
-  position: fixed;
-  top: 111px;
-  right: 82px;
-  z-index: 9999;
+    position: fixed;
+  top: 150px;
+  right: 30px;
+  z-index: 500;
   background: none;
   padding: 10px 15px;
   border-radius: var(--radius-lg);
   display: flex;
+
+display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+
+  div {
+    display: flex;
+    justify-content: center;
+  }
+
+  button {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    i {
+      font-size: 18px;
+      color: white;
+    }
+
+    &:hover:not(:disabled) {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-commonIcon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+  }
+
+  .btn-saveIcon {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #38f9d7 0%, #43e97b 100%);
+    }
+
+    &:disabled {
+      background: #95a5a6;
+    }
+  }
+
+  .btn-deleteIcon {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #fee140 0%, #fa709a 100%);
+    }
+
+    &:disabled {
+      background: #95a5a6;
+    }
+  }
 }
 
 %icon-button-base {

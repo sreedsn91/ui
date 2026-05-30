@@ -12,7 +12,8 @@ export class MenuService {
   private apiUrl: string;
   private userId:number;
   private clientId:number;
-
+// "apiUrl": "http://178.212.35.127//api/",
+// "apiUrl": "http://localhost:54579/api/",
   constructor(private http: HttpClient,private configService: ConfigService ,private authService: AuthService) {
     this.apiUrl = configService.getConfig("apiUrl");
   }

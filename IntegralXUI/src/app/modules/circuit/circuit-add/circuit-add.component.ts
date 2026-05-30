@@ -301,7 +301,7 @@ export class CircuitAddComponent {
 
   ngOnInit(): void {
     this.circuitForm.get('plantID')?.valueChanges.subscribe((plantID) => {
-      alert();
+     
       this.circuitForm.get('name')?.updateValueAndValidity();
       if (plantID) {
         this.loadAreasByPlant(plantID);

@@ -1,5 +1,5 @@
 
     {
-  "apiUrl": "http://178.212.35.127/api/",
+  "apiUrl": "http://localhost:54579/api/",
     "AttachmentBaseLocation": "C:\\IntegralXDocs"
   }

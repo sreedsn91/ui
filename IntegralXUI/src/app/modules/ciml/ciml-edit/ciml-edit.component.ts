@@ -8,10 +8,12 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { CimlService } from 'src/app/services/ciml/ciml.service';
 import { SharedDataService } from 'src/app/services/shared-data/shared-data.service';
 import Swal from 'sweetalert2';
+import { AgGridAngular } from 'ag-grid-angular';
+import { ColDef, GridOptions, GridReadyEvent } from 'ag-grid-community';
 
 @Component({
   selector: 'app-ciml-edit',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, AgGridAngular],
   templateUrl: './ciml-edit.component.html',
   styleUrl: './ciml-edit.component.scss'
 })
@@ -19,6 +21,7 @@ export class CimlEditComponent {
 
 
   dataLoaded = false;
+  activeTab: string = 'data'; // Default to data tab
   // Accordion state variables
   expand = false;
   showGeneral = true;
@@ -48,6 +51,31 @@ export class CimlEditComponent {
 
   canAdd: boolean = false;
   cimlForm!: FormGroup;
+  inspectionForm!: FormGroup;
+  approvalForm!: FormGroup;
+
+  // Thickness Inspection properties
+  thicknessInspections: any[] = [];
+  showInspectionModal: boolean = false;
+  showApprovalModal: boolean = false;
+  isEditMode: boolean = false;
+  currentInspection: any = null;
+  approvalAction: string = '';
+  inspectors: any[] = [];
+  verifiers: any[] = [];
+  selectedMinThicknessOption: string = '';
+
+  // AG Grid properties
+  columnDefs: ColDef[] = [];
+  gridOptions: GridOptions = {};
+  gridApi: any;
+  defaultColDef: ColDef = {
+    sortable: true,
+    filter: true,
+    resizable: true,
+    flex: 1,
+    minWidth: 100
+  };
 
   documentPreviews: File[] = [];
   ddlplants: any;
@@ -553,12 +581,15 @@ export class CimlEditComponent {
 
   async ngOnInit() {
     this.ls.showLoading();
-    
+    this.initializeInspectionForms();
+    this.initializeGridColumns();
     await this.loadDetails();
     await this.loadDropdowns();
+    await this.loadInspectors();
+    await this.loadThicknessInspections();
     this.ls.hideLoading();
     this.cimlForm.get('plantId')?.valueChanges.subscribe((plantId) => {
-      alert();
+     
       this.cimlForm.get('name')?.updateValueAndValidity();
       if (plantId) {
         this.loadAreasByPlant(plantId);
@@ -674,7 +705,13 @@ export class CimlEditComponent {
       this.cimlForm.get('name')?.updateValueAndValidity();
     });
 
-
+    // Auto-calculate nominalThicknessCA when nominalThickness or corrosionAllowance changes
+    this.cimlForm.get('nominalThickness')?.valueChanges.subscribe(() => {
+      this.updateNominalThicknessCA();
+    });
+    this.cimlForm.get('corrosionAllowance')?.valueChanges.subscribe(() => {
+      this.updateNominalThicknessCA();
+    });
 
   }
 
@@ -956,6 +993,27 @@ export class CimlEditComponent {
     this[section] = !this[section];
   }
 
+  selectMinThicknessOption(option: string) {
+    this.selectedMinThicknessOption = option;
+  }
+
+  updateNominalThicknessCA() {
+    const nominalThicknessValue = this.cimlForm.get('nominalThickness')?.value;
+    const corrosionAllowanceValue = this.cimlForm.get('corrosionAllowance')?.value;
+    
+    // Parse values and ensure they are valid numbers
+    const nominalThickness = parseFloat(nominalThicknessValue);
+    const corrosionAllowance = parseFloat(corrosionAllowanceValue);
+    
+    // Check if both values are valid numbers
+    if (!isNaN(nominalThickness) && !isNaN(corrosionAllowance)) {
+      const result = nominalThickness - corrosionAllowance;
+      this.cimlForm.get('nominalThicknessCA')?.setValue(result.toFixed(2), { emitEvent: false });
+    } else {
+      this.cimlForm.get('nominalThicknessCA')?.setValue('', { emitEvent: false });
+    }
+  }
+
   private setAll(state: boolean) {
     this.expand = state;
 
@@ -1002,5 +1060,384 @@ export class CimlEditComponent {
 
       }
     });
+  }
+
+  // Thickness Inspection Methods
+  initializeInspectionForms() {
+    this.inspectionForm = this.fb.group({
+      id: [null],
+      clientId: [this.au.getClientId()],
+      cmlId: [this.childValue],
+      inspectionDate: ['', Validators.required],
+      reading: [null],
+      temperature: [null],
+      thickness: [null],
+      nde: [''],
+      status: [1], // 1: Pending, 2: Approved, 3: Rejected
+      inspectedBy: [null],
+      verifiedBy: [null],
+      comment: [''],
+      addedBy: [this.au.getUserId()],
+      isDeleted: [false],
+      isActive: [true]
+    });
+
+    this.approvalForm = this.fb.group({
+      approvalComment: ['', Validators.required]
+    });
+  }
+
+  initializeGridColumns() {
+    this.columnDefs = [
+      {
+        headerName: 'Inspection Date',
+        field: 'inspectionDate',
+        filter: 'agDateColumnFilter',
+        valueFormatter: (params) => {
+          if (params.value) {
+            const date = new Date(params.value);
+            return date.toLocaleDateString('en-GB');
+          }
+          return '';
+        },
+        filterParams: {
+          comparator: (filterDate: Date, cellValue: string) => {
+            if (!cellValue) return -1;
+            const cellDate = new Date(cellValue);
+            if (cellDate < filterDate) return -1;
+            if (cellDate > filterDate) return 1;
+            return 0;
+          }
+        },
+        minWidth: 130
+      },
+      { headerName: 'Reading', field: 'reading', minWidth: 100 },
+      { headerName: 'Temperature', field: 'temperature', minWidth: 120 },
+      { headerName: 'Thickness', field: 'thickness', minWidth: 110 },
+      { headerName: 'NDE', field: 'nde', minWidth: 100 },
+      {
+        headerName: 'Status',
+        field: 'status',
+        minWidth: 110,
+        cellRenderer: (params: any) => {
+          const status = params.value;
+          let badgeClass = 'badge-secondary';
+          let statusText = 'Pending';
+          
+          if (status === 2) {
+            badgeClass = 'badge-success';
+            statusText = 'Approved';
+          } else if (status === 3) {
+            badgeClass = 'badge-danger';
+            statusText = 'Rejected';
+          }
+          
+          return `<span class="badge ${badgeClass}">${statusText}</span>`;
+        }
+      },
+      { headerName: 'Inspected By', field: 'inspectedByName', minWidth: 130 },
+      { headerName: 'Verified By', field: 'verifiedByName', minWidth: 130 },
+      { headerName: 'Comment', field: 'comment', minWidth: 150 },
+      {
+        headerName: 'Approval/Rejection Comment',
+        field: 'approvalComment',
+        minWidth: 200,
+        cellRenderer: (params: any) => {
+          const status = params.data.status;
+          const comment = params.value;
+          
+          if (status === 2 || status === 3) {
+            const badgeClass = status === 2 ? 'badge-success' : 'badge-danger';
+            return `<span class="badge ${badgeClass}">${comment || ''}</span>`;
+          }
+          return '<span class="text-muted">-</span>';
+        }
+      },
+      {
+        headerName: 'Actions',
+        field: 'actions',
+        minWidth: 180,
+        cellRenderer: (params: any) => {
+          const inspection = params.data;
+          const isFinalized = inspection.status === 2 || inspection.status === 3;
+          const isUserInspector = this.isCurrentUserInspector(inspection);
+          
+          return `
+            <div class="btn-group" role="group">
+              <button 
+                type="button" 
+                class="btn btn-sm btn-info action-btn edit-btn" 
+                ${isFinalized ? 'disabled' : ''}
+                title="Edit">
+                <i class="feather icon-edit"></i>
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-sm btn-danger action-btn delete-btn" 
+                ${isFinalized ? 'disabled' : ''}
+                title="Delete">
+                <i class="feather icon-trash"></i>
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-sm btn-success action-btn approve-btn" 
+                ${isFinalized || isUserInspector ? 'disabled' : ''}
+                title="Approve">
+                <i class="feather icon-check"></i>
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-sm btn-warning action-btn reject-btn" 
+                ${isFinalized || isUserInspector ? 'disabled' : ''}
+                title="Reject">
+                <i class="feather icon-x"></i>
+              </button>
+            </div>
+          `;
+        },
+        sortable: false,
+        filter: false
+      }
+    ];
+
+    this.gridOptions = {
+      rowData: this.thicknessInspections,
+      columnDefs: this.columnDefs,
+      defaultColDef: this.defaultColDef,
+      pagination: true,
+      paginationPageSize: 10,
+      paginationPageSizeSelector: [10, 25, 50, 100],
+      domLayout: 'autoHeight',
+      onGridReady: (params: GridReadyEvent) => {
+        params.api.sizeColumnsToFit();
+      },
+      getRowClass: (params) => {
+        if (params.data.status === 2) {
+          return 'ag-row-success';
+        } else if (params.data.status === 3) {
+          return 'ag-row-danger';
+        }
+        return '';
+      },
+      onCellClicked: (event) => {
+        const target = event.event?.target as HTMLElement;
+        if (target.closest('.edit-btn')) {
+          this.editInspection(event.data);
+        } else if (target.closest('.delete-btn')) {
+          this.deleteInspection(event.data.id);
+        } else if (target.closest('.approve-btn')) {
+          this.openApprovalModal(event.data, 'approve');
+        } else if (target.closest('.reject-btn')) {
+          this.openApprovalModal(event.data, 'reject');
+        }
+      }
+    };
+  }
+
+  onGridReady(params: GridReadyEvent) {
+    this.gridApi = params.api;
+    params.api.sizeColumnsToFit();
+  }
+
+  refreshGrid() {
+    if (this.gridApi) {
+      this.gridApi.setGridOption('rowData', this.thicknessInspections);
+    }
+  }
+
+  async loadInspectors() {
+    try {
+      this.service.getUsersForInspection().subscribe(
+        (data) => {
+          this.inspectors = data;
+        },
+        (error) => {
+          console.error('Error loading inspectors:', error);
+        }
+      );
+    } catch (error) {
+      console.error('Error loading inspectors:', error);
+    }
+  }
+
+  async loadThicknessInspections() {
+    try {
+      this.service.getThicknessInspectionsByCML(this.childValue).subscribe(
+        (data) => {
+          this.thicknessInspections = data;
+          this.refreshGrid();
+        },
+        (error) => {
+          console.error('Error loading inspections:', error);
+          Swal.fire('Error', 'Failed to load thickness inspections', 'error');
+        }
+      );
+    } catch (error) {
+      console.error('Error loading thickness inspections:', error);
+    }
+  }
+
+  openInspectionModal() {
+    this.isEditMode = false;
+    this.currentInspection = null;
+    this.inspectionForm.reset({
+      clientId: this.au.getClientId(),
+      cmlId: this.childValue,
+      status: 1,
+      addedBy: this.au.getUserId(),
+      isDeleted: false,
+      isActive: true
+    });
+    this.showInspectionModal = true;
+  }
+
+  editInspection(inspection: any) {
+    this.isEditMode = true;
+    this.currentInspection = inspection;
+    this.inspectionForm.patchValue(inspection);
+    this.showInspectionModal = true;
+  }
+
+  closeInspectionModal() {
+    this.showInspectionModal = false;
+    this.inspectionForm.reset();
+  }
+
+  saveInspection() {
+    if (this.inspectionForm.invalid) {
+      return;
+    }
+
+    const formValue = this.inspectionForm.value;
+    
+    // Prepare the data with proper formatting
+    const inspectionData: any = {
+      id: formValue.id || 0,
+      clientId: Number(this.au.getClientId()),
+      cmlId: Number(this.childValue),
+      inspectionDate: formValue.inspectionDate ? new Date(formValue.inspectionDate).toISOString() : new Date().toISOString(),
+      reading: formValue.reading ? Number(formValue.reading) : 0,
+      temperature: formValue.temperature ? Number(formValue.temperature) : 0,
+      thickness: formValue.thickness ? Number(formValue.thickness) : 0,
+      nde: formValue.nde || '',
+      status: Number(formValue.status),
+      inspectedBy: formValue.inspectedBy ? Number(formValue.inspectedBy) : 0,
+      verifiedBy: formValue.verifiedBy ? Number(formValue.verifiedBy) : 0,
+      comment: formValue.comment || '',
+      addedBy: Number(formValue.addedBy),
+      isDeleted: formValue.isDeleted || false,
+      isActive: formValue.isActive !== false
+    };
+    
+    // Add modification fields for edit mode
+    if (this.isEditMode) {
+      inspectionData.modifiedBy = Number(this.au.getUserId());
+      inspectionData.modifiedOn = new Date().toISOString();
+    }
+    
+    console.log('Inspection Data being sent:', inspectionData);
+
+    if (this.isEditMode) {
+      this.service.updateThicknessInspection(inspectionData.id, inspectionData).subscribe(
+        () => {
+          Swal.fire('Success', 'Inspection updated successfully', 'success');
+          this.loadThicknessInspections();
+          this.closeInspectionModal();
+        },
+        (error) => {
+          console.error('Error updating inspection:', error);
+          Swal.fire('Error', 'Failed to update inspection', 'error');
+        }
+      );
+    } else {
+      this.service.createThicknessInspection(inspectionData).subscribe(
+        () => {
+          Swal.fire('Success', 'Inspection added successfully', 'success');
+          this.loadThicknessInspections();
+          this.closeInspectionModal();
+        },
+        (error) => {
+          console.error('Error adding inspection:', error);
+          Swal.fire('Error', 'Failed to add inspection', 'error');
+        }
+      );
+    }
+  }
+
+  deleteInspection(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to delete this inspection?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.service.deleteThicknessInspection(id).subscribe(
+          () => {
+            Swal.fire('Deleted!', 'Inspection has been deleted.', 'success');
+            this.loadThicknessInspections();
+          },
+          (error) => {
+            console.error('Error deleting inspection:', error);
+            Swal.fire('Error', 'Failed to delete inspection', 'error');
+          }
+        );
+      }
+    });
+  }
+
+  openApprovalModal(inspection: any, action: string) {
+    this.currentInspection = inspection;
+    this.approvalAction = action;
+    this.approvalForm.reset();
+    this.showApprovalModal = true;
+  }
+
+  closeApprovalModal() {
+    this.showApprovalModal = false;
+    this.approvalForm.reset();
+  }
+
+  submitApproval() {
+    if (this.approvalForm.invalid) {
+      return;
+    }
+
+    const approvalComment = this.approvalForm.get('approvalComment')?.value;
+    const newStatus = this.approvalAction === 'approve' ? 2 : 3; // 2: Approved, 3: Rejected
+
+    this.service.updateInspectionStatus(this.currentInspection.id, newStatus, approvalComment).subscribe(
+      () => {
+        const message = this.approvalAction === 'approve' ? 'approved' : 'rejected';
+        Swal.fire('Success', `Inspection ${message} successfully`, 'success');
+        this.loadThicknessInspections();
+        this.closeApprovalModal();
+      },
+      (error) => {
+        console.error('Error updating inspection status:', error);
+        Swal.fire('Error', 'Failed to update inspection status', 'error');
+      }
+    );
+  }
+
+  getStatusLabel(status: number): string {
+    switch (status) {
+      case 1:
+        return 'Pending';
+      case 2:
+        return 'Approved';
+      case 3:
+        return 'Rejected';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  isCurrentUserInspector(inspection: any): boolean {
+    const currentUserId = Number(this.au.getUserId());
+    return inspection.inspectedBy === currentUserId;
   }
 }

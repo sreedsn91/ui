@@ -576,4 +576,54 @@ getCIMLInsulationRemovalRequired(): Observable<any> {
   });
 }
 
+// Thickness Inspection APIs
+getThicknessInspectionsByCML(cmlId: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/ByCML/${cmlId}`, {
+    headers: this.getHeaders(),
+  });
+}
+
+getThicknessInspection(id: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/${id}`, {
+    headers: this.getHeaders(),
+  });
+}
+
+createThicknessInspection(data: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}CIMLThicknessInspection`, data, {
+    headers: this.getHeaders(),
+  });
+}
+
+updateThicknessInspection(id: number, data: any): Observable<any> {
+  return this.http.put(`${this.apiUrl}CIMLThicknessInspection/${id}`, data, {
+    headers: this.getHeaders(),
+  });
+}
+
+deleteThicknessInspection(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}CIMLThicknessInspection/${id}`, {
+    headers: this.getHeaders(),
+  });
+}
+
+updateInspectionStatus(id: number, status: number, comment: string): Observable<any> {
+  return this.http.put(`${this.apiUrl}CIMLThicknessInspection/${id}/status`, 
+    { status, comment },
+    { headers: this.getHeaders() }
+  );
+}
+
+getInspectionStatuses(): Observable<any> {
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/statuses`, {
+    headers: this.getHeaders(),
+  });
+}
+
+getUsersForInspection(): Observable<any> {
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/users`, {
+    headers: this.getHeaders(),
+  });
+}
+
 }
