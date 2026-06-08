@@ -3,7 +3,7 @@
         <div class="card-body" *ngIf="dataLoaded">
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <div class="d-flex align-items-center gap-3">
-                    <h3 class="m-0">New CIML</h3>
+                    
                     <div class="floating-button-panel">
                         <div *ngIf="!this.expand">
                             <button class="btn-commonIcon" (click)="expandAll()" title="Expand all sections">
@@ -59,7 +59,7 @@
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" [class.active]="activeTab === 'inspections'" type="button" role="tab" (click)="activeTab = 'inspections'">
+                        <button class="nav-link" [class.active]="activeTab === 'inspections'" type="button" role="tab" (click)="activeTab = 'inspections'; onInspectionsTabClick()">
                             Inspections
                         </button>
                     </li>
@@ -967,6 +967,14 @@
         <div class="m-1 field-containernwsm">
             <label for="nominalThickness" class="form-label">Nominal Thickness:</label>
             <input id="nominalThickness" formControlName="nominalThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Nominal Thickness" />
+        </div>
+    </div>
+
+    <!-- Baseline Thickness (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="baselineThickness" class="form-label">Baseline Thickness (mm):</label>
+            <input id="baselineThickness" formControlName="baselineThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Baseline Thickness" />
         </div>
     </div>
 
@@ -2281,83 +2289,178 @@
 </div>
 
 <!-- Inspection Modal -->
-<div class="modal fade" [class.show]="showInspectionModal" [style.display]="showInspectionModal ? 'block' : 'none'" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade inspection-modal" [class.show]="showInspectionModal" [style.display]="showInspectionModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl insp-modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{ isEditMode ? 'Edit' : 'Add' }} Thickness Inspection</h5>
-                <button type="button" class="close" (click)="closeInspectionModal()">
+            <div class="modal-header insp-modal-header">
+                <div class="insp-modal-title-wrap">
+                    <span class="insp-modal-icon"><i class="fa fa-ruler-combined"></i></span>
+                    <h5 class="modal-title">{{ isViewMode ? 'View' : isEditMode ? 'Edit' : 'Add' }} Thickness Inspection</h5>
+                </div>
+                <button type="button" class="insp-close-btn" (click)="closeInspectionModal()" aria-label="Close">
                     <span>&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body insp-modal-body">
                 <form [formGroup]="inspectionForm">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="inspectionDate">Inspection Date <span class="text-danger">*</span></label>
-                                <input type="date" id="inspectionDate" formControlName="inspectionDate" class="form-control" />
+                    <div class="insp-split-layout">
+
+                        <!-- ── LEFT: form sections ─────────────────────────── -->
+                        <div class="insp-split-left">
+
+                            <!-- Measurement Details -->
+                            <div class="insp-section-header">
+                                <i class="fa fa-chart-line"></i> Measurement Details
+                            </div>
+                            <div class="row insp-section-body">
+                                <div class="col-md-6">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="inspectionDate">
+                                            Inspection Date <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="date" id="inspectionDate" formControlName="inspectionDate" class="form-control insp-input" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="reading">Measured Thickness (mm)</label>
+                                        <input type="number" id="reading" formControlName="reading" class="form-control insp-input" step="0.01" placeholder="Enter reading value" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="temperature">Temperature</label>
+                                        <input type="number" id="temperature" formControlName="temperature" class="form-control insp-input" step="0.01" placeholder="Enter temperature" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="thickness">Corrected Measured Thickness (mm)</label>
+                                        <input type="number" id="thickness" formControlName="thickness" class="form-control insp-input" step="0.01" placeholder="Enter thickness" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Inspection Details -->
+                            <div class="insp-section-header">
+                                <i class="fa fa-clipboard-check"></i> Inspection Details
+                            </div>
+                            <div class="row insp-section-body">
+                                <div class="col-md-6">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="modeOfThicknessLoss">Mode of Thickness Loss</label>
+                                        <select id="modeOfThicknessLoss" formControlName="modeOfThicknessLoss" class="form-control insp-input">
+                                            <option [value]="null">-- Select Mode --</option>
+                                            <option *ngFor="let mode of modeOfThicknessLossOptions" [value]="mode.id">{{ mode.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="nde">NDE</label>
+                                        <input type="text" id="nde" formControlName="nde" class="form-control insp-input" placeholder="Enter NDE method" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="inspectedBy">Inspected By</label>
+                                        <select id="inspectedBy" formControlName="inspectedBy" class="form-control insp-input">
+                                            <option value="">-- Select Inspector --</option>
+                                            <option *ngFor="let user of inspectors" [value]="user.id">{{ user.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group insp-form-group">
+                                        <label class="insp-label" for="comment">Comment</label>
+                                        <textarea id="comment" formControlName="comment" class="form-control insp-input insp-textarea" rows="3" placeholder="Enter any additional comments"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- ── end LEFT ──────────────────────────────────────── -->
+
+                        <!-- ── RIGHT: calculated results ─────────────────────── -->
+                        <div class="insp-split-right">
+                            <div class="insp-section-header">
+                                <i class="fa fa-calculator"></i> Calculated Results
+                                <span *ngIf="calculationsLoading" class="insp-calc-spinner">
+                                    <i class="fa fa-spinner fa-spin"></i> Calculating...
+                                </span>
+                            </div>
+                            <div class="insp-calc-panel" [class.insp-calc-loading]="calculationsLoading">
+
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">STCR</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('stcr')?.value != null ? (inspectionForm.get('stcr')?.value | number:'1.4-4') : '—' }}</span>
+                                </div>
+
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">LTCR</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('ltcr')?.value != null ? (inspectionForm.get('ltcr')?.value | number:'1.4-4') : '—' }}</span>
+                                </div>
+
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">Remaining CA</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('remainingCA')?.value != null ? (inspectionForm.get('remainingCA')?.value | number:'1.4-4') : '—' }}</span>
+                                </div>
+
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">Thickness Loss (%)</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('thicknessLossPercentage')?.value != null ? (inspectionForm.get('thicknessLossPercentage')?.value | number:'1.2-2') + '%' : '—' }}</span>
+                                </div>
+
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">Baseline Thickness</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('calcBaselineThickness')?.value != null ? (inspectionForm.get('calcBaselineThickness')?.value | number:'1.2-2') + ' mm' : '—' }}</span>
+                                </div>
+<!-- 
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">Nominal Thickness</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('calcNominalThickness')?.value != null ? (inspectionForm.get('calcNominalThickness')?.value | number:'1.2-2') + ' mm' : '—' }}</span>
+                                </div> -->
+
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">Remaining Life (Yrs) – LTCR</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('remainingLifeLTCR')?.value != null ? (inspectionForm.get('remainingLifeLTCR')?.value | number:'1.2-2') + ' yrs' : '—' }}</span>
+                                </div>
+
+                                <div class="insp-calc-field">
+                                    <span class="insp-calc-label">Remaining Life (Yrs) – STCR</span>
+                                    <span class="insp-calc-value">{{ inspectionForm.get('remainingLifeSTCR')?.value != null ? (inspectionForm.get('remainingLifeSTCR')?.value | number:'1.2-2') + ' yrs' : '—' }}</span>
+                                </div>
+
+                                <div class="insp-calc-field insp-calc-field--highlight">
+                                    <label class="insp-calc-label" for="minThickness">Minimum Thickness</label>
+                                    <input type="number"
+                                           id="minThickness"
+                                           formControlName="minThickness"
+                                           class="insp-input insp-min-thickness-input"
+                                           step="0.0001"
+                                           placeholder="Auto-calculated" />
+                                </div>
+
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="reading">Reading</label>
-                                <input type="number" id="reading" formControlName="reading" class="form-control" step="0.01" placeholder="Enter Reading" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="temperature">Temperature</label>
-                                <input type="number" id="temperature" formControlName="temperature" class="form-control" step="0.01" placeholder="Enter Temperature" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="thickness">Thickness</label>
-                                <input type="number" id="thickness" formControlName="thickness" class="form-control" step="0.01" placeholder="Enter Thickness" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="nde">NDE</label>
-                                <input type="text" id="nde" formControlName="nde" class="form-control" placeholder="Enter NDE" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="inspectedBy">Inspected By</label>
-                                <select id="inspectedBy" formControlName="inspectedBy" class="form-control">
-                                    <option value="">-- Select Inspector --</option>
-                                    <option *ngFor="let user of inspectors" [value]="user.id">{{ user.name }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="verifiedBy">Verified By</label>
-                                <select id="verifiedBy" formControlName="verifiedBy" class="form-control">
-                                    <option value="">-- Select Verifier --</option>
-                                    <option *ngFor="let user of verifiers" [value]="user.id">{{ user.name }}</option>
-                                </select>
-                            </div>
-                        </div> -->
-                        <div class="col-md-12">
-                            <div class="form-group mb-3">
-                                <label for="comment">Comment</label>
-                                <textarea id="comment" formControlName="comment" class="form-control" rows="3" placeholder="Enter Comment"></textarea>
-                            </div>
-                        </div>
+                        <!-- ── end RIGHT ─────────────────────────────────────── -->
+
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closeInspectionModal()">Cancel</button>
-                <button type="button" class="btn btn-primary" (click)="saveInspection()" [disabled]="inspectionForm.invalid">Save</button>
+            <div class="modal-footer insp-modal-footer">
+                <button type="button" class="btn insp-btn-cancel" (click)="closeInspectionModal()">
+                    <i class="fa fa-times"></i> Cancel
+                </button>
+                @if (!isViewMode) {
+                <button type="button" class="btn insp-btn-save" (click)="saveInspection()" [disabled]="inspectionForm.invalid">
+                    <i class="fa fa-save"></i> {{ isEditMode ? 'Update' : 'Save' }}
+                </button>
+                }
             </div>
         </div>
     </div>
 </div>
-<div class="modal-backdrop fade" [class.show]="showInspectionModal" *ngIf="showInspectionModal"></div>
 
 <!-- Approval Modal -->
 <div class="modal fade" [class.show]="showApprovalModal" [style.display]="showApprovalModal ? 'block' : 'none'" tabindex="-1" role="dialog">

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Renderer2, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LoadingService } from 'src/app/common/loadingPanel/loading.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CimlService } from 'src/app/services/ciml/ciml.service';
@@ -17,7 +18,7 @@ import { ColDef, GridOptions, GridReadyEvent } from 'ag-grid-community';
   templateUrl: './ciml-edit.component.html',
   styleUrl: './ciml-edit.component.scss'
 })
-export class CimlEditComponent {
+export class CimlEditComponent implements OnDestroy {
 
 
   dataLoaded = false;
@@ -59,11 +60,16 @@ export class CimlEditComponent {
   showInspectionModal: boolean = false;
   showApprovalModal: boolean = false;
   isEditMode: boolean = false;
+  isViewMode: boolean = false;
   currentInspection: any = null;
   approvalAction: string = '';
   inspectors: any[] = [];
   verifiers: any[] = [];
+  modeOfThicknessLossOptions: any[] = [];
   selectedMinThicknessOption: string = '';
+  thicknessLossPercentage: number | null = null;
+  calculationsLoading: boolean = false;
+  thicknessReferencesChecked: boolean = false;
 
   // AG Grid properties
   columnDefs: ColDef[] = [];
@@ -80,7 +86,7 @@ export class CimlEditComponent {
   documentPreviews: File[] = [];
   ddlplants: any;
   ddlareas: any;
-  ddlunits: any; ''
+  ddlunits: any;
   ddlsystems: any;
   ddlcircuits: any;
   ddlcorrosionLoops: any;
@@ -159,7 +165,9 @@ export class CimlEditComponent {
   canEdit: boolean = false;
   canDelete: boolean = false;
 
-  constructor(private sharedDataService: SharedDataService, private service: CimlService, private ls: LoadingService, private fb: FormBuilder, private au: AuthService, private router: Router) {
+  private backdropEl: HTMLElement | null = null;
+
+  constructor(private sharedDataService: SharedDataService, private service: CimlService, private ls: LoadingService, private fb: FormBuilder, private au: AuthService, private router: Router, private renderer: Renderer2) {
     this.canDelete = (this.au.getCanDelete());
     this.canEdit = (this.au.getCanEdit());
     this.receivedData = this.sharedDataService.getData();
@@ -254,6 +262,7 @@ export class CimlEditComponent {
       materialSpecification: [''],
       allowableStress: [''],
       nominalThickness: [''],
+      baselineThickness: [''],
       corrosionAllowance: [''],
       cladding: [''],
       claddingType: [''],
@@ -370,7 +379,6 @@ export class CimlEditComponent {
   }
   async loadDetails() {
     this.service.getCIMLDetails(this.childValue).subscribe(data => {
-      debugger;
       // Map the data to match the form structure
       this.cimlForm.patchValue({
         id: data.id || null,
@@ -461,6 +469,7 @@ export class CimlEditComponent {
         materialSpecification: data.materialSpecification || '',
         allowableStress: data.allowableStress || '',
         nominalThickness: data.nominalThickness || '',
+        baselineThickness: data.baselineThickness || '',
         corrosionAllowance: data.corrosionAllowance || '',
         cladding: data.cladding || '',
         claddingType: data.claddingType || '',
@@ -582,6 +591,7 @@ export class CimlEditComponent {
   async ngOnInit() {
     this.ls.showLoading();
     this.initializeInspectionForms();
+    this.subscribeToInspectionCalculations();
     this.initializeGridColumns();
     await this.loadDetails();
     await this.loadDropdowns();
@@ -907,7 +917,6 @@ export class CimlEditComponent {
       soilToAirInterfaces: this.service.GetDdlCIMLSoilToAirInterface(),
       accessibilityOptions: this.service.GetDdlCIMLAccessible()
     }).subscribe(results => {
-      debugger;
       this.ddlplants = results.ddlplants;
       this.categories = results.categories;
       this.soilToAirInterfaces = results.soilToAirInterfaces;
@@ -1014,6 +1023,44 @@ export class CimlEditComponent {
     }
   }
 
+  performThicknessCalculations(measuredThickness: number, measuredDate: string): void {
+    if (!measuredThickness || !measuredDate) {
+      Swal.fire('Validation', 'Measured thickness and date are required for calculations.', 'warning');
+      return;
+    }
+
+    this.ls.showLoading();
+
+    forkJoin({
+      stcr: this.service.calculateSTCR(this.childValue, measuredThickness, measuredDate),
+      ltcr: this.service.calculateLTCR(this.childValue, measuredThickness, measuredDate),
+      remainingCA: this.service.calculateRemainingCA(this.childValue, measuredThickness),
+      thicknessLoss: this.service.calculateThicknessLoss(this.childValue, measuredThickness),
+      baselineThickness: this.service.getBaselineThickness(this.childValue),
+      nominalThickness: this.service.getNominalThickness(this.childValue)
+    }).subscribe({
+      next: (results) => {
+        this.cimlForm.patchValue({
+          stcr: results.stcr?.stcr ?? '',
+          ltcr: results.ltcr?.ltcr ?? '',
+          calculatedRemainingLife: results.remainingCA?.remainingCA ?? '',
+          baselineThickness: results.baselineThickness?.baselineThickness ?? '',
+          nominalThickness: results.nominalThickness?.nominalThickness ?? ''
+        }, { emitEvent: false });
+
+        this.thicknessLossPercentage = results.thicknessLoss?.thicknessLossPercentage ?? null;
+
+        this.ls.hideLoading();
+        Swal.fire('Success', 'Thickness calculations completed successfully.', 'success');
+      },
+      error: (error) => {
+        this.ls.hideLoading();
+        console.error('Error performing thickness calculations:', error);
+        Swal.fire('Error', 'Failed to perform thickness calculations.', 'error');
+      }
+    });
+  }
+
   private setAll(state: boolean) {
     this.expand = state;
 
@@ -1052,11 +1099,10 @@ export class CimlEditComponent {
       confirmButtonText: 'Yes, Delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.service.deleteCIML(this.childValue).subscribe(
-          () => this.backToCIML(),
-          error =>
-            Swal.fire('Delete failed:', error)
-        );
+        this.service.deleteCIML(this.childValue).subscribe({
+          next: () => this.backToCIML(),
+          error: (err) => Swal.fire('Delete failed:', err)
+        });
 
       }
     });
@@ -1072,6 +1118,7 @@ export class CimlEditComponent {
       reading: [null],
       temperature: [null],
       thickness: [null],
+      modeOfThicknessLoss: [null],
       nde: [''],
       status: [1], // 1: Pending, 2: Approved, 3: Rejected
       inspectedBy: [null],
@@ -1079,11 +1126,93 @@ export class CimlEditComponent {
       comment: [''],
       addedBy: [this.au.getUserId()],
       isDeleted: [false],
-      isActive: [true]
+      isActive: [true],
+      stcr: [null],
+      ltcr: [null],
+      remainingCA: [null],
+      thicknessLossPercentage: [null],
+      calcBaselineThickness: [null],
+      calcNominalThickness: [null],
+      remainingLifeLTCR: [null],
+      remainingLifeSTCR: [null],
+      minThickness: [null]
     });
 
     this.approvalForm = this.fb.group({
       approvalComment: ['', Validators.required]
+    });
+  }
+
+  subscribeToInspectionCalculations(): void {
+    const triggerCalc = () => {
+      const thickness = Number(this.inspectionForm.get('thickness')?.value);
+      const inspectionDate = this.inspectionForm.get('inspectionDate')?.value as string;
+      if (thickness > 0 && inspectionDate) {
+        this.performInspectionCalculations(thickness, inspectionDate);
+      }
+    };
+
+    this.inspectionForm.get('thickness')?.valueChanges.pipe(
+      debounceTime(600),
+      distinctUntilChanged()
+    ).subscribe((value) => {
+      if (value != null && value !== '') {
+      
+      }
+      triggerCalc();
+    });
+
+    this.inspectionForm.get('inspectionDate')?.valueChanges.pipe(
+      debounceTime(600),
+      distinctUntilChanged()
+    ).subscribe(() => triggerCalc());
+  }
+
+  performInspectionCalculations(measuredThickness: number, measuredDate: string): void {
+    this.calculationsLoading = true;
+
+    forkJoin({
+      stcr: this.service.calculateSTCR(this.childValue, measuredThickness, measuredDate).pipe(catchError(() => of(null))),
+      ltcr: this.service.calculateLTCR(this.childValue, measuredThickness, measuredDate).pipe(catchError(() => of(null))),
+      remainingCA: this.service.calculateRemainingCA(this.childValue, measuredThickness).pipe(catchError(() => of(null))),
+      thicknessLoss: this.service.calculateThicknessLoss(this.childValue, measuredThickness).pipe(catchError(() => of(null))),
+      baselineThickness: this.service.getBaselineThickness(this.childValue).pipe(catchError(() => of(null))),
+      nominalThickness: this.service.getNominalThickness(this.childValue).pipe(catchError(() => of(null)))
+    }).subscribe({
+      next: (results) => {
+        const remainingCA = results.remainingCA?.remainingCA ?? null;
+        const ltcr = results.ltcr?.ltcr ?? null;
+        const stcr = results.stcr?.stcr ?? null;
+
+        const remainingLifeLTCR = (remainingCA != null && ltcr != null && ltcr !== 0)
+          ? remainingCA / ltcr : null;
+        const remainingLifeSTCR = (remainingCA != null && stcr != null && stcr !== 0)
+          ? remainingCA / stcr : null;
+
+        const calcValues = [
+          stcr, ltcr, remainingCA,
+          results.thicknessLoss?.thicknessLossPercentage ?? null,
+          results.baselineThickness?.baselineThickness ?? null,
+          results.nominalThickness?.nominalThickness ?? null
+        ].filter((v): v is number => v !== null);
+        const minThickness = calcValues.length > 0 ? Math.min(...calcValues) : null;
+
+        this.inspectionForm.patchValue({
+          stcr,
+          ltcr,
+          remainingCA,
+          thicknessLossPercentage: results.thicknessLoss?.thicknessLossPercentage ?? null,
+          calcBaselineThickness: results.baselineThickness?.baselineThickness ?? null,
+          calcNominalThickness: results.nominalThickness?.nominalThickness ?? null,
+          remainingLifeLTCR,
+          remainingLifeSTCR,
+          minThickness
+        }, { emitEvent: false });
+        this.calculationsLoading = false;
+      },
+      error: () => {
+        this.calculationsLoading = false;
+      }
     });
   }
 
@@ -1114,40 +1243,43 @@ export class CimlEditComponent {
       { headerName: 'Reading', field: 'reading', minWidth: 100 },
       { headerName: 'Temperature', field: 'temperature', minWidth: 120 },
       { headerName: 'Thickness', field: 'thickness', minWidth: 110 },
+      { headerName: 'Min Thickness', field: 'minThickness', minWidth: 120 },
+      { headerName: 'Mode of Thickness Loss', field: 'modeOfThicknessLossName', minWidth: 170 },
       { headerName: 'NDE', field: 'nde', minWidth: 100 },
       {
         headerName: 'Status',
         field: 'status',
         minWidth: 110,
         cellRenderer: (params: any) => {
-          const status = params.value;
-          let badgeClass = 'badge-secondary';
+          const status = Number(params.value);
+          let badgeClass = 'bg-secondary';
           let statusText = 'Pending';
-          
+
           if (status === 2) {
-            badgeClass = 'badge-success';
+            badgeClass = 'bg-success';
             statusText = 'Approved';
           } else if (status === 3) {
-            badgeClass = 'badge-danger';
+            badgeClass = 'bg-danger';
             statusText = 'Rejected';
           }
-          
+
           return `<span class="badge ${badgeClass}">${statusText}</span>`;
         }
       },
-      { headerName: 'Inspected By', field: 'inspectedByName', minWidth: 130 },
+      //{ headerName: 'Inspected By', field: 'inspectedByName', minWidth: 130 },
       { headerName: 'Verified By', field: 'verifiedByName', minWidth: 130 },
+      // { headerName: 'Entered By', field: 'addedByName', minWidth: 130 },
       { headerName: 'Comment', field: 'comment', minWidth: 150 },
       {
         headerName: 'Approval/Rejection Comment',
         field: 'approvalComment',
         minWidth: 200,
         cellRenderer: (params: any) => {
-          const status = params.data.status;
+          const status = Number(params.data.status);
           const comment = params.value;
-          
+
           if (status === 2 || status === 3) {
-            const badgeClass = status === 2 ? 'badge-success' : 'badge-danger';
+            const badgeClass = status === 2 ? 'bg-success' : 'bg-danger';
             return `<span class="badge ${badgeClass}">${comment || ''}</span>`;
           }
           return '<span class="text-muted">-</span>';
@@ -1159,36 +1291,44 @@ export class CimlEditComponent {
         minWidth: 180,
         cellRenderer: (params: any) => {
           const inspection = params.data;
-          const isFinalized = inspection.status === 2 || inspection.status === 3;
+          const isFinalized = Number(inspection.status) === 2 || Number(inspection.status) === 3;
           const isUserInspector = this.isCurrentUserInspector(inspection);
           
+          if (isFinalized) {
+            return `
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-sm btn-secondary action-btn view-btn" title="View">
+                  <i class="feather icon-eye"></i>
+                </button>
+              </div>
+            `;
+          }
+
           return `
             <div class="btn-group" role="group">
-              <button 
-                type="button" 
-                class="btn btn-sm btn-info action-btn edit-btn" 
-                ${isFinalized ? 'disabled' : ''}
+              <button
+                type="button"
+                class="btn btn-sm btn-info action-btn edit-btn"
                 title="Edit">
                 <i class="feather icon-edit"></i>
               </button>
-              <button 
-                type="button" 
-                class="btn btn-sm btn-danger action-btn delete-btn" 
-                ${isFinalized ? 'disabled' : ''}
+              <button
+                type="button"
+                class="btn btn-sm btn-danger action-btn delete-btn"
                 title="Delete">
                 <i class="feather icon-trash"></i>
               </button>
-              <button 
-                type="button" 
-                class="btn btn-sm btn-success action-btn approve-btn" 
-                ${isFinalized || isUserInspector ? 'disabled' : ''}
+              <button
+                type="button"
+                class="btn btn-sm btn-success action-btn approve-btn"
+                ${isUserInspector ? 'disabled' : ''}
                 title="Approve">
                 <i class="feather icon-check"></i>
               </button>
-              <button 
-                type="button" 
-                class="btn btn-sm btn-warning action-btn reject-btn" 
-                ${isFinalized || isUserInspector ? 'disabled' : ''}
+              <button
+                type="button"
+                class="btn btn-sm btn-warning action-btn reject-btn"
+                ${isUserInspector ? 'disabled' : ''}
                 title="Reject">
                 <i class="feather icon-x"></i>
               </button>
@@ -1212,16 +1352,18 @@ export class CimlEditComponent {
         params.api.sizeColumnsToFit();
       },
       getRowClass: (params) => {
-        if (params.data.status === 2) {
+        if (Number(params.data.status) === 2) {
           return 'ag-row-success';
-        } else if (params.data.status === 3) {
+        } else if (Number(params.data.status) === 3) {
           return 'ag-row-danger';
         }
         return '';
       },
       onCellClicked: (event) => {
         const target = event.event?.target as HTMLElement;
-        if (target.closest('.edit-btn')) {
+        if (target.closest('.view-btn')) {
+          this.viewInspection(event.data);
+        } else if (target.closest('.edit-btn')) {
           this.editInspection(event.data);
         } else if (target.closest('.delete-btn')) {
           this.deleteInspection(event.data.id);
@@ -1247,14 +1389,14 @@ export class CimlEditComponent {
 
   async loadInspectors() {
     try {
-      this.service.getUsersForInspection().subscribe(
-        (data) => {
-          this.inspectors = data;
-        },
-        (error) => {
-          console.error('Error loading inspectors:', error);
-        }
-      );
+      this.service.getUsersForInspection().subscribe({
+        next: (data) => { this.inspectors = data; },
+        error: (error) => { console.error('Error loading inspectors:', error); }
+      });
+      this.service.getModeOfThicknessLoss().subscribe({
+        next: (data) => { this.modeOfThicknessLossOptions = data; },
+        error: (error) => { console.error('Error loading mode of thickness loss options:', error); }
+      });
     } catch (error) {
       console.error('Error loading inspectors:', error);
     }
@@ -1262,19 +1404,45 @@ export class CimlEditComponent {
 
   async loadThicknessInspections() {
     try {
-      this.service.getThicknessInspectionsByCML(this.childValue).subscribe(
-        (data) => {
+      this.service.getThicknessInspectionsByCML(this.childValue).subscribe({
+        next: (data) => {
+          debugger;
           this.thicknessInspections = data;
           this.refreshGrid();
         },
-        (error) => {
+        error: (error) => {
           console.error('Error loading inspections:', error);
           Swal.fire('Error', 'Failed to load thickness inspections', 'error');
         }
-      );
+      });
     } catch (error) {
       console.error('Error loading thickness inspections:', error);
     }
+  }
+
+  private showBackdrop() {
+    this.backdropEl = this.renderer.createElement('div');
+    this.renderer.addClass(this.backdropEl, 'insp-backdrop');
+    this.renderer.appendChild(document.body, this.backdropEl);
+    this.renderer.setStyle(document.body, 'overflow', 'hidden');
+    setTimeout(() => this.backdropEl && this.renderer.addClass(this.backdropEl, 'insp-backdrop--visible'), 10);
+  }
+
+  private hideBackdrop() {
+    if (this.backdropEl) {
+      this.renderer.removeClass(this.backdropEl, 'insp-backdrop--visible');
+      setTimeout(() => {
+        if (this.backdropEl) {
+          this.renderer.removeChild(document.body, this.backdropEl);
+          this.backdropEl = null;
+        }
+      }, 250);
+    }
+    this.renderer.removeStyle(document.body, 'overflow');
+  }
+
+  ngOnDestroy() {
+    this.hideBackdrop();
   }
 
   openInspectionModal() {
@@ -1289,18 +1457,35 @@ export class CimlEditComponent {
       isActive: true
     });
     this.showInspectionModal = true;
+    this.showBackdrop();
   }
 
   editInspection(inspection: any) {
     this.isEditMode = true;
+    this.isViewMode = false;
     this.currentInspection = inspection;
     this.inspectionForm.patchValue(inspection);
+    this.inspectionForm.enable();
     this.showInspectionModal = true;
+    this.showBackdrop();
+  }
+
+  viewInspection(inspection: any) {
+    this.isEditMode = false;
+    this.isViewMode = true;
+    this.currentInspection = inspection;
+    this.inspectionForm.patchValue(inspection);
+    this.inspectionForm.disable();
+    this.showInspectionModal = true;
+    this.showBackdrop();
   }
 
   closeInspectionModal() {
+    this.isViewMode = false;
+    this.inspectionForm.enable();
     this.showInspectionModal = false;
     this.inspectionForm.reset();
+    this.hideBackdrop();
   }
 
   saveInspection() {
@@ -1319,7 +1504,17 @@ export class CimlEditComponent {
       reading: formValue.reading ? Number(formValue.reading) : 0,
       temperature: formValue.temperature ? Number(formValue.temperature) : 0,
       thickness: formValue.thickness ? Number(formValue.thickness) : 0,
+      modeOfThicknessLoss: formValue.modeOfThicknessLoss ? Number(formValue.modeOfThicknessLoss) : null,
       nde: formValue.nde || '',
+      stcr: formValue.stcr != null ? Number(formValue.stcr) : null,
+      ltcr: formValue.ltcr != null ? Number(formValue.ltcr) : null,
+      remainingCA: formValue.remainingCA != null ? Number(formValue.remainingCA) : null,
+      thicknessLossPercentage: formValue.thicknessLossPercentage != null ? Number(formValue.thicknessLossPercentage) : null,
+      calcBaselineThickness: formValue.calcBaselineThickness != null ? Number(formValue.calcBaselineThickness) : null,
+      calcNominalThickness: formValue.calcNominalThickness != null ? Number(formValue.calcNominalThickness) : null,
+      remainingLifeLTCR: formValue.remainingLifeLTCR != null ? Number(formValue.remainingLifeLTCR) : null,
+      remainingLifeSTCR: formValue.remainingLifeSTCR != null ? Number(formValue.remainingLifeSTCR) : null,
+      minThickness: formValue.minThickness != null ? Number(formValue.minThickness) : null,
       status: Number(formValue.status),
       inspectedBy: formValue.inspectedBy ? Number(formValue.inspectedBy) : 0,
       verifiedBy: formValue.verifiedBy ? Number(formValue.verifiedBy) : 0,
@@ -1338,29 +1533,29 @@ export class CimlEditComponent {
     console.log('Inspection Data being sent:', inspectionData);
 
     if (this.isEditMode) {
-      this.service.updateThicknessInspection(inspectionData.id, inspectionData).subscribe(
-        () => {
+      this.service.updateThicknessInspection(inspectionData.id, inspectionData).subscribe({
+        next: () => {
           Swal.fire('Success', 'Inspection updated successfully', 'success');
           this.loadThicknessInspections();
           this.closeInspectionModal();
         },
-        (error) => {
+        error: (error) => {
           console.error('Error updating inspection:', error);
           Swal.fire('Error', 'Failed to update inspection', 'error');
         }
-      );
+      });
     } else {
-      this.service.createThicknessInspection(inspectionData).subscribe(
-        () => {
+      this.service.createThicknessInspection(inspectionData).subscribe({
+        next: () => {
           Swal.fire('Success', 'Inspection added successfully', 'success');
           this.loadThicknessInspections();
           this.closeInspectionModal();
         },
-        (error) => {
+        error: (error) => {
           console.error('Error adding inspection:', error);
           Swal.fire('Error', 'Failed to add inspection', 'error');
         }
-      );
+      });
     }
   }
 
@@ -1375,16 +1570,16 @@ export class CimlEditComponent {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.service.deleteThicknessInspection(id).subscribe(
-          () => {
+        this.service.deleteThicknessInspection(id).subscribe({
+          next: () => {
             Swal.fire('Deleted!', 'Inspection has been deleted.', 'success');
             this.loadThicknessInspections();
           },
-          (error) => {
+          error: (error) => {
             console.error('Error deleting inspection:', error);
             Swal.fire('Error', 'Failed to delete inspection', 'error');
           }
-        );
+        });
       }
     });
   }
@@ -1409,18 +1604,18 @@ export class CimlEditComponent {
     const approvalComment = this.approvalForm.get('approvalComment')?.value;
     const newStatus = this.approvalAction === 'approve' ? 2 : 3; // 2: Approved, 3: Rejected
 
-    this.service.updateInspectionStatus(this.currentInspection.id, newStatus, approvalComment).subscribe(
-      () => {
+    this.service.updateInspectionStatus(this.currentInspection.id, newStatus, approvalComment).subscribe({
+      next: () => {
         const message = this.approvalAction === 'approve' ? 'approved' : 'rejected';
         Swal.fire('Success', `Inspection ${message} successfully`, 'success');
         this.loadThicknessInspections();
         this.closeApprovalModal();
       },
-      (error) => {
+      error: (error) => {
         console.error('Error updating inspection status:', error);
         Swal.fire('Error', 'Failed to update inspection status', 'error');
       }
-    );
+    });
   }
 
   getStatusLabel(status: number): string {
@@ -1439,5 +1634,36 @@ export class CimlEditComponent {
   isCurrentUserInspector(inspection: any): boolean {
     const currentUserId = Number(this.au.getUserId());
     return inspection.inspectedBy === currentUserId;
+  }
+
+  onInspectionsTabClick(): void {
+    if (this.thicknessReferencesChecked) return;
+
+    this.service.checkThicknessReferences(this.childValue).subscribe({
+      next: (res: any) => {
+        this.thicknessReferencesChecked = true;
+
+        if (!res.hasNominalThickness && !res.hasBaselineThickness) {
+          Swal.fire({
+            title: 'No Reference Thickness Found',
+            html: 'Both <b>Nominal Thickness</b> and <b>Baseline Thickness</b> are missing or zero for this CIML.<br><br>' +
+                  'Calculations (Thickness Loss, Remaining CA, LTCR, STCR) will not be available until a valid reference thickness is set.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
+        } else if (!res.hasBaselineThickness) {
+          Swal.fire({
+            title: 'Baseline Thickness Not Set',
+            html: `<b>Baseline Thickness</b> is not set for this CIML.<br><br>` +
+                  `Calculations will use <b>Nominal Thickness (${res.nominalThickness} mm)</b> as the reference.`,
+            icon: 'info',
+            confirmButtonText: 'OK'
+          });
+        }
+      },
+      error: () => {
+        this.thicknessReferencesChecked = true;
+      }
+    });
   }
 }

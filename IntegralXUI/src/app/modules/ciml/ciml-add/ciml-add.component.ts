@@ -219,6 +219,7 @@ export class CimlAddComponent {
       materialSpecification: [''],
       allowableStress: [''],
       nominalThickness: [''],
+      baselineThickness: [''],
       corrosionAllowance: [''],
       cladding: [''],
       claddingType: [''],

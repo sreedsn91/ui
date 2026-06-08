@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '../config/config.service';
 import { AuthService } from '../auth/auth.service';
@@ -576,6 +576,13 @@ getCIMLInsulationRemovalRequired(): Observable<any> {
   });
 }
 
+getModeOfThicknessLoss(): Observable<any> {
+  const clientId = Number(this.authService.getClientId());
+  return this.http.get(`${this.apiUrl}CIML/GetDdlCIMLModeofThicknessLoss/${clientId}`, {
+    headers: this.getHeaders(),
+  });
+}
+
 // Thickness Inspection APIs
 getThicknessInspectionsByCML(cmlId: number): Observable<any> {
   return this.http.get(`${this.apiUrl}CIMLThicknessInspection/ByCML/${cmlId}`, {
@@ -622,6 +629,63 @@ getInspectionStatuses(): Observable<any> {
 
 getUsersForInspection(): Observable<any> {
   return this.http.get(`${this.apiUrl}CIMLThicknessInspection/users`, {
+    headers: this.getHeaders(),
+  });
+}
+
+// Thickness calculation APIs
+calculateSTCR(cimlId: number, measuredThickness: number, measuredDate: string): Observable<any> {
+  const params = new HttpParams()
+    .set('measuredThickness', measuredThickness.toString())
+    .set('measuredDate', measuredDate);
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/CalculateSTCR/${cimlId}`, {
+    headers: this.getHeaders(),
+    params
+  });
+}
+
+calculateLTCR(cimlId: number, measuredThickness: number, measuredDate: string): Observable<any> {
+  const params = new HttpParams()
+    .set('measuredThickness', measuredThickness.toString())
+    .set('measuredDate', measuredDate);
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/CalculateLTCR/${cimlId}`, {
+    headers: this.getHeaders(),
+    params
+  });
+}
+
+calculateRemainingCA(cimlId: number, measuredThickness: number): Observable<any> {
+  const params = new HttpParams()
+    .set('measuredThickness', measuredThickness.toString());
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/CalculateRemainingCA/${cimlId}`, {
+    headers: this.getHeaders(),
+    params
+  });
+}
+
+calculateThicknessLoss(cimlId: number, measuredThickness: number): Observable<any> {
+  const params = new HttpParams()
+    .set('measuredThickness', measuredThickness.toString());
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/CalculateThicknessLoss/${cimlId}`, {
+    headers: this.getHeaders(),
+    params
+  });
+}
+
+getBaselineThickness(cimlId: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/BaselineThickness/${cimlId}`, {
+    headers: this.getHeaders(),
+  });
+}
+
+getNominalThickness(cimlId: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/NominalThickness/${cimlId}`, {
+    headers: this.getHeaders(),
+  });
+}
+
+checkThicknessReferences(cimlId: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}CIMLThicknessInspection/CheckThicknessReferences/${cimlId}`, {
     headers: this.getHeaders(),
   });
 }

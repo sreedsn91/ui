@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\IntegralXUI",
-    "\\IntegralXUI\\src",
-    "\\IntegralXUI\\src\\app",
-    "\\IntegralXUI\\src\\app\\modules",
-    "\\IntegralXUI\\src\\app\\modules\\plant",
-    "\\IntegralXUI\\src\\app\\modules\\plant\\plant-edit"
+    "\\IntegralXUI"
   ],
   "PreviewInSolutionExplorer": false
 }

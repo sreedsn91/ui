@@ -679,22 +679,22 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item'
       },
       {
-        id: 'CIML',
-        title: 'CIML',
+        id: 'CML',
+        title: 'CML',
         type: 'collapse',
         icon: 'feather icon-users',
         classes: 'nav-item',
         children: [
                   {
                     id: 'addCIML',
-                    title: 'Add CIML',
+                    title: 'Add CML',
                     type: 'item',
                     url: '/clientciml/add'
                   },
                 
                   {
                     id: 'editEquipment',
-                    title: 'Edit CIML',
+                    title: 'Edit CML',
                     type: 'item',
                     url: '/clientciml/edit'
                   },
