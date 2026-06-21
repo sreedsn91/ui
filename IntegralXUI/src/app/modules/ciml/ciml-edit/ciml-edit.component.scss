@@ -184,6 +184,9 @@
   }
 }
 
+// ─── Modal backdrop — full-viewport fix ────────────────────────────────────────
+
+
 .modal {
   position: fixed;
   top: 0;
@@ -194,6 +197,7 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+// ───────────────────────────────────────────────────────────────────────────────
 
 // ─── Thickness Inspection Modal ────────────────────────────────────────────────
 .inspection-modal {
@@ -348,53 +352,13 @@
     min-height: 80px;
   }
 
-  // Two-column split layout
-  .insp-split-layout {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-  }
-
-  .insp-split-left {
-    flex: 0 0 58%;
-    min-width: 0;
-  }
-
-  .insp-split-right {
-    flex: 1 1 auto;
-    min-width: 0;
-    position: sticky;
-    top: 0;
-  }
-
-  // Calculated results panel (right column)
-  .insp-calc-panel {
+  // Calculated results section
+  .insp-calc-section {
     background: #f0f4ff;
     border: 1px solid #d6e0ff;
-    border-radius: 8px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
     transition: opacity 0.2s;
 
     &.insp-calc-loading { opacity: 0.5; pointer-events: none; }
-
-    .insp-calc-field {
-      padding: 10px 12px;
-      border-radius: 6px;
-      margin-bottom: 0;
-
-      &:nth-child(odd) { background: rgba(255,255,255,0.6); }
-      &:nth-child(even) { background: rgba(102,126,234,0.06); }
-
-      &.insp-calc-field--highlight {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        margin-top: 8px;
-
-        .insp-calc-label { color: rgba(255,255,255,0.85); }
-      }
-    }
   }
 
   .insp-calc-spinner {

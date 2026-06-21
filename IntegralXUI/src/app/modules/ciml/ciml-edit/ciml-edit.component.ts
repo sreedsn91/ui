@@ -8,6 +8,7 @@ import { LoadingService } from 'src/app/common/loadingPanel/loading.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CimlService } from 'src/app/services/ciml/ciml.service';
 import { SharedDataService } from 'src/app/services/shared-data/shared-data.service';
+import { PlantService } from 'src/app/services/plant/plant.service';
 import Swal from 'sweetalert2';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridOptions, GridReadyEvent } from 'ag-grid-community';
@@ -67,6 +68,9 @@ export class CimlEditComponent implements OnDestroy {
   verifiers: any[] = [];
   modeOfThicknessLossOptions: any[] = [];
   selectedMinThicknessOption: string = '';
+  selectedCROption: string = '';
+  selectedRLOption: string = '';
+  selectedInspectionIntervalOption: string = '';
   thicknessLossPercentage: number | null = null;
   calculationsLoading: boolean = false;
   thicknessReferencesChecked: boolean = false;
@@ -167,7 +171,7 @@ export class CimlEditComponent implements OnDestroy {
 
   private backdropEl: HTMLElement | null = null;
 
-  constructor(private sharedDataService: SharedDataService, private service: CimlService, private ls: LoadingService, private fb: FormBuilder, private au: AuthService, private router: Router, private renderer: Renderer2) {
+  constructor(private sharedDataService: SharedDataService, private service: CimlService, private ls: LoadingService, private fb: FormBuilder, private au: AuthService, private router: Router, private renderer: Renderer2, private plantService: PlantService) {
     this.canDelete = (this.au.getCanDelete());
     this.canEdit = (this.au.getCanEdit());
     this.receivedData = this.sharedDataService.getData();
@@ -257,7 +261,10 @@ export class CimlEditComponent implements OnDestroy {
       radiography: [''],
       radiographyCategory: [''],
       jointEfficiency: [''],
+      weldJointStRedFact: [1],
+      designfactor: [0.4],
       otherNDE: [''],
+      pressureClass: [''],
       generalMaterial: [''],
       materialSpecification: [''],
       allowableStress: [''],
@@ -347,6 +354,7 @@ export class CimlEditComponent implements OnDestroy {
       maximumOfAbove: [''],
       manual: [''],
       selectedMinReqThk: [''],
+      selectedMinThicknessOption: [''],
       cvi: [''],
       utg: [''],
       uts: [''],
@@ -361,7 +369,9 @@ export class CimlEditComponent implements OnDestroy {
       designCR: [''],
       minOrDefaultCR: [''],
       crForRL: [''],
+      selectedCROption: [''],
       calculatedRemainingLife: [''],
+      selectedRLOption: [''],
       maxRemainingLife: [''],
       minAbove2: [''],
       remainingLife: [''],
@@ -370,6 +380,7 @@ export class CimlEditComponent implements OnDestroy {
       minAbove2Interval: [''],
       defaultMinimumInterval: [''],
       manualEntry: [''],
+      selectedInspectionIntervalOption: [''],
       selectedInspectionInterval: [''],
       accessible: [''],
       accessType: [''],
@@ -464,7 +475,10 @@ export class CimlEditComponent implements OnDestroy {
         radiography: data.radiography || '',
         radiographyCategory: data.radiographyCategory || '',
         jointEfficiency: data.jointEfficiency || '',
+        weldJointStRedFact: data.weldJointStRedFact ?? 1,
+        designfactor: data.designfactor ?? 0.4,
         otherNDE: data.otherNDE || '',
+        pressureClass: data.pressureClass || '',
         generalMaterial: data.generalMaterial || '',
         materialSpecification: data.materialSpecification || '',
         allowableStress: data.allowableStress || '',
@@ -554,6 +568,8 @@ export class CimlEditComponent implements OnDestroy {
         maximumOfAbove: data.maximumOfAbove || '',
         manual: data.manual || '',
         selectedMinReqThk: data.selectedMinReqThk || '',
+        selectedMinThicknessOption: data.selectedMinThicknessOption || '',
+        selectedCROption: data.selectedCROption || '',
         cvi: data.cvi || '',
         utg: data.utg || '',
         uts: data.uts || '',
@@ -569,6 +585,7 @@ export class CimlEditComponent implements OnDestroy {
         minOrDefaultCR: data.minOrDefaultCR || '',
         crForRL: data.crForRL || '',
         calculatedRemainingLife: data.calculatedRemainingLife || '',
+        selectedRLOption: data.selectedRLOption || '',
         maxRemainingLife: data.maxRemainingLife || '',
         minAbove2: data.minAbove2 || '',
         remainingLife: data.remainingLife || '',
@@ -577,6 +594,7 @@ export class CimlEditComponent implements OnDestroy {
         minAbove2Interval: data.minAbove2Interval || '',
         defaultMinimumInterval: data.defaultMinimumInterval || '',
         manualEntry: data.manualEntry || '',
+        selectedInspectionIntervalOption: data.selectedInspectionIntervalOption || '',
         selectedInspectionInterval: data.selectedInspectionInterval || '',
         accessible: data.accessible || '',
         accessType: data.accessType || '',
@@ -584,7 +602,26 @@ export class CimlEditComponent implements OnDestroy {
         insulationRemovalRequired: data.insulationRemovalRequired || ''
       });
 
+      if (data.selectedMinThicknessOption) {
+        this.selectedMinThicknessOption = data.selectedMinThicknessOption;
+      }
+      if (data.selectedCROption) {
+        this.selectedCROption = data.selectedCROption;
+      }
+      if (data.selectedRLOption) {
+        this.selectedRLOption = data.selectedRLOption;
+      }
+      if (data.selectedInspectionIntervalOption) {
+        this.selectedInspectionIntervalOption = data.selectedInspectionIntervalOption;
+      }
+
       this.dataLoaded = true;
+      this.applyRecentApprovedCR();
+      this.syncCRForRL();
+      this.syncMinAbove2RL();
+      this.syncRemainingLife();
+      this.syncMinAbove2Interval();
+      this.syncSelectedInspectionInterval();
     });
   }
 
@@ -599,14 +636,31 @@ export class CimlEditComponent implements OnDestroy {
     await this.loadThicknessInspections();
     this.ls.hideLoading();
     this.cimlForm.get('plantId')?.valueChanges.subscribe((plantId) => {
-     
+
       this.cimlForm.get('name')?.updateValueAndValidity();
       if (plantId) {
         this.loadAreasByPlant(plantId);
         this.loadUnits(plantId, 0);
         this.loadSystems(plantId, 0, 0);
         this.loadCircuits(plantId, 0, 0, 0);
-
+        this.plantService.getPlantDetails(plantId).subscribe({
+          next: (plant: any) => {
+            if (plant?.defaultMinimumThickness != null) {
+              this.cimlForm.get('defaultMinimumThickness')?.setValue(plant.defaultMinimumThickness, { emitEvent: false });
+            }
+            if (plant?.minOrDefaultCR != null) {
+              this.cimlForm.get('minOrDefaultCR')?.setValue(plant.minOrDefaultCR, { emitEvent: false });
+            }
+            if (plant?.maxRemainingLife != null) {
+              this.cimlForm.get('maxRemainingLife')?.setValue(plant.maxRemainingLife, { emitEvent: false });
+              this.syncMinAbove2RL();
+            }
+            if (plant?.minimumInspectionInterval != null) {
+              this.cimlForm.get('defaultMinimumInterval')?.setValue(plant.minimumInspectionInterval, { emitEvent: false });
+            }
+          },
+          error: () => {}
+        });
       } else {
         this.ddlareas = [];
         this.ddlunits = [];
@@ -716,12 +770,176 @@ export class CimlEditComponent implements OnDestroy {
     });
 
     // Auto-calculate nominalThicknessCA when nominalThickness or corrosionAllowance changes
-    this.cimlForm.get('nominalThickness')?.valueChanges.subscribe(() => {
-      this.updateNominalThicknessCA();
-    });
-    this.cimlForm.get('corrosionAllowance')?.valueChanges.subscribe(() => {
-      this.updateNominalThicknessCA();
-    });
+    this.cimlForm.get('nominalThickness')?.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => this.updateNominalThicknessCA());
+    this.cimlForm.get('corrosionAllowance')?.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => this.updateNominalThicknessCA());
+
+    // Auto-update Structural Minimum Thickness when NPS, Pressure Class, Material, or Temperature changes
+    const updateStructuralMinThk = () => {
+      const materialId = parseInt(this.cimlForm.get('generalMaterial')?.value, 10);
+      const pressureClass = parseInt(this.cimlForm.get('pressureClass')?.value, 10);
+      const nps = parseFloat(this.cimlForm.get('nps')?.value);
+      const designTemp = parseFloat(this.cimlForm.get('designTemperatureMax')?.value);
+      if (materialId > 0 && pressureClass > 0 && nps > 0) {
+        this.service.getStructuralMinThicknessByMaterial(materialId, pressureClass, nps, isNaN(designTemp) ? undefined : designTemp)
+          .subscribe({
+            next: (value: any) => {
+              this.cimlForm.get('structuralMinimumThk')?.setValue(value, { emitEvent: false });
+            },
+            error: () => {}
+          });
+      }
+    };
+
+    this.cimlForm.get('nps')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+    this.cimlForm.get('pressureClass')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+    this.cimlForm.get('generalMaterial')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+    this.cimlForm.get('designTemperatureMax')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+
+    // Auto-calculate Calculated (Internal Pressure) when any relevant field changes
+    const updateInternalPressure = () => {
+      const equipmentType = parseInt(this.cimlForm.get('cml_Type')?.value, 10);
+      const equipmentCategory = parseInt(this.cimlForm.get('cml_Category')?.value, 10);
+      if (!equipmentType || !equipmentCategory) return;
+
+      const payload: any = { equipmentType, equipmentCategory };
+
+      const designPressure = parseFloat(this.cimlForm.get('designPressureInternal')?.value);
+      if (!isNaN(designPressure)) payload.designPressure = designPressure;
+
+      const outsideDiameter = parseFloat(this.cimlForm.get('outsideDiameter')?.value);
+      if (!isNaN(outsideDiameter)) payload.outsideDiameter = outsideDiameter;
+
+      const allowableStress = parseFloat(this.cimlForm.get('allowableStress')?.value);
+      if (!isNaN(allowableStress)) payload.allowableStress = allowableStress;
+
+      const jointEfficiency = parseFloat(this.cimlForm.get('jointEfficiency')?.value);
+      if (!isNaN(jointEfficiency)) payload.jointEfficiency = jointEfficiency;
+
+      const weldJointStRedFact = parseFloat(this.cimlForm.get('weldJointStRedFact')?.value);
+      if (!isNaN(weldJointStRedFact)) payload.weldJointStRedFact = weldJointStRedFact;
+
+      const designFactor = parseFloat(this.cimlForm.get('designfactor')?.value);
+      if (!isNaN(designFactor)) payload.designFactor = designFactor;
+
+      const lengthHeight = parseFloat(this.cimlForm.get('lengthHeight')?.value);
+      if (!isNaN(lengthHeight)) payload.length = lengthHeight;
+
+      this.service.calculateInternalPressureThickness(payload).subscribe({
+        next: (res: any) => {
+          this.cimlForm.get('calculatedInternalPressure')?.setValue(
+            res.calculatedInternalPressure ?? '', { emitEvent: false }
+          );
+        },
+        error: () => {}
+      });
+    };
+
+    ['designPressureInternal', 'outsideDiameter', 'allowableStress', 'jointEfficiency',
+     'weldJointStRedFact', 'designfactor', 'lengthHeight', 'cml_Type', 'cml_Category', 'nominalThickness']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => updateInternalPressure())
+      );
+
+    const updateMaxStructuralCalculated = () => {
+      const vals = [
+        parseFloat(this.cimlForm.get('structuralMinimumThk')?.value),
+        parseFloat(this.cimlForm.get('calculatedInternalPressure')?.value),
+        parseFloat(this.cimlForm.get('calculatedExternalPressure')?.value)
+      ].filter(v => !isNaN(v));
+      const max = vals.length > 0 ? Math.max(...vals) : null;
+      this.cimlForm.get('maxStructuralCalculated')?.setValue(max !== null ? max.toFixed(2) : '', { emitEvent: false });
+    };
+
+    ['structuralMinimumThk', 'calculatedInternalPressure', 'calculatedExternalPressure']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => updateMaxStructuralCalculated())
+      );
+
+    const updateMaximumOfAbove = () => {
+      const vals = [
+        parseFloat(this.cimlForm.get('nominalThicknessCA')?.value),
+        parseFloat(this.cimlForm.get('defaultMinimumThickness')?.value),
+        parseFloat(this.cimlForm.get('structuralMinimumThk')?.value),
+        parseFloat(this.cimlForm.get('calculatedInternalPressure')?.value),
+        parseFloat(this.cimlForm.get('calculatedExternalPressure')?.value),
+        parseFloat(this.cimlForm.get('maxStructuralCalculated')?.value)
+      ].filter(v => !isNaN(v));
+      const max = vals.length > 0 ? Math.max(...vals) : null;
+      this.cimlForm.get('maximumOfAbove')?.setValue(max !== null ? max.toFixed(2) : '', { emitEvent: false });
+    };
+
+    ['nominalThicknessCA', 'defaultMinimumThickness', 'structuralMinimumThk',
+     'calculatedInternalPressure', 'calculatedExternalPressure', 'maxStructuralCalculated']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => updateMaximumOfAbove())
+      );
+
+    const updateMaxAbove2 = () => {
+      const vals = [
+        parseFloat(this.cimlForm.get('ltcr')?.value),
+        parseFloat(this.cimlForm.get('stcr')?.value)
+      ].filter(v => !isNaN(v));
+      const max = vals.length > 0 ? Math.max(...vals) : null;
+      this.cimlForm.get('maxAbove2')?.setValue(max !== null ? max.toFixed(4) : '', { emitEvent: false });
+    };
+
+    ['ltcr', 'stcr'].forEach(field =>
+      this.cimlForm.get(field)?.valueChanges
+        .pipe(debounceTime(400), distinctUntilChanged())
+        .subscribe(() => updateMaxAbove2())
+    );
+
+    ['nominalThicknessCA', 'defaultMinimumThickness', 'structuralMinimumThk',
+     'calculatedInternalPressure', 'calculatedExternalPressure', 'maxStructuralCalculated',
+     'maximumOfAbove', 'manual']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => this.syncSelectedMinReqThk())
+      );
+
+    ['ltcr', 'stcr', 'maxAbove2', 'designCR', 'minOrDefaultCR']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => this.syncCRForRL())
+      );
+
+    this.cimlForm.get('crForRL')?.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(value => {
+        const parsed = parseFloat(value);
+        this.cimlForm.get('calculatedRemainingLife')?.setValue(
+          !isNaN(parsed) ? parsed.toFixed(4) : '', { emitEvent: false }
+        );
+        this.syncMinAbove2RL();
+      });
+
+    this.cimlForm.get('maxRemainingLife')?.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => this.syncMinAbove2RL());
+
+    ['perAPI', 'halfRemainingLife'].forEach(field =>
+      this.cimlForm.get(field)?.valueChanges
+        .pipe(debounceTime(400), distinctUntilChanged())
+        .subscribe(() => this.syncMinAbove2Interval())
+    );
+
+    ['defaultMinimumInterval', 'manualEntry'].forEach(field =>
+      this.cimlForm.get(field)?.valueChanges
+        .pipe(debounceTime(400), distinctUntilChanged())
+        .subscribe(() => this.syncSelectedInspectionInterval())
+    );
 
   }
 
@@ -799,7 +1017,7 @@ export class CimlEditComponent implements OnDestroy {
 
         Swal.fire({
           title: 'Success!',
-          text: 'CIML added successfully',
+          text: 'CIML updated successfully',
           icon: 'success',
           confirmButtonText: 'Ok'
         });
@@ -1004,18 +1222,75 @@ export class CimlEditComponent implements OnDestroy {
 
   selectMinThicknessOption(option: string) {
     this.selectedMinThicknessOption = option;
+    this.cimlForm.get('selectedMinThicknessOption')?.setValue(option, { emitEvent: false });
+    this.syncSelectedMinReqThk();
+  }
+
+  syncSelectedMinReqThk() {
+    if (!this.selectedMinThicknessOption) return;
+    const value = parseFloat(this.cimlForm.get(this.selectedMinThicknessOption)?.value);
+    this.cimlForm.get('selectedMinReqThk')?.setValue(!isNaN(value) ? value.toFixed(2) : '', { emitEvent: false });
+  }
+
+  selectCROption(option: string) {
+    this.selectedCROption = option;
+    this.cimlForm.get('selectedCROption')?.setValue(option, { emitEvent: false });
+    this.syncCRForRL();
+  }
+
+  syncCRForRL() {
+    if (!this.selectedCROption) return;
+    const value = parseFloat(this.cimlForm.get(this.selectedCROption)?.value);
+    this.cimlForm.get('crForRL')?.setValue(!isNaN(value) ? value.toFixed(4) : '', { emitEvent: false });
+  }
+
+  syncMinAbove2RL() {
+    const calc = parseFloat(this.cimlForm.get('calculatedRemainingLife')?.value);
+    const maxRL = parseFloat(this.cimlForm.get('maxRemainingLife')?.value);
+    const vals = [calc, maxRL].filter(v => !isNaN(v));
+    const min = vals.length > 0 ? Math.min(...vals) : null;
+    this.cimlForm.get('minAbove2')?.setValue(min !== null ? min.toFixed(4) : '', { emitEvent: false });
+    this.syncRemainingLife();
+  }
+
+  syncMinAbove2Interval() {
+    const perAPI = parseFloat(this.cimlForm.get('perAPI')?.value);
+    const halfRL = parseFloat(this.cimlForm.get('halfRemainingLife')?.value);
+    const vals = [perAPI, halfRL].filter(v => !isNaN(v));
+    const min = vals.length > 0 ? Math.min(...vals) : null;
+    this.cimlForm.get('minAbove2Interval')?.setValue(min !== null ? min.toFixed(4) : '', { emitEvent: false });
+    this.syncSelectedInspectionInterval();
+  }
+
+  selectInspectionIntervalOption(option: string) {
+    this.selectedInspectionIntervalOption = option;
+    this.cimlForm.get('selectedInspectionIntervalOption')?.setValue(option, { emitEvent: false });
+    this.syncSelectedInspectionInterval();
+  }
+
+  syncSelectedInspectionInterval() {
+    if (!this.selectedInspectionIntervalOption) return;
+    const value = parseFloat(this.cimlForm.get(this.selectedInspectionIntervalOption)?.value);
+    this.cimlForm.get('selectedInspectionInterval')?.setValue(!isNaN(value) ? value.toFixed(4) : '', { emitEvent: false });
+  }
+
+  selectRLOption(option: string) {
+    this.selectedRLOption = option;
+    this.cimlForm.get('selectedRLOption')?.setValue(option, { emitEvent: false });
+    this.syncRemainingLife();
+  }
+
+  syncRemainingLife() {
+    if (!this.selectedRLOption) return;
+    const value = parseFloat(this.cimlForm.get(this.selectedRLOption)?.value);
+    this.cimlForm.get('remainingLife')?.setValue(!isNaN(value) ? value.toFixed(4) : '', { emitEvent: false });
   }
 
   updateNominalThicknessCA() {
-    const nominalThicknessValue = this.cimlForm.get('nominalThickness')?.value;
-    const corrosionAllowanceValue = this.cimlForm.get('corrosionAllowance')?.value;
-    
-    // Parse values and ensure they are valid numbers
-    const nominalThickness = parseFloat(nominalThicknessValue);
-    const corrosionAllowance = parseFloat(corrosionAllowanceValue);
-    
-    // Check if both values are valid numbers
-    if (!isNaN(nominalThickness) && !isNaN(corrosionAllowance)) {
+    const nominalThickness = parseFloat(this.cimlForm.get('nominalThickness')?.value);
+    const corrosionAllowance = parseFloat(this.cimlForm.get('corrosionAllowance')?.value) || 0;
+
+    if (!isNaN(nominalThickness)) {
       const result = nominalThickness - corrosionAllowance;
       this.cimlForm.get('nominalThicknessCA')?.setValue(result.toFixed(2), { emitEvent: false });
     } else {
@@ -1180,30 +1455,33 @@ export class CimlEditComponent implements OnDestroy {
       nominalThickness: this.service.getNominalThickness(this.childValue).pipe(catchError(() => of(null)))
     }).subscribe({
       next: (results) => {
-        const remainingCA = results.remainingCA?.remainingCA ?? null;
-        const ltcr = results.ltcr?.ltcr ?? null;
-        const stcr = results.stcr?.stcr ?? null;
+        const round4 = (v: number | null) => v != null ? parseFloat(v.toFixed(4)) : null;
 
-        const remainingLifeLTCR = (remainingCA != null && ltcr != null && ltcr !== 0)
-          ? remainingCA / ltcr : null;
-        const remainingLifeSTCR = (remainingCA != null && stcr != null && stcr !== 0)
-          ? remainingCA / stcr : null;
+        const remainingCA = round4(results.remainingCA?.remainingCA ?? null);
+        const ltcr = round4(results.ltcr?.ltcr ?? null);
+        const stcr = round4(results.stcr?.stcr ?? null);
+
+        const remainingLifeLTCR = round4((remainingCA != null && ltcr != null && ltcr !== 0)
+          ? remainingCA / ltcr : null);
+        const remainingLifeSTCR = round4((remainingCA != null && stcr != null && stcr !== 0)
+          ? remainingCA / stcr : null);
+
+        const thicknessLossPercentage = round4(results.thicknessLoss?.thicknessLossPercentage ?? null);
+        const calcBaselineThickness = round4(results.baselineThickness?.baselineThickness ?? null);
+        const calcNominalThickness = round4(results.nominalThickness?.nominalThickness ?? null);
 
         const calcValues = [
-          stcr, ltcr, remainingCA,
-          results.thicknessLoss?.thicknessLossPercentage ?? null,
-          results.baselineThickness?.baselineThickness ?? null,
-          results.nominalThickness?.nominalThickness ?? null
+          stcr, ltcr, remainingCA, thicknessLossPercentage, calcBaselineThickness, calcNominalThickness
         ].filter((v): v is number => v !== null);
-        const minThickness = calcValues.length > 0 ? Math.min(...calcValues) : null;
+        const minThickness = round4(calcValues.length > 0 ? Math.min(...calcValues) : null);
 
         this.inspectionForm.patchValue({
           stcr,
           ltcr,
           remainingCA,
-          thicknessLossPercentage: results.thicknessLoss?.thicknessLossPercentage ?? null,
-          calcBaselineThickness: results.baselineThickness?.baselineThickness ?? null,
-          calcNominalThickness: results.nominalThickness?.nominalThickness ?? null,
+          thicknessLossPercentage,
+          calcBaselineThickness,
+          calcNominalThickness,
           remainingLifeLTCR,
           remainingLifeSTCR,
           minThickness
@@ -1409,6 +1687,7 @@ export class CimlEditComponent implements OnDestroy {
           debugger;
           this.thicknessInspections = data;
           this.refreshGrid();
+          this.applyRecentApprovedCR();
         },
         error: (error) => {
           console.error('Error loading inspections:', error);
@@ -1418,6 +1697,15 @@ export class CimlEditComponent implements OnDestroy {
     } catch (error) {
       console.error('Error loading thickness inspections:', error);
     }
+  }
+
+  applyRecentApprovedCR() {
+    if (!this.thicknessInspections?.length) return;
+    const approved = this.thicknessInspections.find(i => Number(i.status) === 2);
+    if (!approved) return;
+    const ltcr = approved.ltcr ?? null;
+    const stcr = approved.stcr ?? null;
+    this.cimlForm.patchValue({ ltcr: ltcr ?? '', stcr: stcr ?? '' });
   }
 
   private showBackdrop() {
@@ -1464,8 +1752,11 @@ export class CimlEditComponent implements OnDestroy {
     this.isEditMode = true;
     this.isViewMode = false;
     this.currentInspection = inspection;
-    this.inspectionForm.patchValue(inspection);
-    this.inspectionForm.enable();
+    this.inspectionForm.patchValue({
+      ...inspection,
+      inspectionDate: inspection.inspectionDate ? new Date(inspection.inspectionDate).toISOString().split('T')[0] : ''
+    }, { emitEvent: false });
+    this.inspectionForm.enable({ emitEvent: false });
     this.showInspectionModal = true;
     this.showBackdrop();
   }
@@ -1474,17 +1765,20 @@ export class CimlEditComponent implements OnDestroy {
     this.isEditMode = false;
     this.isViewMode = true;
     this.currentInspection = inspection;
-    this.inspectionForm.patchValue(inspection);
-    this.inspectionForm.disable();
+    this.inspectionForm.patchValue({
+      ...inspection,
+      inspectionDate: inspection.inspectionDate ? new Date(inspection.inspectionDate).toISOString().split('T')[0] : ''
+    }, { emitEvent: false });
+    this.inspectionForm.disable({ emitEvent: false });
     this.showInspectionModal = true;
     this.showBackdrop();
   }
 
   closeInspectionModal() {
     this.isViewMode = false;
-    this.inspectionForm.enable();
+    this.inspectionForm.enable({ emitEvent: false });
     this.showInspectionModal = false;
-    this.inspectionForm.reset();
+    this.inspectionForm.reset({}, { emitEvent: false });
     this.hideBackdrop();
   }
 

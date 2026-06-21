@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CimlService } from 'src/app/services/ciml/ciml.service';
+import { PlantService } from 'src/app/services/plant/plant.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -123,10 +125,13 @@ export class CimlAddComponent {
    internalEntryOptions: any;  
    accessTypeOptions: any;  
    insulationRemovalRequired: any;
+   selectedMinThicknessOption: string = '';
+   selectedRLOption: string = '';
+   selectedInspectionIntervalOption: string = '';
 
-  
 
-  constructor(private service: CimlService, private fb: FormBuilder, private au: AuthService, private router: Router) {
+
+  constructor(private service: CimlService, private fb: FormBuilder, private au: AuthService, private router: Router, private plantService: PlantService) {
     debugger;  
     this.canAdd = (this.au.getCanAdd());
   
@@ -214,7 +219,10 @@ export class CimlAddComponent {
       radiography: [''],
       radiographyCategory: [''],
       jointEfficiency: [''],
+      weldJointStRedFact: [1],
+      designfactor: [0.4],
       otherNDE: [''],
+      pressureClass: [''],
       generalMaterial: [''],
       materialSpecification: [''],
       allowableStress: [''],
@@ -304,6 +312,7 @@ export class CimlAddComponent {
       maximumOfAbove: [''],
       manual: [''],
       selectedMinReqThk: [''],
+      selectedMinThicknessOption: [''],
       cvi: [''],
       utg: [''],
       uts: [''],
@@ -319,6 +328,7 @@ export class CimlAddComponent {
       minOrDefaultCR: [''],
       crForRL: [''],
       calculatedRemainingLife: [''],
+      selectedRLOption: [''],
       maxRemainingLife: [''],
       minAbove2: [''],
       remainingLife: [''],
@@ -327,6 +337,7 @@ export class CimlAddComponent {
       minAbove2Interval: [''],
       defaultMinimumInterval: [''],
       manualEntry: [''],
+      selectedInspectionIntervalOption: [''],
       selectedInspectionInterval: [''],
       accessible: [''],
       accessType: [''],
@@ -338,14 +349,31 @@ export class CimlAddComponent {
   
   ngOnInit() {
     this.cimlForm.get('plantId')?.valueChanges.subscribe((plantId) => {
-    
+
       this.cimlForm.get('name')?.updateValueAndValidity();
       if (plantId) {
         this.loadAreasByPlant(plantId);
         this.loadUnits(plantId, 0);
         this.loadSystems(plantId, 0, 0);
         this.loadCircuits(plantId, 0, 0, 0);
-
+        this.plantService.getPlantDetails(plantId).subscribe({
+          next: (plant: any) => {
+            if (plant?.defaultMinimumThickness != null) {
+              this.cimlForm.get('defaultMinimumThickness')?.setValue(plant.defaultMinimumThickness, { emitEvent: false });
+            }
+            if (plant?.minOrDefaultCR != null) {
+              this.cimlForm.get('minOrDefaultCR')?.setValue(plant.minOrDefaultCR, { emitEvent: false });
+            }
+            if (plant?.maxRemainingLife != null) {
+              this.cimlForm.get('maxRemainingLife')?.setValue(plant.maxRemainingLife, { emitEvent: false });
+              this.syncMinAbove2RL();
+            }
+            if (plant?.minimumInspectionInterval != null) {
+              this.cimlForm.get('defaultMinimumInterval')?.setValue(plant.minimumInspectionInterval, { emitEvent: false });
+            }
+          },
+          error: () => {}
+        });
       } else {
         this.ddlareas = [];
         this.ddlunits = [];
@@ -454,15 +482,155 @@ export class CimlAddComponent {
       this.cimlForm.get('name')?.updateValueAndValidity();
     });
 
-     this.loadDropdowns();
+    // Auto-update Structural Minimum Thickness when NPS, Pressure Class, Material, or Temperature changes
+    const updateStructuralMinThk = () => {
+      const materialId = parseInt(this.cimlForm.get('generalMaterial')?.value, 10);
+      const pressureClass = parseInt(this.cimlForm.get('pressureClass')?.value, 10);
+      const nps = parseFloat(this.cimlForm.get('nps')?.value);
+      const designTemp = parseFloat(this.cimlForm.get('designTemperatureMax')?.value);
+      if (materialId > 0 && pressureClass > 0 && nps > 0) {
+        this.service.getStructuralMinThicknessByMaterial(materialId, pressureClass, nps, isNaN(designTemp) ? undefined : designTemp)
+          .subscribe({
+            next: (value: any) => {
+              this.cimlForm.get('structuralMinimumThk')?.setValue(value, { emitEvent: false });
+            },
+            error: () => {}
+          });
+      }
+    };
 
- 
+    this.cimlForm.get('nps')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+    this.cimlForm.get('pressureClass')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+    this.cimlForm.get('generalMaterial')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+    this.cimlForm.get('designTemperatureMax')?.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe(() => updateStructuralMinThk());
+
+    const updateMaxStructuralCalculated = () => {
+      const vals = [
+        parseFloat(this.cimlForm.get('structuralMinimumThk')?.value),
+        parseFloat(this.cimlForm.get('calculatedInternalPressure')?.value),
+        parseFloat(this.cimlForm.get('calculatedExternalPressure')?.value)
+      ].filter(v => !isNaN(v));
+      const max = vals.length > 0 ? Math.max(...vals) : null;
+      this.cimlForm.get('maxStructuralCalculated')?.setValue(max !== null ? max.toFixed(2) : '', { emitEvent: false });
+    };
+
+    ['structuralMinimumThk', 'calculatedInternalPressure', 'calculatedExternalPressure']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => updateMaxStructuralCalculated())
+      );
+
+    const updateMaximumOfAbove = () => {
+      const vals = [
+        parseFloat(this.cimlForm.get('nominalThicknessCA')?.value),
+        parseFloat(this.cimlForm.get('defaultMinimumThickness')?.value),
+        parseFloat(this.cimlForm.get('structuralMinimumThk')?.value),
+        parseFloat(this.cimlForm.get('calculatedInternalPressure')?.value),
+        parseFloat(this.cimlForm.get('calculatedExternalPressure')?.value),
+        parseFloat(this.cimlForm.get('maxStructuralCalculated')?.value)
+      ].filter(v => !isNaN(v));
+      const max = vals.length > 0 ? Math.max(...vals) : null;
+      this.cimlForm.get('maximumOfAbove')?.setValue(max !== null ? max.toFixed(2) : '', { emitEvent: false });
+    };
+
+    ['nominalThicknessCA', 'defaultMinimumThickness', 'structuralMinimumThk',
+     'calculatedInternalPressure', 'calculatedExternalPressure', 'maxStructuralCalculated']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => updateMaximumOfAbove())
+      );
+
+    ['nominalThicknessCA', 'defaultMinimumThickness', 'structuralMinimumThk',
+     'calculatedInternalPressure', 'calculatedExternalPressure', 'maxStructuralCalculated',
+     'maximumOfAbove', 'manual']
+      .forEach(field =>
+        this.cimlForm.get(field)?.valueChanges
+          .pipe(debounceTime(400), distinctUntilChanged())
+          .subscribe(() => this.syncSelectedMinReqThk())
+      );
+
+    ['calculatedRemainingLife', 'maxRemainingLife'].forEach(field =>
+      this.cimlForm.get(field)?.valueChanges
+        .pipe(debounceTime(400), distinctUntilChanged())
+        .subscribe(() => this.syncMinAbove2RL())
+    );
+
+    ['perAPI', 'halfRemainingLife'].forEach(field =>
+      this.cimlForm.get(field)?.valueChanges
+        .pipe(debounceTime(400), distinctUntilChanged())
+        .subscribe(() => this.syncMinAbove2Interval())
+    );
+
+    ['defaultMinimumInterval', 'manualEntry'].forEach(field =>
+      this.cimlForm.get(field)?.valueChanges
+        .pipe(debounceTime(400), distinctUntilChanged())
+        .subscribe(() => this.syncSelectedInspectionInterval())
+    );
+
+    this.loadDropdowns();
+
   }
 
 
 
 
 
+
+  selectMinThicknessOption(option: string) {
+    this.selectedMinThicknessOption = option;
+    this.cimlForm.get('selectedMinThicknessOption')?.setValue(option, { emitEvent: false });
+    this.syncSelectedMinReqThk();
+  }
+
+  syncSelectedMinReqThk() {
+    if (!this.selectedMinThicknessOption) return;
+    const value = parseFloat(this.cimlForm.get(this.selectedMinThicknessOption)?.value);
+    this.cimlForm.get('selectedMinReqThk')?.setValue(!isNaN(value) ? value.toFixed(2) : '', { emitEvent: false });
+  }
+
+  syncMinAbove2RL() {
+    const calc = parseFloat(this.cimlForm.get('calculatedRemainingLife')?.value);
+    const maxRL = parseFloat(this.cimlForm.get('maxRemainingLife')?.value);
+    const vals = [calc, maxRL].filter(v => !isNaN(v));
+    const min = vals.length > 0 ? Math.min(...vals) : null;
+    this.cimlForm.get('minAbove2')?.setValue(min !== null ? min.toFixed(4) : '', { emitEvent: false });
+    this.syncRemainingLife();
+  }
+
+  syncMinAbove2Interval() {
+    const perAPI = parseFloat(this.cimlForm.get('perAPI')?.value);
+    const halfRL = parseFloat(this.cimlForm.get('halfRemainingLife')?.value);
+    const vals = [perAPI, halfRL].filter(v => !isNaN(v));
+    const min = vals.length > 0 ? Math.min(...vals) : null;
+    this.cimlForm.get('minAbove2Interval')?.setValue(min !== null ? min.toFixed(4) : '', { emitEvent: false });
+    this.syncSelectedInspectionInterval();
+  }
+
+  selectInspectionIntervalOption(option: string) {
+    this.selectedInspectionIntervalOption = option;
+    this.cimlForm.get('selectedInspectionIntervalOption')?.setValue(option, { emitEvent: false });
+    this.syncSelectedInspectionInterval();
+  }
+
+  syncSelectedInspectionInterval() {
+    if (!this.selectedInspectionIntervalOption) return;
+    const value = parseFloat(this.cimlForm.get(this.selectedInspectionIntervalOption)?.value);
+    this.cimlForm.get('selectedInspectionInterval')?.setValue(!isNaN(value) ? value.toFixed(4) : '', { emitEvent: false });
+  }
+
+  selectRLOption(option: string) {
+    this.selectedRLOption = option;
+    this.cimlForm.get('selectedRLOption')?.setValue(option, { emitEvent: false });
+    this.syncRemainingLife();
+  }
+
+  syncRemainingLife() {
+    if (!this.selectedRLOption) return;
+    const value = parseFloat(this.cimlForm.get(this.selectedRLOption)?.value);
+    this.cimlForm.get('remainingLife')?.setValue(!isNaN(value) ? value.toFixed(4) : '', { emitEvent: false });
+  }
 
   loadAreasByPlant(plantId: number) {
 

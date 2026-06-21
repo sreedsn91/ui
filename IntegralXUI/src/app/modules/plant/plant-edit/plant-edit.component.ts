@@ -275,6 +275,7 @@ saveMarkers() {
   showRegulatory = false;
   showDocuments = false;
   showAudit = false;
+  showDefaultValues = false;
   expand = false;
   receivedData: any;
   receivedrefdoc: any;
@@ -376,6 +377,10 @@ saveMarkers() {
       functionalLocation: [''],
       externalSystemID : [''],
       syncStatus : [''],
+      defaultMinimumThickness: [null],
+      minOrDefaultCR: [null],
+      maxRemainingLife: [null],
+      minimumInspectionInterval: [null],
       addedOnDate: [null],
       modifiedOnDate: [null],
       addedByName: [''],
@@ -467,6 +472,10 @@ saveMarkers() {
         functionalLocation: plantData.functionalLocation || '',
         externalSystemID : plantData.externalSystemID || '',
         syncStatus : plantData.syncStatus || '',
+        defaultMinimumThickness: plantData.defaultMinimumThickness ?? null,
+        minOrDefaultCR: plantData.minOrDefaultCR ?? null,
+        maxRemainingLife: plantData.maxRemainingLife ?? null,
+        minimumInspectionInterval: plantData.minimumInspectionInterval ?? null,
         addedOnDate: plantData.addedOnDate ? new Date(plantData.addedOnDate).toLocaleDateString('en-CA') : null,
         modifiedOnDate: plantData.modifiedOnDate ? new Date(plantData.modifiedOnDate).toLocaleDateString('en-CA') : null,
         addedByName : plantData.addedByName || '',
@@ -503,7 +512,8 @@ saveMarkers() {
   this.showEnvironment = state;
   this.showRegulatory = state;
   this.showDocuments = state;
-   this.showAudit = state;
+  this.showAudit = state;
+  this.showDefaultValues = state;
   }
 
   formatDate(dateString: string): string | null {

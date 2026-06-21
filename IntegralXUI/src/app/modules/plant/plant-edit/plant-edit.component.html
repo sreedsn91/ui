@@ -998,6 +998,53 @@
                                                 </div>
                                             </div>
 
+                                            <div class="row mt-2">
+                                                <div class="col-md-12">
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showDefaultValues')">
+                                                            Default Values
+                                                            <span class="arrow" [class.open]="showDefaultValues"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showDefaultValues">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="defaultMinimumThickness" class="form-label">Default Minimum Thickness:</label>
+                                                                        <input type="number" id="defaultMinimumThickness" formControlName="defaultMinimumThickness"
+                                                                            step="0.001" class="form-control form-control-nb"
+                                                                            placeholder="Enter default minimum thickness" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="minOrDefaultCR" class="form-label">Min or Default CR:</label>
+                                                                        <input type="number" id="minOrDefaultCR" formControlName="minOrDefaultCR"
+                                                                            step="0.001" class="form-control form-control-nb"
+                                                                            placeholder="Enter min or default CR" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="maxRemainingLife" class="form-label">Max Remaining Life:</label>
+                                                                        <input type="number" id="maxRemainingLife" formControlName="maxRemainingLife"
+                                                                            step="0.001" class="form-control form-control-nb"
+                                                                            placeholder="Enter max remaining life" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="minimumInspectionInterval" class="form-label">Minimum Inspection Interval:</label>
+                                                                        <input type="number" id="minimumInspectionInterval" formControlName="minimumInspectionInterval"
+                                                                            step="0.001" class="form-control form-control-nb"
+                                                                            placeholder="Enter minimum inspection interval" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="row">
                                                 <!-- Basic Information (Column 1) -->
 

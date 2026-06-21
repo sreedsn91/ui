@@ -22,6 +22,7 @@ export class PlantAddComponent {
   showEnvironment = false;
   showRegulatory = false;
   showDocuments = false;
+  showDefaultValues = false;
   plantForm: FormGroup;
   plantTypes: any[] = [];
   plantCategories: any[] = [];
@@ -99,7 +100,11 @@ export class PlantAddComponent {
       eRPorCMMSSystem : [''],
       functionalLocation: [''],
       externalSystemID : [''],
-      syncStatus : ['']
+      syncStatus : [''],
+      defaultMinimumThickness: [null],
+      minOrDefaultCR: [null],
+      maxRemainingLife: [null],
+      minimumInspectionInterval: [null]
     });
     
   }

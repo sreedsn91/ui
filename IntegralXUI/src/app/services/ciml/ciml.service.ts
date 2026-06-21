@@ -690,4 +690,24 @@ checkThicknessReferences(cimlId: number): Observable<any> {
   });
 }
 
+calculateInternalPressureThickness(payload: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}Calculations/InternalPressure`, payload, {
+    headers: this.getHeaders()
+  });
+}
+
+getStructuralMinThicknessByMaterial(materialId: number, pressureClass: number, nps: number, temperatureCelsius?: number): Observable<any> {
+  let params = new HttpParams()
+    .set('materialId', materialId.toString())
+    .set('pressureClass', pressureClass.toString())
+    .set('nps', nps.toString());
+  if (temperatureCelsius != null) {
+    params = params.set('temperatureCelsius', temperatureCelsius.toString());
+  }
+  return this.http.get(`${this.apiUrl}Calculations/StructuralMinimumThickness/ByMaterial`, {
+    headers: this.getHeaders(),
+    params
+  });
+}
+
 }
