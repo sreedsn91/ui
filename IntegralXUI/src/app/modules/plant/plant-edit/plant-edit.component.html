@@ -1,4 +1,4 @@
-<div class="rowp">
+﻿<div class="rowp">
     <!-- [ tabs ] start -->
 
     <div class="col-sm-12">
@@ -161,9 +161,10 @@
                                                             class="bi  feather icon-trash"></i></button></div>
                                             </div>
                                             <!-- General Information -->
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="accordion-item">
+
+                <!-- General Information -->
+                <div class="row">
+                      <div class="accordion-item">
                                                         <div class="accordion-header" (click)="toggle('showGeneral')">
                                                             General Information
                                                             <span class="arrow" [class.open]="showGeneral"></span>
@@ -176,7 +177,7 @@
 
 
                                                                         <label for="name" class="form-label">Plant
-                                                                            Code/ID: </label>
+                                                                            Code/ID: <span class="text-danger">*</span></label>
                                                                         <input id="name" formControlName="name"
                                                                             class="form-control form-control-nb"
                                                                             placeholder="Enter plant code/ID" />
@@ -324,9 +325,241 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                
+                      </div>
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                <!-- odd -->
+
+                                                  
+
+
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header"
+                                                            (click)="toggle('showMaintenance')">
+                                                            Maintenance & Reliability
+                                                            <span class="arrow" [class.open]="showMaintenance"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showMaintenance">
+                                                            <div class="row">
+
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="currentMaintenanceStrategyId"
+                                                                            class="form-label">Current Maintenance
+                                                                            Strategy:</label>
+                                                                        <select id="currentMaintenanceStrategyId"
+                                                                            formControlName="currentMaintenanceStrategyId"
+                                                                            class="form-select form-control-nb">
+                                                                            <option
+                                                                                *ngFor="let item of maintenanceStrategies"
+                                                                                [value]="item.id">{{ item.name }}
+                                                                            </option>
+                                                                        </select>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="shutdownTurnaroundFrequency"
+                                                                            class="form-label">Shutdown Turnaround
+                                                                            Frequency(Years):</label>
+                                                                        <input type="number"
+                                                                            id="shutdownTurnaroundFrequency"
+                                                                            formControlName="shutdownTurnaroundFrequency"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter shutdown turnaround frequency" />
+                                                                        <div *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].invalid &&  plantForm.controls['shutdownTurnaroundFrequency'].touched"
+                                                                            class="text-danger">
+                                                                            <div
+                                                                                *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].errors?.['min']">
+                                                                                invalid
+                                                                                shutdown turnaround.</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="lastMajorOverhaulDate"
+                                                                            class="form-label">Last Major Overhaul
+                                                                            Date:</label>
+                                                                        <input type="date" id="lastMajorOverhaulDate"
+                                                                            formControlName="lastMajorOverhaulDate"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter last major overhaul date" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="nextMajorOverhaulDate"
+                                                                            class="form-label">Next Major Overhaul
+                                                                            Date:</label>
+                                                                        <input type="date" id="nextMajorOverhaulDate"
+                                                                            formControlName="nextMajorOverhaulDate"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter next major overhaul date" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="reliabilityMetricsId"
+                                                                            class="form-label">Reliability
+                                                                            Metrics:</label>
+                                                                        <select id="reliabilityMetricsId"
+                                                                            formControlName="reliabilityMetricsId"
+                                                                            class="form-select form-control-nb">
+                                                                            <option
+                                                                                *ngFor="let item of reliabilityMetrics"
+                                                                                [value]="item.id">{{ item.name }}
+                                                                            </option>
+                                                                        </select>
+
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <!-- Add your fields for Maintenance & Reliability here -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+
+
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header"
+                                                            (click)="toggle('showIntegration')">
+                                                            Integration & Metadata
+                                                            <span class="arrow" [class.open]="showIntegration"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showIntegration">
+                                                            <div class="row">
+
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="eRPorCMMSPlantCode"
+                                                                            class="form-label">ERP/CMMS Plant
+                                                                            Code:</label>
+                                                                        <input type="text" id="eRPorCMMSPlantCode"
+                                                                            formControlName="eRPorCMMSPlantCode"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter ERP/CMMS Plant Code" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="eRPorCMMSSystem"
+                                                                            class="form-label">ERP/CMMS System:</label>
+                                                                        <input type="text" id="eRPorCMMSSystem"
+                                                                            formControlName="eRPorCMMSSystem"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter ERP/CMMS System" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="functionalLocation"
+                                                                            class="form-label">Functional
+                                                                            Location:</label>
+                                                                        <input type="text" id="functionalLocation"
+                                                                            formControlName="functionalLocation"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter Functional Location" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="externalSystemID"
+                                                                            class="form-label">External System
+                                                                            ID:</label>
+                                                                        <input type="text" id="externalSystemID"
+                                                                            formControlName="externalSystemID"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter External System ID" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="syncStatus" class="form-label">Sync
+                                                                            Status:</label>
+                                                                        <input type="text" id="syncStatus"
+                                                                            formControlName="syncStatus"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter Sync Status" />
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Add your fields for Integration & Metadata here -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+
+
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showAudit')">
+                                                            Audit Information
+                                                            <span class="arrow" [class.open]="showAudit"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showAudit">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="addedByName"
+                                                                            class="form-label">Created By:</label>
+                                                                        <input type="text" id="addedByName"
+                                                                            [disabled]="true"
+                                                                            formControlName="addedByName"
+                                                                            class="form-control form-control-nb" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="addedOnDate"
+                                                                            class="form-label">Created
+                                                                            Date:</label>
+                                                                        <input type="text" id="addedOnDate"
+                                                                            [disabled]="true"
+                                                                            formControlName="addedOnDate"
+                                                                            class="form-control form-control-nb" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="modifiedByName"
+                                                                            class="form-label">Last Modified
+                                                                            By:</label>
+                                                                        <input type="text" id="modifiedByName"
+                                                                            [disabled]="true"
+                                                                            formControlName="modifiedByName"
+                                                                            class="form-control form-control-nb" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="modifiedOnDate"
+                                                                            class="form-label">Last Modified
+                                                                            Date:</label>
+                                                                        <input type="text" id="modifiedOnDate"
+                                                                            [disabled]="true"
+                                                                            formControlName="modifiedOnDate"
+                                                                            class="form-control form-control-nb" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
 
-                                                <div class="col-md-7">
+                                                <div class="col-md-6">
+                                                <!-- even -->
+
                                                     <div class="accordion-item">
                                                         <div class="accordion-header" (click)="toggle('showDesign')">
                                                             Design and Construction Data
@@ -486,106 +719,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-5">
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header"
-                                                            (click)="toggle('showMaintenance')">
-                                                            Maintenance & Reliability
-                                                            <span class="arrow" [class.open]="showMaintenance"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showMaintenance">
-                                                            <div class="row">
-
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernw">
-                                                                        <label for="currentMaintenanceStrategyId"
-                                                                            class="form-label">Current Maintenance
-                                                                            Strategy:</label>
-                                                                        <select id="currentMaintenanceStrategyId"
-                                                                            formControlName="currentMaintenanceStrategyId"
-                                                                            class="form-select form-control-nb">
-                                                                            <option
-                                                                                *ngFor="let item of maintenanceStrategies"
-                                                                                [value]="item.id">{{ item.name }}
-                                                                            </option>
-                                                                        </select>
-
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernw">
-                                                                        <label for="shutdownTurnaroundFrequency"
-                                                                            class="form-label">Shutdown Turnaround
-                                                                            Frequency(Years):</label>
-                                                                        <input type="number"
-                                                                            id="shutdownTurnaroundFrequency"
-                                                                            formControlName="shutdownTurnaroundFrequency"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter shutdown turnaround frequency" />
-                                                                        <div *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].invalid &&  plantForm.controls['shutdownTurnaroundFrequency'].touched"
-                                                                            class="text-danger">
-                                                                            <div
-                                                                                *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].errors?.['min']">
-                                                                                invalid
-                                                                                shutdown turnaround.</div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="lastMajorOverhaulDate"
-                                                                            class="form-label">Last Major Overhaul
-                                                                            Date:</label>
-                                                                        <input type="date" id="lastMajorOverhaulDate"
-                                                                            formControlName="lastMajorOverhaulDate"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter last major overhaul date" />
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="nextMajorOverhaulDate"
-                                                                            class="form-label">Next Major Overhaul
-                                                                            Date:</label>
-                                                                        <input type="date" id="nextMajorOverhaulDate"
-                                                                            formControlName="nextMajorOverhaulDate"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter next major overhaul date" />
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="reliabilityMetricsId"
-                                                                            class="form-label">Reliability
-                                                                            Metrics:</label>
-                                                                        <select id="reliabilityMetricsId"
-                                                                            formControlName="reliabilityMetricsId"
-                                                                            class="form-select form-control-nb">
-                                                                            <option
-                                                                                *ngFor="let item of reliabilityMetrics"
-                                                                                [value]="item.id">{{ item.name }}
-                                                                            </option>
-                                                                        </select>
-
-                                                                    </div>
-                                                                </div>
+                                                
 
 
-
-                                                                <!-- Add your fields for Maintenance & Reliability here -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-md-7">
                                                     <div class="accordion-item">
                                                         <div class="accordion-header"
                                                             (click)="toggle('showEnvironment')">
@@ -735,77 +871,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                
 
-                                                <div class="col-md-5">
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header"
-                                                            (click)="toggle('showIntegration')">
-                                                            Integration & Metadata
-                                                            <span class="arrow" [class.open]="showIntegration"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showIntegration">
-                                                            <div class="row">
 
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="eRPorCMMSPlantCode"
-                                                                            class="form-label">ERP/CMMS Plant
-                                                                            Code:</label>
-                                                                        <input type="text" id="eRPorCMMSPlantCode"
-                                                                            formControlName="eRPorCMMSPlantCode"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter ERP/CMMS Plant Code" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="eRPorCMMSSystem"
-                                                                            class="form-label">ERP/CMMS System:</label>
-                                                                        <input type="text" id="eRPorCMMSSystem"
-                                                                            formControlName="eRPorCMMSSystem"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter ERP/CMMS System" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="functionalLocation"
-                                                                            class="form-label">Functional
-                                                                            Location:</label>
-                                                                        <input type="text" id="functionalLocation"
-                                                                            formControlName="functionalLocation"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter Functional Location" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="externalSystemID"
-                                                                            class="form-label">External System
-                                                                            ID:</label>
-                                                                        <input type="text" id="externalSystemID"
-                                                                            formControlName="externalSystemID"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter External System ID" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="syncStatus" class="form-label">Sync
-                                                                            Status:</label>
-                                                                        <input type="text" id="syncStatus"
-                                                                            formControlName="syncStatus"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter Sync Status" />
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Add your fields for Integration & Metadata here -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
                                                     <div class="accordion-item">
                                                         <div class="accordion-header"
                                                             (click)="toggle('showRegulatory')">
@@ -871,63 +939,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header" (click)="toggle('showAudit')">
-                                                            Audit Information
-                                                            <span class="arrow" [class.open]="showAudit"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showAudit">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="addedByName"
-                                                                            class="form-label">Created By:</label>
-                                                                        <input type="text" id="addedByName"
-                                                                            [disabled]="true"
-                                                                            formControlName="addedByName"
-                                                                            class="form-control form-control-nb" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="addedOnDate"
-                                                                            class="form-label">Created
-                                                                            Date:</label>
-                                                                        <input type="text" id="addedOnDate"
-                                                                            [disabled]="true"
-                                                                            formControlName="addedOnDate"
-                                                                            class="form-control form-control-nb" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="modifiedByName"
-                                                                            class="form-label">Last Modified
-                                                                            By:</label>
-                                                                        <input type="text" id="modifiedByName"
-                                                                            [disabled]="true"
-                                                                            formControlName="modifiedByName"
-                                                                            class="form-control form-control-nb" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="modifiedOnDate"
-                                                                            class="form-label">Last Modified
-                                                                            Date:</label>
-                                                                        <input type="text" id="modifiedOnDate"
-                                                                            [disabled]="true"
-                                                                            formControlName="modifiedOnDate"
-                                                                            class="form-control form-control-nb" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
+                                                
+
+
                                                     <div class="accordion-item">
                                                         <div class="accordion-header" (click)="toggle('showDocuments')">
                                                             Documents
@@ -995,6 +1009,7 @@
 
                                                         </div>
                                                     </div>
+                                                
                                                 </div>
                                             </div>
 

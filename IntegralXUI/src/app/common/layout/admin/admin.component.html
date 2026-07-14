@@ -1,4 +1,4 @@
-<div class="header">
+﻿<div class="header">
   <div class="header-left">
     <div class="logo"> <a [routerLink]="['/dashboard']" class="b-brand" style="color: rgb(13 166 253);;">IntegralX</a></div>
   
@@ -28,7 +28,7 @@
           </button>
         </ng-container>
       <button class="icon-btn" title="Hierarchy"  (click)="showJsonData()"><i class="bi"
-               [ngClass]="'feather icon-pocket'"></i></button>
+               [ngClass]="'feather icon-layers'"></i></button>
        <button class="icon-btn" title="Settings">  <i class="bi"
                [ngClass]="'feather icon-settings'"></i></button>
       <!-- <button class="icon-btn" title="Notifications">🔔</button> -->
@@ -66,178 +66,153 @@
 <header class="" >
   <div class="d-flex align-items-center">
     
-      <!-- Bootstrap Modal -->
-      <!-- Bootstrap Modal -->
-      <div class="modal fade" #jsonModal tabindex="-1" aria-labelledby="jsonModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
+      <!-- Hierarchy Floating Panel -->
+      <div class="hierarchy-panel" *ngIf="isHierarchyOpen"
+           [style.left.px]="panelX" [style.top.px]="panelY">
 
-            <div class="modal-header">
-              <h5 class="modal-title" id="jsonModalLabel">Hierarchy </h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="hierarchy-header" (mousedown)="startDrag($event)">
+          <div class="hierarchy-title-wrap">
+            <div class="hierarchy-icon">
+              <i class="feather icon-git-branch"></i>
             </div>
+            <span class="hierarchy-title">Asset Hierarchy</span>
+          </div>
+          <div class="hierarchy-header-actions">
+            <span class="drag-hint">⋮⋮</span>
+            <button class="hierarchy-close-btn" (click)="closeHierarchy()" title="Close">✕</button>
+          </div>
+        </div>
 
-            <div class="modal-body">
-              <div class="modal-body-content">
-                <!-- Tree View Section -->
-                <div class="tree-view">
-                  <ul class="list-unstyled">
-                    <li *ngFor="let plant of jsonData">
-                      <div class="tree-node" [attr.id]="'plant-' + plant.plantId">
-                        <span class="tree-arrow" (click)="toggle(plant)" [class.expanded]="plant.isExpanded">▶</span>
-                        <span class="tree-label" (click)="navigateToDetails('plant', plant.plantId)">
-                          🏭 <strong>{{ plant.plantName }}</strong>
+        <div class="hierarchy-body">
+          <div class="hierarchy-body-content">
+
+            <!-- Tree View Section -->
+            <div class="tree-view">
+              <ul class="list-unstyled">
+                <li *ngFor="let plant of jsonData">
+                  <div class="tree-node" [attr.id]="'plant-' + plant.plantId">
+                    <span class="tree-arrow" (click)="toggle(plant)" [class.expanded]="plant.isExpanded">▶</span>
+                    <span class="tree-label plant-label" (click)="navigateToDetails('plant', plant.plantId)">
+                      🏭 <strong>{{ plant.plantName }}</strong>
+                    </span>
+                  </div>
+
+                  <ul *ngIf="plant.isExpanded" class="ms-3">
+                    <li *ngFor="let area of plant.areas">
+                      <div class="tree-node" [attr.id]="'area-' + area.areaId">
+                        <span class="tree-arrow" (click)="toggle(area)" [class.expanded]="area.isExpanded">▶</span>
+                        <span class="tree-label" (click)="navigateToDetails('area', area.areaId)">
+                          📍 {{ area.areaName }}
                         </span>
                       </div>
 
-                      <ul *ngIf="plant.isExpanded" class="ms-3">
-                        <!-- AREA NODES -->
-                        <li *ngFor="let area of plant.areas">
-                          <div class="tree-node" [attr.id]="'area-' + area.areaId">
-                            <span class="tree-arrow" (click)="toggle(area)" [class.expanded]="area.isExpanded">▶</span>
-                            <span class="tree-label" (click)="navigateToDetails('area', area.areaId)">
-                              📍 {{ area.areaName }}
+                      <ul *ngIf="area.isExpanded" class="ms-3">
+                        <li *ngFor="let unit of area.units">
+                          <div class="tree-node" [attr.id]="'unit-' + unit.unitId">
+                            <span class="tree-arrow" (click)="toggle(unit)" [class.expanded]="unit.isExpanded">▶</span>
+                            <span class="tree-label" (click)="navigateToDetails('unit', unit.unitId)">
+                              ⚙️ {{ unit.unitName }}
                             </span>
                           </div>
 
-                          <ul *ngIf="area.isExpanded" class="ms-3">
-                            <!-- UNIT NODES -->
-                            <li *ngFor="let unit of area.units">
-                              <div class="tree-node" [attr.id]="'unit-' + unit.unitId">
-                                <span class="tree-arrow" (click)="toggle(unit)"
-                                  [class.expanded]="unit.isExpanded">▶</span>
-                                <span class="tree-label" (click)="navigateToDetails('unit', unit.unitId)">
-                                  📦 {{ unit.unitName }}
+                          <ul *ngIf="unit.isExpanded" class="ms-3">
+                            <li *ngFor="let system of unit.systems">
+                              <div class="tree-node" [attr.id]="'system-' + system.systemId">
+                                <span class="tree-arrow" (click)="toggle(system)" [class.expanded]="system.isExpanded">▶</span>
+                                <span class="tree-label" (click)="navigateToDetails('system', system.systemId)">
+                                  🔄 {{ system.systemName }}
                                 </span>
                               </div>
 
-                              <ul *ngIf="unit.isExpanded" class="ms-3">
-                                <!-- SYSTEM NODES -->
-                                <li *ngFor="let system of unit.systems">
-                                  <div class="tree-node" [attr.id]="'system-' + system.systemId">
-                                    <span class="tree-arrow" (click)="toggle(system)"
-                                      [class.expanded]="system.isExpanded">▶</span>
-                                    <span class="tree-label" (click)="navigateToDetails('system', system.systemId)">
-                                      🖥️ {{ system.systemName }}
+                              <ul *ngIf="system.isExpanded" class="ms-3">
+                                <li *ngFor="let circuit of system.circuit">
+                                  <div class="tree-node" [attr.id]="'circuit-' + circuit.circuitId">
+                                    <span class="tree-arrow" (click)="toggle(circuit)" [class.expanded]="circuit.isExpanded">▶</span>
+                                    <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+                                      ⚡ {{ circuit.circuitName }}
                                     </span>
                                   </div>
-
-                                  <ul *ngIf="system.isExpanded" class="ms-3">
-                                    <!-- CIRCUITS -->
-                                    <li *ngFor="let circuit of system.circuit">
-                                      <div class="tree-node" [attr.id]="'circuit-' + circuit.circuitId">
-                                        <span class="tree-arrow" (click)="toggle(circuit)"
-                                          [class.expanded]="circuit.isExpanded">▶</span>
-                                        <span class="tree-label"
-                                          (click)="navigateToDetails('circuit', circuit.circuitId)">
-                                          ⚡ {{ circuit.circuitName }}
-                                        </span>
-                                      </div>
-
-                                      <ul *ngIf="circuit.isExpanded" class="ms-3">
-                                        <li *ngFor="let eq of circuit.equipment"
-                                          [attr.id]="'equipment-' + eq.equipmentId">
-                                          <span class="tree-label"
-                                            (click)="navigateToDetails('equipment', eq.equipmentId)">
-                                            ⚗️ {{ eq.equipmentName }}
-                                          </span>
-                                        </li>
-                                      </ul>
-                                    </li>
-
-                                    <!-- Equipment directly under system -->
-                                    <li *ngFor="let eq of system.equipment" [attr.id]="'equipment-' + eq.equipmentId">
-                                      <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
-                                        ⚗️ {{ eq.equipmentName }}
+                                  <ul *ngIf="circuit.isExpanded" class="ms-3">
+                                    <li *ngFor="let eq of circuit.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+                                      <span class="tree-label leaf-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                                        🔧 {{ eq.equipmentName }}
                                       </span>
                                     </li>
                                   </ul>
                                 </li>
-
-                                <!-- Circuits under Unit -->
-                                <li *ngFor="let circuit of unit.circuit" [attr.id]="'circuit-' + circuit.circuitId">
-                                  <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
-                                    ⚡ {{ circuit.circuitName }}
-                                  </span>
-                                </li>
-
-                                <!-- Equipment under Unit -->
-                                <li *ngFor="let eq of unit.equipment" [attr.id]="'equipment-' + eq.equipmentId">
-                                  <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
-                                    ⚗️ {{ eq.equipmentName }}
+                                <li *ngFor="let eq of system.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+                                  <span class="tree-label leaf-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                                    🔧 {{ eq.equipmentName }}
                                   </span>
                                 </li>
                               </ul>
                             </li>
-
-                            <!-- Systems, Circuits, Equipment in Area -->
-                            <li *ngFor="let system of area.systems" [attr.id]="'system-' + system.systemId">
-                              <span class="tree-label" (click)="navigateToDetails('system', system.systemId)">
-                                🖥️ {{ system.systemName }}
-                              </span>
-                            </li>
-
-                            <li *ngFor="let circuit of area.circuit" [attr.id]="'circuit-' + circuit.circuitId">
-                              <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+                            <li *ngFor="let circuit of unit.circuit" [attr.id]="'circuit-' + circuit.circuitId">
+                              <span class="tree-label leaf-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
                                 ⚡ {{ circuit.circuitName }}
                               </span>
                             </li>
-
-                            <li *ngFor="let eq of area.equipment" [attr.id]="'equipment-' + eq.equipmentId">
-                              <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
-                                ⚗️ {{ eq.equipmentName }}
+                            <li *ngFor="let eq of unit.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+                              <span class="tree-label leaf-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                                🔧 {{ eq.equipmentName }}
                               </span>
                             </li>
                           </ul>
                         </li>
-
-                        <!-- Units, Systems, Circuits, Equipment under Plant -->
-                        <li *ngFor="let unit of plant.units" [attr.id]="'unit-' + unit.unitId">
-                          <span class="tree-label" (click)="navigateToDetails('unit', unit.unitId)">
-                            📦 {{ unit.unitName }}
+                        <li *ngFor="let system of area.systems" [attr.id]="'system-' + system.systemId">
+                          <span class="tree-label leaf-label" (click)="navigateToDetails('system', system.systemId)">
+                            🔄 {{ system.systemName }}
                           </span>
                         </li>
-
-                        <li *ngFor="let system of plant.systems" [attr.id]="'system-' + system.systemId">
-                          <span class="tree-label" (click)="navigateToDetails('system', system.systemId)">
-                            🖥️ {{ system.systemName }}
-                          </span>
-                        </li>
-
-                        <li *ngFor="let circuit of plant.circuit" [attr.id]="'circuit-' + circuit.circuitId">
-                          <span class="tree-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+                        <li *ngFor="let circuit of area.circuit" [attr.id]="'circuit-' + circuit.circuitId">
+                          <span class="tree-label leaf-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
                             ⚡ {{ circuit.circuitName }}
                           </span>
                         </li>
-
-                        <li *ngFor="let eq of plant.equipment" [attr.id]="'equipment-' + eq.equipmentId">
-                          <span class="tree-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
-                            ⚗️ {{ eq.equipmentName }}
+                        <li *ngFor="let eq of area.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+                          <span class="tree-label leaf-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                            🔧 {{ eq.equipmentName }}
                           </span>
                         </li>
                       </ul>
                     </li>
-
+                    <li *ngFor="let unit of plant.units" [attr.id]="'unit-' + unit.unitId">
+                      <span class="tree-label leaf-label" (click)="navigateToDetails('unit', unit.unitId)">
+                        ⚙️ {{ unit.unitName }}
+                      </span>
+                    </li>
+                    <li *ngFor="let system of plant.systems" [attr.id]="'system-' + system.systemId">
+                      <span class="tree-label leaf-label" (click)="navigateToDetails('system', system.systemId)">
+                        🔄 {{ system.systemName }}
+                      </span>
+                    </li>
+                    <li *ngFor="let circuit of plant.circuit" [attr.id]="'circuit-' + circuit.circuitId">
+                      <span class="tree-label leaf-label" (click)="navigateToDetails('circuit', circuit.circuitId)">
+                        ⚡ {{ circuit.circuitName }}
+                      </span>
+                    </li>
+                    <li *ngFor="let eq of plant.equipment" [attr.id]="'equipment-' + eq.equipmentId">
+                      <span class="tree-label leaf-label" (click)="navigateToDetails('equipment', eq.equipmentId)">
+                        🔧 {{ eq.equipmentName }}
+                      </span>
+                    </li>
                   </ul>
-                </div>
-
-                <!-- Legend Section -->
-                <div class="icon-legend">
-                  <ul>
-                    <li><span>🏭</span> <span class="label-text">Plant</span></li>
-                    <li><span>📍</span> <span class="label-text">Area</span></li>
-                    <li><span>📦</span> <span class="label-text">Unit</span></li>
-                    <li><span>🖥️</span> <span class="label-text">System</span></li>
-                    <li><span>⚡</span> <span class="label-text">Circuit</span></li>
-                    <li><span>⚗️</span> <span class="label-text">Equipment</span></li>
-                  </ul>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
 
-            <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div> -->
+            <!-- Legend Section -->
+            <div class="icon-legend">
+              <div class="legend-title">Legend</div>
+              <ul>
+                <li><span class="legend-icon">🏭</span><span class="label-text">Plant</span></li>
+                <li><span class="legend-icon">📍</span><span class="label-text">Area</span></li>
+                <li><span class="legend-icon">⚙️</span><span class="label-text">Unit</span></li>
+                <li><span class="legend-icon">🔄</span><span class="label-text">System</span></li>
+                <li><span class="legend-icon">⚡</span><span class="label-text">Circuit</span></li>
+                <li><span class="legend-icon">🔧</span><span class="label-text">Equipment</span></li>
+              </ul>
+            </div>
 
           </div>
         </div>

@@ -92,6 +92,7 @@ ddlcomponentInspectionAccess: any;
 ddlcomponentScheduledRepairReplacement: any;
 ddlcomponentRepairReplacementDuringNextShutdown: any;
 ddlcomponentSyncStatus: any;
+headTypeOptions = ['Flat', 'Ellipsoidal', 'Torispherical', 'Spherical', 'Other'];
   clientData: any;
   childValue: number = 0;
   receivedData: any;
@@ -139,6 +140,7 @@ ddlcomponentSyncStatus: any;
       commissioningDate: [null],
       builtDate: [null],
       operationalStatus: [null],
+      inserviceStartDate: [null],
 
       // Location
       plantID: [null,Validators.required],
@@ -179,6 +181,7 @@ ddlcomponentSyncStatus: any;
       orientation: [null],
       emptyWeight: [null],
       capacity: [null],
+      headType: [null],
 
       // Operating Conditions
       operatingPressureMax: [null],
@@ -513,6 +516,7 @@ async popolateloops(){
     commissioningDate: data.commissioningDate || null,
     builtDate: data.builtDate || null,
     operationalStatus: data.operationalStatus || null,
+    inserviceStartDate: data.inserviceStartDate || null,
 
     // Location
     plantID: data.plantID || null,
@@ -553,6 +557,7 @@ async popolateloops(){
     orientation: data.orientation || null,
     emptyWeight: data.emptyWeight || null,
     capacity: data.capacity || null,
+    headType: data.headType || null,
 
     // Operating Conditions
     operatingPressureMax: data.operatingPressureMax || null,

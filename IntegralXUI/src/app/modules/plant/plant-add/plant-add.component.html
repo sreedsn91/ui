@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <div class="card">
         <div class="card-body ">
             <div class="d-flex justify-content-between align-items-center mt-2">
@@ -24,7 +24,8 @@
                 </div>
                 <!-- General Information -->
                 <div class="row">
-                    <div class="col-md-12">
+
+                    
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showGeneral')">
                                 General Information
@@ -37,7 +38,7 @@
                                         <div class="m-1 field-containernwsm">
 
 
-                                            <label for="name" class="form-label">Plant Code/ID: </label>
+                                            <label for="name" class="form-label">Plant Code/ID: <span class="text-danger">*</span></label>
                                             <input id="name" formControlName="name" class="form-control form-control-nb"
                                                 placeholder="Enter plant code/ID" />
                                             <div *ngIf="plantForm.controls['name'].invalid && plantForm.controls['name'].touched"
@@ -159,9 +160,160 @@
                                 </div>
                             </div>
                         </div>
+                    
                     </div>
-             
-                    <div class="col-md-7">
+                <div class="row">
+
+                    <div class="col-md-6">
+                    <!-- odd -->
+
+
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showMaintenance')">
+                                Maintenance & Reliability
+                                <span class="arrow" [class.open]="showMaintenance"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showMaintenance">
+                                <div class="row"> 
+
+                        <div class="col-md-6"> <div class="m-1 field-containernw">
+                            <label for="currentMaintenanceStrategyId" class="form-label">Current Maintenance
+                                Strategy:</label>
+                            <select id="currentMaintenanceStrategyId" formControlName="currentMaintenanceStrategyId"
+                                class="form-select form-control-nb">
+                                <option *ngFor="let item of maintenanceStrategies" [value]="item.id">{{ item.name }}
+                                </option>
+                            </select>
+
+                        </div>
+
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernw">
+                            <label for="shutdownTurnaroundFrequency" class="form-label">Shutdown Turnaround
+                                Frequency(Years):</label>
+                            <input type="number" id="shutdownTurnaroundFrequency"
+                                formControlName="shutdownTurnaroundFrequency" class="form-control form-control-nb"
+                                placeholder="Enter shutdown turnaround frequency" />
+                            <div *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].invalid &&  plantForm.controls['shutdownTurnaroundFrequency'].touched"
+                                class="text-danger">
+                                <div *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].errors?.['min']">invalid
+                                    shutdown turnaround.</div>
+                            </div>
+                        </div>
+
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="lastMajorOverhaulDate" class="form-label">Last Major Overhaul Date:</label>
+                            <input type="date" id="lastMajorOverhaulDate" formControlName="lastMajorOverhaulDate"
+                                class="form-control form-control-nb" placeholder="Enter last major overhaul date" />
+                        </div>
+
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="nextMajorOverhaulDate" class="form-label">Next Major Overhaul Date:</label>
+                            <input type="date" id="nextMajorOverhaulDate" formControlName="nextMajorOverhaulDate"
+                                class="form-control form-control-nb" placeholder="Enter next major overhaul date" />
+                        </div>
+
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="reliabilityMetricsId" class="form-label">Reliability Metrics:</label>
+                            <select id="reliabilityMetricsId" formControlName="reliabilityMetricsId"
+                                class="form-select form-control-nb">
+                                <option *ngFor="let item of reliabilityMetrics" [value]="item.id">{{ item.name }}
+                                </option>
+                            </select>
+
+                        </div>   </div>
+
+
+                  
+                    <!-- Add your fields for Maintenance & Reliability here -->
+                                </div>
+                            </div>
+                        </div>
+                    
+
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showIntegration')">
+                                Integration & Metadata
+                                <span class="arrow" [class.open]="showIntegration"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showIntegration">
+                                <div class="row">
+                                        
+                          <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="eRPorCMMSPlantCode" class="form-label">ERP/CMMS Plant Code:</label>
+                            <input type="text" id="eRPorCMMSPlantCode" formControlName="eRPorCMMSPlantCode"
+                                class="form-control form-control-nb" placeholder="Enter ERP/CMMS Plant Code" />
+                        </div>
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="eRPorCMMSSystem" class="form-label">ERP/CMMS System:</label>
+                            <input type="text" id="eRPorCMMSSystem" formControlName="eRPorCMMSSystem"
+                                class="form-control form-control-nb" placeholder="Enter ERP/CMMS System" />
+                        </div>
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="functionalLocation" class="form-label">Functional Location:</label>
+                            <input type="text" id="functionalLocation" formControlName="functionalLocation"
+                                class="form-control form-control-nb" placeholder="Enter Functional Location" />
+                        </div>
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="externalSystemID" class="form-label">External System ID:</label>
+                            <input type="text" id="externalSystemID" formControlName="externalSystemID"
+                                class="form-control form-control-nb" placeholder="Enter External System ID" />
+                        </div>
+                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
+                            <label for="syncStatus" class="form-label">Sync
+                                Status:</label>
+                            <input type="text" id="syncStatus" formControlName="syncStatus"
+                                class="form-control form-control-nb" placeholder="Enter Sync Status" />
+                        </div>
+                       </div> 
+                                    <!-- Add your fields for Integration & Metadata here -->
+                                </div>
+                            </div>
+                        </div>
+                    
+
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showDocuments')">
+                                Documents
+                                <span class="arrow" [class.open]="showDocuments"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showDocuments">
+                                <div class="row">
+                                       <div class="col-md-12"> <div class="m-1 field-containernwsm">
+                            <label for="documents" class="form-label">Select Files:</label>
+                            <input id="documents" type="file" multiple class="form-control form-control-nb"
+                                style="margin: -6px -6px;" (change)="onFileSelect($event)" />
+                        </div>
+                        <div class="mb-3">
+                            <ul *ngIf="documentPreviews.length > 0" class="list-group" style="border-radius: 0px;">
+                                <li *ngFor="let file of documentPreviews; let i = index"
+                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{{ file.name }}</span>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                            (click)="downloadFile(file)">
+                                            <i class="feather icon-download"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger docbutton" (click)="deleteFile(i)">
+                                            <i class="feather icon-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                     </div>
+
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                    <div class="col-md-6">
+                    <!-- even -->
+
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showDesign')">
                                 Design and Construction Data
@@ -288,73 +440,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                
-                    <div class="col-md-5">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showMaintenance')">
-                                Maintenance & Reliability
-                                <span class="arrow" [class.open]="showMaintenance"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showMaintenance">
-                                <div class="row"> 
-
-                        <div class="col-md-6"> <div class="m-1 field-containernw">
-                            <label for="currentMaintenanceStrategyId" class="form-label">Current Maintenance
-                                Strategy:</label>
-                            <select id="currentMaintenanceStrategyId" formControlName="currentMaintenanceStrategyId"
-                                class="form-select form-control-nb">
-                                <option *ngFor="let item of maintenanceStrategies" [value]="item.id">{{ item.name }}
-                                </option>
-                            </select>
-
-                        </div>
-
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernw">
-                            <label for="shutdownTurnaroundFrequency" class="form-label">Shutdown Turnaround
-                                Frequency(Years):</label>
-                            <input type="number" id="shutdownTurnaroundFrequency"
-                                formControlName="shutdownTurnaroundFrequency" class="form-control form-control-nb"
-                                placeholder="Enter shutdown turnaround frequency" />
-                            <div *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].invalid &&  plantForm.controls['shutdownTurnaroundFrequency'].touched"
-                                class="text-danger">
-                                <div *ngIf=" plantForm.controls['shutdownTurnaroundFrequency'].errors?.['min']">invalid
-                                    shutdown turnaround.</div>
-                            </div>
-                        </div>
-
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="lastMajorOverhaulDate" class="form-label">Last Major Overhaul Date:</label>
-                            <input type="date" id="lastMajorOverhaulDate" formControlName="lastMajorOverhaulDate"
-                                class="form-control form-control-nb" placeholder="Enter last major overhaul date" />
-                        </div>
-
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="nextMajorOverhaulDate" class="form-label">Next Major Overhaul Date:</label>
-                            <input type="date" id="nextMajorOverhaulDate" formControlName="nextMajorOverhaulDate"
-                                class="form-control form-control-nb" placeholder="Enter next major overhaul date" />
-                        </div>
-
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="reliabilityMetricsId" class="form-label">Reliability Metrics:</label>
-                            <select id="reliabilityMetricsId" formControlName="reliabilityMetricsId"
-                                class="form-select form-control-nb">
-                                <option *ngFor="let item of reliabilityMetrics" [value]="item.id">{{ item.name }}
-                                </option>
-                            </select>
-
-                        </div>   </div>
+                    
 
 
-                  
-                    <!-- Add your fields for Maintenance & Reliability here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-             
-                    <div class="col-md-7">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showEnvironment')">
                                 Environmental & Operating Conditions
@@ -482,50 +570,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-               
-                    <div class="col-md-5">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showIntegration')">
-                                Integration & Metadata
-                                <span class="arrow" [class.open]="showIntegration"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showIntegration">
-                                <div class="row">
-                                        
-                          <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="eRPorCMMSPlantCode" class="form-label">ERP/CMMS Plant Code:</label>
-                            <input type="text" id="eRPorCMMSPlantCode" formControlName="eRPorCMMSPlantCode"
-                                class="form-control form-control-nb" placeholder="Enter ERP/CMMS Plant Code" />
-                        </div>
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="eRPorCMMSSystem" class="form-label">ERP/CMMS System:</label>
-                            <input type="text" id="eRPorCMMSSystem" formControlName="eRPorCMMSSystem"
-                                class="form-control form-control-nb" placeholder="Enter ERP/CMMS System" />
-                        </div>
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="functionalLocation" class="form-label">Functional Location:</label>
-                            <input type="text" id="functionalLocation" formControlName="functionalLocation"
-                                class="form-control form-control-nb" placeholder="Enter Functional Location" />
-                        </div>
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="externalSystemID" class="form-label">External System ID:</label>
-                            <input type="text" id="externalSystemID" formControlName="externalSystemID"
-                                class="form-control form-control-nb" placeholder="Enter External System ID" />
-                        </div>
-                         </div>  <div class="col-md-6"> <div class="m-1 field-containernwsm">
-                            <label for="syncStatus" class="form-label">Sync
-                                Status:</label>
-                            <input type="text" id="syncStatus" formControlName="syncStatus"
-                                class="form-control form-control-nb" placeholder="Enter Sync Status" />
-                        </div>
-                       </div> 
-                                    <!-- Add your fields for Integration & Metadata here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
+                    
+
+
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showRegulatory')">
                                 Regulatory & Compliance
@@ -569,43 +616,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-               
-                    <div class="col-md-5">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showDocuments')">
-                                Documents
-                                <span class="arrow" [class.open]="showDocuments"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showDocuments">
-                                <div class="row">
-                                       <div class="col-md-12"> <div class="m-1 field-containernwsm">
-                            <label for="documents" class="form-label">Select Files:</label>
-                            <input id="documents" type="file" multiple class="form-control form-control-nb"
-                                style="margin: -6px -6px;" (change)="onFileSelect($event)" />
-                        </div>
-                        <div class="mb-3">
-                            <ul *ngIf="documentPreviews.length > 0" class="list-group" style="border-radius: 0px;">
-                                <li *ngFor="let file of documentPreviews; let i = index"
-                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{{ file.name }}</span>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-success mx-1 docbutton"
-                                            (click)="downloadFile(file)">
-                                            <i class="feather icon-download"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger docbutton" (click)="deleteFile(i)">
-                                            <i class="feather icon-trash"></i>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                     </div>
-
-                            </div>
-                        </div>
+                    
                     </div>
                 </div>
 

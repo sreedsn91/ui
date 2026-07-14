@@ -481,7 +481,6 @@ saveMarkers() {
         addedByName : plantData.addedByName || '',
         modifiedByName: plantData.modifiedByName || '',
       });
-      alert(plantData.refdocpoint);
   this.receivedrefdoc  = (plantData.refdocloc);
   this.receivedrefdocmappings = plantData.refdocpoint ;
   this.existingMarkers = plantData.refdocpoint ;

@@ -1,7 +1,5 @@
 // angular import
-import { Component, ElementRef, ViewChild } from '@angular/core';
-
-declare var bootstrap: any;
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -38,8 +36,17 @@ interface MenuItem {
 })
 export class AdminComponent {
 
-  @ViewChild('jsonModal') jsonModal!: ElementRef;
   jsonData: any = null;
+
+  // Hierarchy panel state
+  isHierarchyOpen = false;
+  panelX = Math.max(0, (window.innerWidth - 900) / 2);
+  panelY = Math.max(0, (window.innerHeight - 600) / 2);
+  private isDragging = false;
+  private dragStartX = 0;
+  private dragStartY = 0;
+  private startPanelX = 0;
+  private startPanelY = 0;
 
   // Function to get JSON and open modal
 
@@ -131,19 +138,35 @@ navigateToDetails(type: string, id: number) {
     return outlet?.activatedRouteData?.['animation'];
   }
   showJsonData() {
-    // Simulate API call / logic
-    this.jsonData = this.getJson();
- this.service.getHierarchy().subscribe((data: any) => {
+    this.service.getHierarchy().subscribe((data: any) => {
       this.jsonData = data;
-      debugger;
     });
-    // Show Bootstrap modal
-    const modal = new bootstrap.Modal(this.jsonModal.nativeElement,{
-    backdrop: false,     // 🔹 No overlay
-    keyboard: false      // 🔹 Optional: Esc key won't close it
-  });
+    this.isHierarchyOpen = true;
+  }
 
-    modal.show();
+  closeHierarchy() {
+    this.isHierarchyOpen = false;
+  }
+
+  startDrag(event: MouseEvent) {
+    this.isDragging = true;
+    this.dragStartX = event.clientX;
+    this.dragStartY = event.clientY;
+    this.startPanelX = this.panelX;
+    this.startPanelY = this.panelY;
+    event.preventDefault();
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (!this.isDragging) return;
+    this.panelX = this.startPanelX + (event.clientX - this.dragStartX);
+    this.panelY = this.startPanelY + (event.clientY - this.dragStartY);
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    this.isDragging = false;
   }
  toggle(item: any) {
     item.isExpanded = !item.isExpanded;

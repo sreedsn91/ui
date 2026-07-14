@@ -128,6 +128,7 @@ export class CimlAddComponent {
    selectedMinThicknessOption: string = '';
    selectedRLOption: string = '';
    selectedInspectionIntervalOption: string = '';
+   selectedInspectionMethod: string = '';
 
 
 
@@ -624,6 +625,17 @@ export class CimlAddComponent {
     this.selectedRLOption = option;
     this.cimlForm.get('selectedRLOption')?.setValue(option, { emitEvent: false });
     this.syncRemainingLife();
+  }
+
+  selectInspectionMethod(method: string) {
+    const methods = ['cvi', 'utg', 'uts', 'rt', 'prt', 'mfl', 'pec', 'other'];
+    if (this.selectedInspectionMethod === method) {
+      this.selectedInspectionMethod = '';
+      methods.forEach(m => this.cimlForm.get(m)?.setValue(false, { emitEvent: false }));
+    } else {
+      this.selectedInspectionMethod = method;
+      methods.forEach(m => this.cimlForm.get(m)?.setValue(m === method, { emitEvent: false }));
+    }
   }
 
   syncRemainingLife() {

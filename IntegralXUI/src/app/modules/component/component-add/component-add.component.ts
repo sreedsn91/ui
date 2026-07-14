@@ -89,6 +89,7 @@ ddlcomponentInspectionAccess: any;
 ddlcomponentScheduledRepairReplacement: any;
 ddlcomponentRepairReplacementDuringNextShutdown: any;
 ddlcomponentSyncStatus: any;
+headTypeOptions = ['Flat', 'Ellipsoidal', 'Torispherical', 'Spherical', 'Other'];
 cl: any;
 corrosionLoopIds: string = '';
   expand = true;
@@ -125,6 +126,7 @@ corrosionLoopIds: string = '';
       commissioningDate: [null],
       builtDate: [null],
       operationalStatus: [null],
+      inserviceStartDate: [null],
 
       // Location
       plantId: [null,Validators.required],
@@ -166,6 +168,7 @@ corrosionLoopIds: string = '';
       orientation: [null],
       emptyWeight: [null],
       capacity: [null],
+      headType: [null],
 
       // Operating Conditions
       operatingPressureMax: [null],

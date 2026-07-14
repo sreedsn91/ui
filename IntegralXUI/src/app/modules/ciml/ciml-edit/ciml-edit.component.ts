@@ -71,6 +71,7 @@ export class CimlEditComponent implements OnDestroy {
   selectedCROption: string = '';
   selectedRLOption: string = '';
   selectedInspectionIntervalOption: string = '';
+  selectedInspectionMethod: string = '';
   thicknessLossPercentage: number | null = null;
   calculationsLoading: boolean = false;
   thicknessReferencesChecked: boolean = false;
@@ -613,6 +614,11 @@ export class CimlEditComponent implements OnDestroy {
       }
       if (data.selectedInspectionIntervalOption) {
         this.selectedInspectionIntervalOption = data.selectedInspectionIntervalOption;
+      }
+      const inspectionMethods = ['cvi', 'utg', 'uts', 'rt', 'prt', 'mfl', 'pec', 'other'];
+      const activeMethod = inspectionMethods.find(m => data[m] === true);
+      if (activeMethod) {
+        this.selectedInspectionMethod = activeMethod;
       }
 
       this.dataLoaded = true;
@@ -1278,6 +1284,17 @@ export class CimlEditComponent implements OnDestroy {
     this.selectedRLOption = option;
     this.cimlForm.get('selectedRLOption')?.setValue(option, { emitEvent: false });
     this.syncRemainingLife();
+  }
+
+  selectInspectionMethod(method: string) {
+    const methods = ['cvi', 'utg', 'uts', 'rt', 'prt', 'mfl', 'pec', 'other'];
+    if (this.selectedInspectionMethod === method) {
+      this.selectedInspectionMethod = '';
+      methods.forEach(m => this.cimlForm.get(m)?.setValue(false, { emitEvent: false }));
+    } else {
+      this.selectedInspectionMethod = method;
+      methods.forEach(m => this.cimlForm.get(m)?.setValue(m === method, { emitEvent: false }));
+    }
   }
 
   syncRemainingLife() {

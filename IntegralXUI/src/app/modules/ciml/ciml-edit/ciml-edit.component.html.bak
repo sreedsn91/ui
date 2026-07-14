@@ -1,4 +1,4 @@
-﻿<div>
+<div>
     <div class="card">
         <div class="card-body" *ngIf="dataLoaded">
             <div class="d-flex justify-content-between align-items-center mt-2">
@@ -93,7 +93,7 @@
     <!-- CML ID (String) -->
     <div class="col-md-3">
         <div class="m-1 field-containernwsm">
-            <label for="cml_Id" class="form-label">CML ID: <span class="text-danger">*</span></label>
+            <label for="cml_Id" class="form-label">CML ID:</label>
             <input id="cml_Id" formControlName="cml_Id" type="text" class="form-control form-control-nb" placeholder="Enter CML ID" />
         </div>
     </div>
@@ -101,7 +101,7 @@
     <!-- CML Description (String) -->
     <div class="col-md-3">
         <div class="m-1 field-containernwsm">
-            <label for="cml_Description" class="form-label">CML Description: <span class="text-danger">*</span></label>
+            <label for="cml_Description" class="form-label">CML Description:</label>
             <input id="cml_Description" formControlName="cml_Description" type="text" class="form-control form-control-nb" placeholder="Enter CML Description" />
         </div>
     </div>
@@ -109,7 +109,7 @@
     <!-- CML Category (Integer) -->
     <div class="col-md-3">
         <div class="m-1 field-containernwsm">
-            <label for="cml_Category" class="form-label">CML Category: <span class="text-danger">*</span></label>
+            <label for="cml_Category" class="form-label">CML Category:</label>
             <select id="cml_Category" formControlName="cml_Category" class="form-control form-control-nb">
                 <option value="" disabled >-- Select Category --</option>
                 <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
@@ -159,9 +159,10 @@
         </div>
     </div>
 </div>
+
+<!-- Location -->
 <div class="col-md-6">
-<!-- odd -->
-<!-- Location -->    <div class="accordion-item">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showLocation')">
             Location
             <span class="arrow" [class.open]="showLocation"></span>
@@ -172,7 +173,7 @@
     <!-- Plant ID (Long) -->
     <div class="col-md-6">
         <div class="m-1 field-containernwsm">
-            <label for="plantId" class="form-label">Plant ID: <span class="text-danger">*</span></label>
+            <label for="plantId" class="form-label">Plant ID:</label>
             <select id="plantId" formControlName="plantId" class="form-control form-control-nb">
                 <option value=""  >-- Select Plant ID --</option>
                 <option *ngFor="let plant of ddlplants" [value]="plant.id">{{ plant.name }}</option>
@@ -308,828 +309,11 @@
 
         </div>
     </div>
-
-<!-- Geometry -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showGeometry')">
-            Geometry
-            <span class="arrow" [class.open]="showGeometry"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showGeometry">
-            <!-- Content for Geometry -->
-             <div class="row">
-    <!-- Geometry (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="geometry" class="form-label">Geometry:</label>
-            <select id="geometry" formControlName="geometry" class="form-control form-control-nb">
-                <option value=""  >-- Select Geometry --</option>
-                <option *ngFor="let geometryOption of geometryOptions" [value]="geometryOption.id">{{ geometryOption.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- NPS (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="nps" class="form-label">NPS:</label>
-            <input id="nps" formControlName="nps" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter NPS" />
-        </div>
-    </div>
-
-    <!-- Inside Diameter (ID) (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="insideDiameter" class="form-label">Inside Diameter (ID):</label>
-            <input id="insideDiameter" formControlName="insideDiameter" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Inside Diameter" />
-        </div>
-    </div>
-
-    <!-- Outside Diameter (OD) (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="outsideDiameter" class="form-label">Outside Diameter (OD):</label>
-            <input id="outsideDiameter" formControlName="outsideDiameter" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Outside Diameter" />
-        </div>
-    </div>
-
-    <!-- Length / Height (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="lengthHeight" class="form-label">Length / Height:</label>
-            <input id="lengthHeight" formControlName="lengthHeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Length / Height" />
-        </div>
-    </div>
-
-    <!-- Fill Height (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="fillHeight" class="form-label">Fill Height:</label>
-            <input id="fillHeight" formControlName="fillHeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Fill Height" />
-        </div>
-    </div>
-
-    <!-- Orientation (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="orientation" class="form-label">Orientation:</label>
-            <select id="orientation" formControlName="orientation" class="form-control form-control-nb">
-                <option value=""  >-- Select Orientation --</option>
-                <option *ngFor="let orientationOption of orientationOptions" [value]="orientationOption.id">{{ orientationOption.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Empty Weight (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="emptyWeight" class="form-label">Empty Weight:</label>
-            <input id="emptyWeight" formControlName="emptyWeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Empty Weight" />
-        </div>
-    </div>
-
-    <!-- Capacity (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="capacity" class="form-label">Capacity:</label>
-            <input id="capacity" formControlName="capacity" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Capacity" />
-        </div>
-    </div>
 </div>
 
-        </div>
-    </div>
-
-<!-- Fabrication -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showFabrication')">
-            Fabrication
-            <span class="arrow" [class.open]="showFabrication"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showFabrication">
-            <!-- Content for Fabrication -->
-             <div class="row">
-    <!-- Manufacturer (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="manufacturer" class="form-label">Manufacturer:</label>
-            <input id="manufacturer" formControlName="manufacturer" type="text" class="form-control form-control-nb" placeholder="Enter Manufacturer" />
-        </div>
-    </div>
-
-    <!-- Serial Number (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="serialNumber" class="form-label">Serial Number:</label>
-            <input id="serialNumber" formControlName="serialNumber" type="text" class="form-control form-control-nb" placeholder="Enter Serial Number" />
-        </div>
-    </div>
-
-    <!-- Warranty Date (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="warrantyDate" class="form-label">Warranty Date:</label>
-            <input id="warrantyDate" formControlName="warrantyDate" type="text" class="form-control form-control-nb" placeholder="Enter Warranty Date" />
-        </div>
-    </div>
-
-    <!-- Heat Treatment (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="heatTreatment" class="form-label">Heat Treatment:</label>
-            <select id="heatTreatment" formControlName="heatTreatment" class="form-control form-control-nb">
-                <option value=""  >-- Select Heat Treatment --</option>
-                <option *ngFor="let treatment of heatTreatments" [value]="treatment.id">{{ treatment.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Heat Treatment Type (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="heatTreatmentType" class="form-label">Heat Treatment Type:</label>
-            <select id="heatTreatmentType" formControlName="heatTreatmentType" class="form-control form-control-nb">
-                <option value=""  >-- Select Treatment Type --</option>
-                <option *ngFor="let type of heatTreatmentTypes" [value]="type.id">{{ type.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Impact Test (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="impactTest" class="form-label">Impact Test:</label>
-            <select id="impactTest" formControlName="impactTest" class="form-control form-control-nb">
-                <option value=""  >-- Select Impact Test --</option>
-                <option *ngFor="let test of impactTests" [value]="test.id">{{ test.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Pressure Test (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="pressureTest" class="form-label">Pressure Test:</label>
-            <select id="pressureTest" formControlName="pressureTest" class="form-control form-control-nb">
-                <option value=""  >-- Select Pressure Test --</option>
-                <option *ngFor="let test of pressureTests" [value]="test.id">{{ test.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Pressure Test Type (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="pressureTestType" class="form-label">Pressure Test Type:</label>
-            <select id="pressureTestType" formControlName="pressureTestType" class="form-control form-control-nb">
-                <option value=""  >-- Select Test Type --</option>
-                <option *ngFor="let type of pressureTestTypes" [value]="type.id">{{ type.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Test Pressure (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="testPressure" class="form-label">Test Pressure:</label>
-            <input id="testPressure" formControlName="testPressure" type="text" class="form-control form-control-nb" placeholder="Enter Test Pressure" />
-        </div>
-    </div>
-
-    <!-- Radiography (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="radiography" class="form-label">Radiography:</label>
-            <select id="radiography" formControlName="radiography" class="form-control form-control-nb">
-                <option value=""  >-- Select Radiography --</option>
-                <option *ngFor="let option of radiographies" [value]="option.id">{{ option.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Radiography Category (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="radiographyCategory" class="form-label">Radiography Category:</label>
-            <select id="radiographyCategory" formControlName="radiographyCategory" class="form-control form-control-nb">
-                <option value=""  >-- Select Category --</option>
-                <option *ngFor="let category of radiographyCategories" [value]="category.id">{{ category.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Joint Efficiency (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="jointEfficiency" class="form-label">Joint Efficiency:</label>
-            <input id="jointEfficiency" formControlName="jointEfficiency" type="text" class="form-control form-control-nb" placeholder="Enter Joint Efficiency" />
-        </div>
-    </div>
-
-    <!-- Other NDE (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="otherNDE" class="form-label">Other NDE:</label>
-            <input id="otherNDE" formControlName="otherNDE" type="text" class="form-control form-control-nb" placeholder="Enter Other NDE" />
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="weldJointStRedFact" class="form-label">Weld Joint Strength Reduction Factor:</label>
-            <input id="weldJointStRedFact" formControlName="weldJointStRedFact" type="number" step="0.01" class="form-control form-control-nb" placeholder="Default: 1" />
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="designfactor" class="form-label">Design Factor:</label>
-            <input id="designfactor" formControlName="designfactor" type="number" step="0.01" class="form-control form-control-nb" placeholder="Default: 0.4" />
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-
-<!-- External -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showExternal')">
-            External
-            <span class="arrow" [class.open]="showExternal"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showExternal">
-            <!-- Content for External -->
-             <div class="row">
-    <!-- External Coating (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="externalCoating" class="form-label">External Coating:</label>
-            <select id="externalCoating" formControlName="externalCoating" class="form-control form-control-nb">
-                <option value=""  >-- Select External Coating --</option>
-                <option *ngFor="let coating of externalCoatings" [value]="coating.id">{{ coating.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- External Coating Type (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="externalCoatingType" class="form-label">External Coating Type:</label>
-            <select id="externalCoatingType" formControlName="externalCoatingType" class="form-control form-control-nb">
-                <option value=""  >-- Select Coating Type --</option>
-                <option *ngFor="let type of externalCoatingTypes" [value]="type.id">{{ type.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- External Coating Thickness (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="externalCoatingThickness" class="form-label">External Coating Thickness:</label>
-            <input id="externalCoatingThickness" formControlName="externalCoatingThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Coating Thickness" />
-        </div>
-    </div>
-
-    <!-- External Coating Age (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="externalCoatingAge" class="form-label">External Coating Age:</label>
-            <input id="externalCoatingAge" formControlName="externalCoatingAge" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Coating Age" />
-        </div>
-    </div>
-
-    <!-- Insulation (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="insulation" class="form-label">Insulation:</label>
-            <select id="insulation" formControlName="insulation" class="form-control form-control-nb">
-                <option value=""  >-- Select Insulation --</option>
-                <option *ngFor="let insulationOption of insulationOptions" [value]="insulationOption.id">{{ insulationOption.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Insulation Type (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="insulationType" class="form-label">Insulation Type:</label>
-            <select id="insulationType" formControlName="insulationType" class="form-control form-control-nb">
-                <option value=""  >-- Select Insulation Type --</option>
-                <option *ngFor="let type of insulationTypes" [value]="type.id">{{ type.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Insulation Material (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="insulationMaterial" class="form-label">Insulation Material:</label>
-            <select id="insulationMaterial" formControlName="insulationMaterial" class="form-control form-control-nb">
-                <option value=""  >-- Select Insulation Material --</option>
-                <option *ngFor="let material of insulationMaterials" [value]="material.id">{{ material.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Insulation Thickness (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="insulationThickness" class="form-label">Insulation Thickness:</label>
-            <input id="insulationThickness" formControlName="insulationThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Insulation Thickness" />
-        </div>
-    </div>
-
-    <!-- CUI Potential (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="cuiPotential" class="form-label">CUI Potential:</label>
-            <select id="cuiPotential" formControlName="cuiPotential" class="form-control form-control-nb">
-                <option value=""  >-- Select CUI Potential --</option>
-                <option *ngFor="let potential of cuiPotentials" [value]="potential.id">{{ potential.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- External Environment (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="externalEnvironment" class="form-label">External Environment:</label>
-            <select id="externalEnvironment" formControlName="externalEnvironment" class="form-control form-control-nb">
-                <option value=""  >-- Select External Environment --</option>
-                <option *ngFor="let environment of externalEnvironments" [value]="environment.id">{{ environment.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Support Type (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="supportType" class="form-label">Support Type:</label>
-            <select id="supportType" formControlName="supportType" class="form-control form-control-nb">
-                <option value=""  >-- Select Support Type --</option>
-                <option *ngFor="let support of supportTypes" [value]="support.id">{{ support.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Heat Tracing (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="heatTracing" class="form-label">Heat Tracing:</label>
-            <select id="heatTracing" formControlName="heatTracing" class="form-control form-control-nb">
-                <option value=""  >-- Select Heat Tracing --</option>
-                <option *ngFor="let tracing of heatTracings" [value]="tracing.id">{{ tracing.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Fire Proofing (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="fireProofing" class="form-label">Fire Proofing:</label>
-            <select id="fireProofing" formControlName="fireProofing" class="form-control form-control-nb">
-                <option value=""  >-- Select Fire Proofing --</option>
-                <option *ngFor="let proofing of fireProofings" [value]="proofing.id">{{ proofing.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Buried (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="buried" class="form-label">Buried:</label>
-            <select id="buried" formControlName="buried" class="form-control form-control-nb">
-                <option value=""  >-- Select Buried --</option>
-                <option *ngFor="let buriedOption of buriedOptions" [value]="buriedOption.id">{{ buriedOption.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Cathodic Protection (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="cathodicProtection" class="form-label">Cathodic Protection:</label>
-            <select id="cathodicProtection" formControlName="cathodicProtection" class="form-control form-control-nb">
-                <option value=""  >-- Select Cathodic Protection --</option>
-                <option *ngFor="let protection of cathodicProtections" [value]="protection.id">{{ protection.name }}</option>
-            </select>
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-
-<!-- Safety and Process Control -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showSafetyProcessControl')">
-            Safety and Process Control
-            <span class="arrow" [class.open]="showSafetyProcessControl"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showSafetyProcessControl">
-            <!-- Content for Safety and Process Control -->
-             <div class="row">
-    <!-- Pressure Relief Devices (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="pressureReliefDevices" class="form-label">Pressure Relief Devices:</label>
-            <select id="pressureReliefDevices" formControlName="pressureReliefDevices" class="form-control form-control-nb">
-                <option value=""  >-- Select Pressure Relief Devices --</option>
-                <option *ngFor="let device of pressureReliefDevicesOptions" [value]="device.id">{{ device.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- PRD ID (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="prd_Id" class="form-label">PRD ID:</label>
-            <input id="prd_Id" formControlName="prd_Id" type="text" class="form-control form-control-nb" placeholder="Enter PRD ID" />
-        </div>
-    </div>
-
-    <!-- PRD Set Pressure (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="prd_SetPressure" class="form-label">PRD Set Pressure:</label>
-            <input id="prd_SetPressure" formControlName="prd_SetPressure" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter PRD Set Pressure" />
-        </div>
-    </div>
-
-    <!-- Chemical Injection (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="chemicalInjection" class="form-label">Chemical Injection:</label>
-            <select id="chemicalInjection" formControlName="chemicalInjection" class="form-control form-control-nb">
-                <option value=""  >-- Select Chemical Injection --</option>
-                <option *ngFor="let injection of chemicalInjectionOptions" [value]="injection.id">{{ injection.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Detection System (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="detectionSystem" class="form-label">Detection System:</label>
-            <select id="detectionSystem" formControlName="detectionSystem" class="form-control form-control-nb">
-                <option value=""  >-- Select Detection System --</option>
-                <option *ngFor="let system of detectionSystemOptions" [value]="system.id">{{ system.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Isolation System (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="isolationSystem" class="form-label">Isolation System:</label>
-            <select id="isolationSystem" formControlName="isolationSystem" class="form-control form-control-nb">
-                <option value=""  >-- Select Isolation System --</option>
-                <option *ngFor="let system of isolationSystemOptions" [value]="system.id">{{ system.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Mitigation System (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="mitigationSystem" class="form-label">Mitigation System:</label>
-            <select id="mitigationSystem" formControlName="mitigationSystem" class="form-control form-control-nb">
-                <option value=""  >-- Select Mitigation System --</option>
-                <option *ngFor="let system of mitigationSystemOptions" [value]="system.id">{{ system.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Online Corrosion Monitoring (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="onlineCorrosionMonitoring" class="form-label">Online Corrosion Monitoring:</label>
-            <select id="onlineCorrosionMonitoring" formControlName="onlineCorrosionMonitoring" class="form-control form-control-nb">
-                <option value=""  >-- Select Online Corrosion Monitoring --</option>
-                <option *ngFor="let monitoring of onlineCorrosionMonitoringOptions" [value]="monitoring.id">{{ monitoring.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Corrosion Monitoring Type (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="corrosionMonitoringType" class="form-label">Corrosion Monitoring Type:</label>
-            <select id="corrosionMonitoringType" formControlName="corrosionMonitoringType" class="form-control form-control-nb">
-                <option value=""  >-- Select Monitoring Type --</option>
-                <option *ngFor="let type of corrosionMonitoringTypes" [value]="type.id">{{ type.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Hazard Classification (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="hazardClassification" class="form-label">Hazard Classification:</label>
-            <select id="hazardClassification" formControlName="hazardClassification" class="form-control form-control-nb">
-                <option value=""  >-- Select Hazard Classification --</option>
-                <option *ngFor="let classification of hazardClassifications" [value]="classification.id">{{ classification.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Safety & Environmental Permits (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="safetyEnvironmentalPermits" class="form-label">Safety & Environmental Permits:</label>
-            <input id="safetyEnvironmentalPermits" formControlName="safetyEnvironmentalPermits" type="text" class="form-control form-control-nb" placeholder="Enter Permits" />
-        </div>
-    </div>
-
-    <!-- Incident History (If Any) (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="incidentHistory" class="form-label">Incident History (If Any):</label>
-            <select id="incidentHistory" formControlName="incidentHistory" class="form-control form-control-nb">
-                <option value=""  >-- Select Incident History --</option>
-                <option *ngFor="let history of incidentHistories" [value]="history.id">{{ history.name }}</option>
-            </select>
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-
-<!-- Equipment Inspection Schedule -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showEquipmentInspectionSchedule')">
-            Equipment Inspection Schedule
-            <span class="arrow" [class.open]="showEquipmentInspectionSchedule"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showEquipmentInspectionSchedule">
-            <!-- Content for Equipment Inspection Schedule -->
-        </div>
-    </div>
-
-<!-- Integration & Metadata -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showIntegrationMetadata')">
-            Integration & Metadata
-            <span class="arrow" [class.open]="showIntegrationMetadata"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showIntegrationMetadata">
-            <!-- Content for Integration & Metadata -->
-             <div class="row">
-    <!-- ERP/CMMS Circuit Code (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="erpCmmsCircuitCode" class="form-label">ERP/CMMS Circuit Code:</label>
-            <input id="erpCmmsCircuitCode" formControlName="erpCmmsCircuitCode" type="text" class="form-control form-control-nb" placeholder="Enter Circuit Code" />
-        </div>
-    </div>
-
-    <!-- ERP/CMMS System (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="erpCmmsSystem" class="form-label">ERP/CMMS System:</label>
-            <input id="erpCmmsSystem" formControlName="erpCmmsSystem" type="text" class="form-control form-control-nb" placeholder="Enter System Name" />
-        </div>
-    </div>
-
-    <!-- Functional Location (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="functionalLocation" class="form-label">Functional Location:</label>
-            <input id="functionalLocation" formControlName="functionalLocation" type="text" class="form-control form-control-nb" placeholder="Enter Functional Location" />
-        </div>
-    </div>
-
-    <!-- External System ID (String) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="externalSystemId" class="form-label">External System ID:</label>
-            <input id="externalSystemId" formControlName="externalSystemId" type="text" class="form-control form-control-nb" placeholder="Enter External System ID" />
-        </div>
-    </div>
-
-    <!-- Sync Status (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="syncStatus" class="form-label">Sync Status:</label>
-            <select id="syncStatus" formControlName="syncStatus" class="form-control form-control-nb">
-                <option value=""  >-- Select Sync Status --</option>
-                <option *ngFor="let status of syncStatusOptions" [value]="status.id">{{ status.name }}</option>
-            </select>
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-
-<!-- Required Inspection Methode -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showRequiredInspectionMethode')">
-            Required Inspection Methode
-            <span class="arrow" [class.open]="showRequiredInspectionMethode"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showRequiredInspectionMethode">
-            <!-- Content for Required Inspection Methode -->
-             <div class="row">
-    <!-- CVI (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="cvi" class="form-label">CVI:</label>
-            <input id="cvi" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'cvi'" (change)="selectInspectionMethod('cvi')" />
-        </div>
-    </div>
-
-    <!-- UTG (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="utg" class="form-label">UTG:</label>
-            <input id="utg" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'utg'" (change)="selectInspectionMethod('utg')" />
-        </div>
-    </div>
-
-    <!-- UTS (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="uts" class="form-label">UTS:</label>
-            <input id="uts" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'uts'" (change)="selectInspectionMethod('uts')" />
-        </div>
-    </div>
-
-    <!-- RT (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="rt" class="form-label">RT:</label>
-            <input id="rt" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'rt'" (change)="selectInspectionMethod('rt')" />
-        </div>
-    </div>
-
-    <!-- PRT (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="prt" class="form-label">PRT:</label>
-            <input id="prt" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'prt'" (change)="selectInspectionMethod('prt')" />
-        </div>
-    </div>
-
-    <!-- MFL (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="mfl" class="form-label">MFL:</label>
-            <input id="mfl" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'mfl'" (change)="selectInspectionMethod('mfl')" />
-        </div>
-    </div>
-
-    <!-- PEC (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="pec" class="form-label">PEC:</label>
-            <input id="pec" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'pec'" (change)="selectInspectionMethod('pec')" />
-        </div>
-    </div>
-
-    <!-- Other (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm d-flex align-items-center">
-            <label for="other" class="form-label">Other:</label>
-            <input id="other" type="checkbox" class="form-check-input inspection-checkbox" [checked]="selectedInspectionMethod === 'other'" (change)="selectInspectionMethod('other')" />
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-
-<!-- RL -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showRL')">
-            RL
-            <span class="arrow" [class.open]="showRL"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showRL">
-            <!-- Content for RL -->
-             <div class="row">
-    <!-- Calculated Remaining Life (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernw d-flex align-items-center">
-            <label for="calculatedRemainingLife" class="form-label">Calculated Remaining Life:</label>
-            <input id="calculatedRemainingLife" formControlName="calculatedRemainingLife" type="number" step="0.0001" class="form-control form-control-nb" placeholder="Auto-calculated from CR for RL" readonly />
-            <input type="checkbox" class="form-check-input ms-2" [checked]="selectedRLOption === 'calculatedRemainingLife'" (change)="selectRLOption('calculatedRemainingLife')" />
-        </div>
-    </div>
-
-    <!-- Max Remaining Life (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernw d-flex align-items-center">
-            <label for="maxRemainingLife" class="form-label">Max Remaining Life:</label>
-            <input id="maxRemainingLife" formControlName="maxRemainingLife" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max Remaining Life" />
-            <input type="checkbox" class="form-check-input ms-2" [checked]="selectedRLOption === 'maxRemainingLife'" (change)="selectRLOption('maxRemainingLife')" />
-        </div>
-    </div>
-
-    <!-- Min (Above 2) (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernw d-flex align-items-center">
-            <label for="minAbove2" class="form-label">Min (Above 2):</label>
-            <input id="minAbove2" formControlName="minAbove2" type="number" step="0.0001" class="form-control form-control-nb" placeholder="Auto-calculated" readonly />
-            <input type="checkbox" class="form-check-input ms-2" [checked]="selectedRLOption === 'minAbove2'" (change)="selectRLOption('minAbove2')" />
-        </div>
-    </div>
-
-    <!-- Remaining Life (Decimal) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="remainingLife" class="form-label">Remaining Life:</label>
-            <input id="remainingLife" formControlName="remainingLife" type="number" step="0.0001" class="form-control form-control-nb" placeholder="Select a value above" readonly />
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-
-<!-- Thickness Inspection Schedule -->    <div class="accordion-item">
-        <div class="accordion-header" (click)="toggle('showThicknessInspectionSchedule')">
-            Thickness Inspection Schedule
-            <span class="arrow" [class.open]="showThicknessInspectionSchedule"></span>
-        </div>
-        <div class="accordion-wrapper" [class.open]="showThicknessInspectionSchedule">
-            <!-- Content for Thickness Inspection Schedule -->
-             <div class="row">
-    <!-- TM Inspection (Datetime) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="tmInspection" class="form-label">TM Inspection:</label>
-            <input id="tmInspection" formControlName="tmInspection" type="datetime-local" class="form-control form-control-nb" placeholder="Enter TM Inspection Date" />
-        </div>
-    </div>
-
-    <!-- Next Shutdown (Datetime) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="nextShutdown" class="form-label">Next Shutdown:</label>
-            <input id="nextShutdown" formControlName="nextShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Next Shutdown Date" />
-        </div>
-    </div>
-
-    <!-- Subsequent Shutdown (Datetime) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="subsequentShutdown" class="form-label">Subsequent Shutdown:</label>
-            <input id="subsequentShutdown" formControlName="subsequentShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Subsequent Shutdown Date" />
-        </div>
-    </div>
-
-    <!-- Prev TM Inspection (Datetime) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="prevTmInspection" class="form-label">Prev TM Inspection:</label>
-            <input id="prevTmInspection" formControlName="prevTmInspection" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous TM Inspection Date" />
-        </div>
-    </div>
-
-    <!-- Prev Next Shutdown (Datetime) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="prevNextShutdown" class="form-label">Prev Next Shutdown:</label>
-            <input id="prevNextShutdown" formControlName="prevNextShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous Next Shutdown Date" />
-        </div>
-    </div>
-
-    <!-- Prev Subsequent Shutdown (Datetime) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="prevSubsequentShutdown" class="form-label">Prev Subsequent Shutdown:</label>
-            <input id="prevSubsequentShutdown" formControlName="prevSubsequentShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous Subsequent Shutdown Date" />
-        </div>
-    </div>
-
-    <!-- Scheduled Repair/ Replacement (Integer) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="scheduledRepairReplacement" class="form-label">Scheduled Repair/ Replacement:</label>
-            <select id="scheduledRepairReplacement" formControlName="scheduledRepairReplacement" class="form-control form-control-nb">
-                <option value=""  >-- Select Option --</option>
-                <option *ngFor="let option of repairReplacementOptions" [value]="option.id">{{ option.name }}</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Scheduled Repair/ Replacement Date (Datetime) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="scheduledRepairReplacementDate" class="form-label">Scheduled Repair/ Replacement Date:</label>
-            <input id="scheduledRepairReplacementDate" formControlName="scheduledRepairReplacementDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Scheduled Repair/ Replacement Date" />
-        </div>
-    </div>
-
-    <!-- Repair/ Replacement during next shutdown (Boolean) -->
-    <div class="col-md-6">
-        <div class="m-1 field-containernwsm">
-            <label for="repairDuringNextShutdown" class="form-label">Repair/ Replacement during next shutdown:</label>
-            <input id="repairDuringNextShutdown" formControlName="repairDuringNextShutdown" type="checkbox" class="form-check-input" />
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-</div>
-
+<!-- Design -->
 <div class="col-md-6">
-<!-- even -->
-<!-- Design -->    <div class="accordion-item">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showDesign')">
             Design
             <span class="arrow" [class.open]="showDesign"></span>
@@ -1245,8 +429,104 @@
 
         </div>
     </div>
+</div>
 
-<!-- Operation and Process -->    <div class="accordion-item">
+<!-- Geometry -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showGeometry')">
+            Geometry
+            <span class="arrow" [class.open]="showGeometry"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showGeometry">
+            <!-- Content for Geometry -->
+             <div class="row">
+    <!-- Geometry (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="geometry" class="form-label">Geometry:</label>
+            <select id="geometry" formControlName="geometry" class="form-control form-control-nb">
+                <option value=""  >-- Select Geometry --</option>
+                <option *ngFor="let geometryOption of geometryOptions" [value]="geometryOption.id">{{ geometryOption.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- NPS (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="nps" class="form-label">NPS:</label>
+            <input id="nps" formControlName="nps" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter NPS" />
+        </div>
+    </div>
+
+    <!-- Inside Diameter (ID) (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="insideDiameter" class="form-label">Inside Diameter (ID):</label>
+            <input id="insideDiameter" formControlName="insideDiameter" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Inside Diameter" />
+        </div>
+    </div>
+
+    <!-- Outside Diameter (OD) (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="outsideDiameter" class="form-label">Outside Diameter (OD):</label>
+            <input id="outsideDiameter" formControlName="outsideDiameter" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Outside Diameter" />
+        </div>
+    </div>
+
+    <!-- Length / Height (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="lengthHeight" class="form-label">Length / Height:</label>
+            <input id="lengthHeight" formControlName="lengthHeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Length / Height" />
+        </div>
+    </div>
+
+    <!-- Fill Height (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="fillHeight" class="form-label">Fill Height:</label>
+            <input id="fillHeight" formControlName="fillHeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Fill Height" />
+        </div>
+    </div>
+
+    <!-- Orientation (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="orientation" class="form-label">Orientation:</label>
+            <select id="orientation" formControlName="orientation" class="form-control form-control-nb">
+                <option value=""  >-- Select Orientation --</option>
+                <option *ngFor="let orientationOption of orientationOptions" [value]="orientationOption.id">{{ orientationOption.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Empty Weight (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="emptyWeight" class="form-label">Empty Weight:</label>
+            <input id="emptyWeight" formControlName="emptyWeight" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Empty Weight" />
+        </div>
+    </div>
+
+    <!-- Capacity (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="capacity" class="form-label">Capacity:</label>
+            <input id="capacity" formControlName="capacity" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Capacity" />
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Operation and Process -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showOperationProcess')">
             Operation and Process
             <span class="arrow" [class.open]="showOperationProcess"></span>
@@ -1503,8 +783,163 @@
 
         </div>
     </div>
+</div>
 
-<!-- Material -->    <div class="accordion-item">
+<!-- Fabrication -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showFabrication')">
+            Fabrication
+            <span class="arrow" [class.open]="showFabrication"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showFabrication">
+            <!-- Content for Fabrication -->
+             <div class="row">
+    <!-- Manufacturer (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="manufacturer" class="form-label">Manufacturer:</label>
+            <input id="manufacturer" formControlName="manufacturer" type="text" class="form-control form-control-nb" placeholder="Enter Manufacturer" />
+        </div>
+    </div>
+
+    <!-- Serial Number (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="serialNumber" class="form-label">Serial Number:</label>
+            <input id="serialNumber" formControlName="serialNumber" type="text" class="form-control form-control-nb" placeholder="Enter Serial Number" />
+        </div>
+    </div>
+
+    <!-- Warranty Date (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="warrantyDate" class="form-label">Warranty Date:</label>
+            <input id="warrantyDate" formControlName="warrantyDate" type="text" class="form-control form-control-nb" placeholder="Enter Warranty Date" />
+        </div>
+    </div>
+
+    <!-- Heat Treatment (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="heatTreatment" class="form-label">Heat Treatment:</label>
+            <select id="heatTreatment" formControlName="heatTreatment" class="form-control form-control-nb">
+                <option value=""  >-- Select Heat Treatment --</option>
+                <option *ngFor="let treatment of heatTreatments" [value]="treatment.id">{{ treatment.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Heat Treatment Type (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="heatTreatmentType" class="form-label">Heat Treatment Type:</label>
+            <select id="heatTreatmentType" formControlName="heatTreatmentType" class="form-control form-control-nb">
+                <option value=""  >-- Select Treatment Type --</option>
+                <option *ngFor="let type of heatTreatmentTypes" [value]="type.id">{{ type.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Impact Test (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="impactTest" class="form-label">Impact Test:</label>
+            <select id="impactTest" formControlName="impactTest" class="form-control form-control-nb">
+                <option value=""  >-- Select Impact Test --</option>
+                <option *ngFor="let test of impactTests" [value]="test.id">{{ test.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Pressure Test (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="pressureTest" class="form-label">Pressure Test:</label>
+            <select id="pressureTest" formControlName="pressureTest" class="form-control form-control-nb">
+                <option value=""  >-- Select Pressure Test --</option>
+                <option *ngFor="let test of pressureTests" [value]="test.id">{{ test.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Pressure Test Type (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="pressureTestType" class="form-label">Pressure Test Type:</label>
+            <select id="pressureTestType" formControlName="pressureTestType" class="form-control form-control-nb">
+                <option value=""  >-- Select Test Type --</option>
+                <option *ngFor="let type of pressureTestTypes" [value]="type.id">{{ type.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Test Pressure (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="testPressure" class="form-label">Test Pressure:</label>
+            <input id="testPressure" formControlName="testPressure" type="text" class="form-control form-control-nb" placeholder="Enter Test Pressure" />
+        </div>
+    </div>
+
+    <!-- Radiography (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="radiography" class="form-label">Radiography:</label>
+            <select id="radiography" formControlName="radiography" class="form-control form-control-nb">
+                <option value=""  >-- Select Radiography --</option>
+                <option *ngFor="let option of radiographies" [value]="option.id">{{ option.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Radiography Category (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="radiographyCategory" class="form-label">Radiography Category:</label>
+            <select id="radiographyCategory" formControlName="radiographyCategory" class="form-control form-control-nb">
+                <option value=""  >-- Select Category --</option>
+                <option *ngFor="let category of radiographyCategories" [value]="category.id">{{ category.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Joint Efficiency (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="jointEfficiency" class="form-label">Joint Efficiency:</label>
+            <input id="jointEfficiency" formControlName="jointEfficiency" type="text" class="form-control form-control-nb" placeholder="Enter Joint Efficiency" />
+        </div>
+    </div>
+
+    <!-- Other NDE (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="otherNDE" class="form-label">Other NDE:</label>
+            <input id="otherNDE" formControlName="otherNDE" type="text" class="form-control form-control-nb" placeholder="Enter Other NDE" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="weldJointStRedFact" class="form-label">Weld Joint Strength Reduction Factor:</label>
+            <input id="weldJointStRedFact" formControlName="weldJointStRedFact" type="number" step="0.01" class="form-control form-control-nb" placeholder="Default: 1" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="designfactor" class="form-label">Design Factor:</label>
+            <input id="designfactor" formControlName="designfactor" type="number" step="0.01" class="form-control form-control-nb" placeholder="Default: 0.4" />
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Material -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showMaterial')">
             Material
             <span class="arrow" [class.open]="showMaterial"></span>
@@ -1648,8 +1083,184 @@
 
         </div>
     </div>
+</div>
 
-<!-- Deadleg -->    <div class="accordion-item">
+<!-- External -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showExternal')">
+            External
+            <span class="arrow" [class.open]="showExternal"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showExternal">
+            <!-- Content for External -->
+             <div class="row">
+    <!-- External Coating (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="externalCoating" class="form-label">External Coating:</label>
+            <select id="externalCoating" formControlName="externalCoating" class="form-control form-control-nb">
+                <option value=""  >-- Select External Coating --</option>
+                <option *ngFor="let coating of externalCoatings" [value]="coating.id">{{ coating.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- External Coating Type (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="externalCoatingType" class="form-label">External Coating Type:</label>
+            <select id="externalCoatingType" formControlName="externalCoatingType" class="form-control form-control-nb">
+                <option value=""  >-- Select Coating Type --</option>
+                <option *ngFor="let type of externalCoatingTypes" [value]="type.id">{{ type.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- External Coating Thickness (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="externalCoatingThickness" class="form-label">External Coating Thickness:</label>
+            <input id="externalCoatingThickness" formControlName="externalCoatingThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Coating Thickness" />
+        </div>
+    </div>
+
+    <!-- External Coating Age (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="externalCoatingAge" class="form-label">External Coating Age:</label>
+            <input id="externalCoatingAge" formControlName="externalCoatingAge" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Coating Age" />
+        </div>
+    </div>
+
+    <!-- Insulation (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="insulation" class="form-label">Insulation:</label>
+            <select id="insulation" formControlName="insulation" class="form-control form-control-nb">
+                <option value=""  >-- Select Insulation --</option>
+                <option *ngFor="let insulationOption of insulationOptions" [value]="insulationOption.id">{{ insulationOption.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Insulation Type (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="insulationType" class="form-label">Insulation Type:</label>
+            <select id="insulationType" formControlName="insulationType" class="form-control form-control-nb">
+                <option value=""  >-- Select Insulation Type --</option>
+                <option *ngFor="let type of insulationTypes" [value]="type.id">{{ type.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Insulation Material (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="insulationMaterial" class="form-label">Insulation Material:</label>
+            <select id="insulationMaterial" formControlName="insulationMaterial" class="form-control form-control-nb">
+                <option value=""  >-- Select Insulation Material --</option>
+                <option *ngFor="let material of insulationMaterials" [value]="material.id">{{ material.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Insulation Thickness (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="insulationThickness" class="form-label">Insulation Thickness:</label>
+            <input id="insulationThickness" formControlName="insulationThickness" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Insulation Thickness" />
+        </div>
+    </div>
+
+    <!-- CUI Potential (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="cuiPotential" class="form-label">CUI Potential:</label>
+            <select id="cuiPotential" formControlName="cuiPotential" class="form-control form-control-nb">
+                <option value=""  >-- Select CUI Potential --</option>
+                <option *ngFor="let potential of cuiPotentials" [value]="potential.id">{{ potential.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- External Environment (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="externalEnvironment" class="form-label">External Environment:</label>
+            <select id="externalEnvironment" formControlName="externalEnvironment" class="form-control form-control-nb">
+                <option value=""  >-- Select External Environment --</option>
+                <option *ngFor="let environment of externalEnvironments" [value]="environment.id">{{ environment.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Support Type (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="supportType" class="form-label">Support Type:</label>
+            <select id="supportType" formControlName="supportType" class="form-control form-control-nb">
+                <option value=""  >-- Select Support Type --</option>
+                <option *ngFor="let support of supportTypes" [value]="support.id">{{ support.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Heat Tracing (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="heatTracing" class="form-label">Heat Tracing:</label>
+            <select id="heatTracing" formControlName="heatTracing" class="form-control form-control-nb">
+                <option value=""  >-- Select Heat Tracing --</option>
+                <option *ngFor="let tracing of heatTracings" [value]="tracing.id">{{ tracing.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Fire Proofing (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="fireProofing" class="form-label">Fire Proofing:</label>
+            <select id="fireProofing" formControlName="fireProofing" class="form-control form-control-nb">
+                <option value=""  >-- Select Fire Proofing --</option>
+                <option *ngFor="let proofing of fireProofings" [value]="proofing.id">{{ proofing.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Buried (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="buried" class="form-label">Buried:</label>
+            <select id="buried" formControlName="buried" class="form-control form-control-nb">
+                <option value=""  >-- Select Buried --</option>
+                <option *ngFor="let buriedOption of buriedOptions" [value]="buriedOption.id">{{ buriedOption.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Cathodic Protection (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="cathodicProtection" class="form-label">Cathodic Protection:</label>
+            <select id="cathodicProtection" formControlName="cathodicProtection" class="form-control form-control-nb">
+                <option value=""  >-- Select Cathodic Protection --</option>
+                <option *ngFor="let protection of cathodicProtections" [value]="protection.id">{{ protection.name }}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Deadleg -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showDeadleg')">
             Deadleg
             <span class="arrow" [class.open]="showDeadleg"></span>
@@ -1742,8 +1353,149 @@
 
         </div>
     </div>
+</div>
 
-<!-- Integrity & Inspection -->    <div class="accordion-item">
+<!-- Safety and Process Control -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showSafetyProcessControl')">
+            Safety and Process Control
+            <span class="arrow" [class.open]="showSafetyProcessControl"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showSafetyProcessControl">
+            <!-- Content for Safety and Process Control -->
+             <div class="row">
+    <!-- Pressure Relief Devices (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="pressureReliefDevices" class="form-label">Pressure Relief Devices:</label>
+            <select id="pressureReliefDevices" formControlName="pressureReliefDevices" class="form-control form-control-nb">
+                <option value=""  >-- Select Pressure Relief Devices --</option>
+                <option *ngFor="let device of pressureReliefDevicesOptions" [value]="device.id">{{ device.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- PRD ID (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="prd_Id" class="form-label">PRD ID:</label>
+            <input id="prd_Id" formControlName="prd_Id" type="text" class="form-control form-control-nb" placeholder="Enter PRD ID" />
+        </div>
+    </div>
+
+    <!-- PRD Set Pressure (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="prd_SetPressure" class="form-label">PRD Set Pressure:</label>
+            <input id="prd_SetPressure" formControlName="prd_SetPressure" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter PRD Set Pressure" />
+        </div>
+    </div>
+
+    <!-- Chemical Injection (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="chemicalInjection" class="form-label">Chemical Injection:</label>
+            <select id="chemicalInjection" formControlName="chemicalInjection" class="form-control form-control-nb">
+                <option value=""  >-- Select Chemical Injection --</option>
+                <option *ngFor="let injection of chemicalInjectionOptions" [value]="injection.id">{{ injection.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Detection System (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="detectionSystem" class="form-label">Detection System:</label>
+            <select id="detectionSystem" formControlName="detectionSystem" class="form-control form-control-nb">
+                <option value=""  >-- Select Detection System --</option>
+                <option *ngFor="let system of detectionSystemOptions" [value]="system.id">{{ system.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Isolation System (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="isolationSystem" class="form-label">Isolation System:</label>
+            <select id="isolationSystem" formControlName="isolationSystem" class="form-control form-control-nb">
+                <option value=""  >-- Select Isolation System --</option>
+                <option *ngFor="let system of isolationSystemOptions" [value]="system.id">{{ system.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Mitigation System (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="mitigationSystem" class="form-label">Mitigation System:</label>
+            <select id="mitigationSystem" formControlName="mitigationSystem" class="form-control form-control-nb">
+                <option value=""  >-- Select Mitigation System --</option>
+                <option *ngFor="let system of mitigationSystemOptions" [value]="system.id">{{ system.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Online Corrosion Monitoring (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="onlineCorrosionMonitoring" class="form-label">Online Corrosion Monitoring:</label>
+            <select id="onlineCorrosionMonitoring" formControlName="onlineCorrosionMonitoring" class="form-control form-control-nb">
+                <option value=""  >-- Select Online Corrosion Monitoring --</option>
+                <option *ngFor="let monitoring of onlineCorrosionMonitoringOptions" [value]="monitoring.id">{{ monitoring.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Corrosion Monitoring Type (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="corrosionMonitoringType" class="form-label">Corrosion Monitoring Type:</label>
+            <select id="corrosionMonitoringType" formControlName="corrosionMonitoringType" class="form-control form-control-nb">
+                <option value=""  >-- Select Monitoring Type --</option>
+                <option *ngFor="let type of corrosionMonitoringTypes" [value]="type.id">{{ type.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hazard Classification (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="hazardClassification" class="form-label">Hazard Classification:</label>
+            <select id="hazardClassification" formControlName="hazardClassification" class="form-control form-control-nb">
+                <option value=""  >-- Select Hazard Classification --</option>
+                <option *ngFor="let classification of hazardClassifications" [value]="classification.id">{{ classification.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Safety & Environmental Permits (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="safetyEnvironmentalPermits" class="form-label">Safety & Environmental Permits:</label>
+            <input id="safetyEnvironmentalPermits" formControlName="safetyEnvironmentalPermits" type="text" class="form-control form-control-nb" placeholder="Enter Permits" />
+        </div>
+    </div>
+
+    <!-- Incident History (If Any) (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="incidentHistory" class="form-label">Incident History (If Any):</label>
+            <select id="incidentHistory" formControlName="incidentHistory" class="form-control form-control-nb">
+                <option value=""  >-- Select Incident History --</option>
+                <option *ngFor="let history of incidentHistories" [value]="history.id">{{ history.name }}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Integrity & Inspection -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showIntegrityInspection')">
             Integrity & Inspection
             <span class="arrow" [class.open]="showIntegrityInspection"></span>
@@ -1845,8 +1597,24 @@
 
         </div>
     </div>
+</div>
 
-<!-- Maintenance schedule -->    <div class="accordion-item">
+<!-- Equipment Inspection Schedule -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showEquipmentInspectionSchedule')">
+            Equipment Inspection Schedule
+            <span class="arrow" [class.open]="showEquipmentInspectionSchedule"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showEquipmentInspectionSchedule">
+            <!-- Content for Equipment Inspection Schedule -->
+        </div>
+    </div>
+</div>
+
+<!-- Maintenance schedule -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showMaintenanceSchedule')">
             Maintenance schedule
             <span class="arrow" [class.open]="showMaintenanceSchedule"></span>
@@ -1887,8 +1655,69 @@
 
         </div>
     </div>
+</div>
 
-<!-- Record Audit Information -->    <div class="accordion-item">
+<!-- Integration & Metadata -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showIntegrationMetadata')">
+            Integration & Metadata
+            <span class="arrow" [class.open]="showIntegrationMetadata"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showIntegrationMetadata">
+            <!-- Content for Integration & Metadata -->
+             <div class="row">
+    <!-- ERP/CMMS Circuit Code (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="erpCmmsCircuitCode" class="form-label">ERP/CMMS Circuit Code:</label>
+            <input id="erpCmmsCircuitCode" formControlName="erpCmmsCircuitCode" type="text" class="form-control form-control-nb" placeholder="Enter Circuit Code" />
+        </div>
+    </div>
+
+    <!-- ERP/CMMS System (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="erpCmmsSystem" class="form-label">ERP/CMMS System:</label>
+            <input id="erpCmmsSystem" formControlName="erpCmmsSystem" type="text" class="form-control form-control-nb" placeholder="Enter System Name" />
+        </div>
+    </div>
+
+    <!-- Functional Location (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="functionalLocation" class="form-label">Functional Location:</label>
+            <input id="functionalLocation" formControlName="functionalLocation" type="text" class="form-control form-control-nb" placeholder="Enter Functional Location" />
+        </div>
+    </div>
+
+    <!-- External System ID (String) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="externalSystemId" class="form-label">External System ID:</label>
+            <input id="externalSystemId" formControlName="externalSystemId" type="text" class="form-control form-control-nb" placeholder="Enter External System ID" />
+        </div>
+    </div>
+
+    <!-- Sync Status (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="syncStatus" class="form-label">Sync Status:</label>
+            <select id="syncStatus" formControlName="syncStatus" class="form-control form-control-nb">
+                <option value=""  >-- Select Sync Status --</option>
+                <option *ngFor="let status of syncStatusOptions" [value]="status.id">{{ status.name }}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Record Audit Information -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showRecordAuditInformation')">
             Record Audit Information
             <span class="arrow" [class.open]="showRecordAuditInformation"></span>
@@ -1931,8 +1760,92 @@
 
         </div>
     </div>
+</div>
 
-<!-- CR -->    <div class="accordion-item">
+
+
+<!-- Required Inspection Methode -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showRequiredInspectionMethode')">
+            Required Inspection Methode
+            <span class="arrow" [class.open]="showRequiredInspectionMethode"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showRequiredInspectionMethode">
+            <!-- Content for Required Inspection Methode -->
+             <div class="row">
+    <!-- CVI (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="cvi" class="form-label">CVI:</label>
+            <input id="cvi" formControlName="cvi" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <!-- UTG (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="utg" class="form-label">UTG:</label>
+            <input id="utg" formControlName="utg" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <!-- UTS (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="uts" class="form-label">UTS:</label>
+            <input id="uts" formControlName="uts" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <!-- RT (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="rt" class="form-label">RT:</label>
+            <input id="rt" formControlName="rt" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <!-- PRT (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="prt" class="form-label">PRT:</label>
+            <input id="prt" formControlName="prt" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <!-- MFL (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="mfl" class="form-label">MFL:</label>
+            <input id="mfl" formControlName="mfl" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <!-- PEC (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="pec" class="form-label">PEC:</label>
+            <input id="pec" formControlName="pec" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+
+    <!-- Other (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="other" class="form-label">Other:</label>
+            <input id="other" formControlName="other" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CR -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showCR')">
             CR
             <span class="arrow" [class.open]="showCR"></span>
@@ -1996,8 +1909,61 @@
 
         </div>
     </div>
+</div>
 
-<!-- Inspection interval -->    <div class="accordion-item">
+<!-- RL -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showRL')">
+            RL
+            <span class="arrow" [class.open]="showRL"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showRL">
+            <!-- Content for RL -->
+             <div class="row">
+    <!-- Calculated Remaining Life (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernw d-flex align-items-center">
+            <label for="calculatedRemainingLife" class="form-label">Calculated Remaining Life:</label>
+            <input id="calculatedRemainingLife" formControlName="calculatedRemainingLife" type="number" step="0.0001" class="form-control form-control-nb" placeholder="Auto-calculated from CR for RL" readonly />
+            <input type="checkbox" class="form-check-input ms-2" [checked]="selectedRLOption === 'calculatedRemainingLife'" (change)="selectRLOption('calculatedRemainingLife')" />
+        </div>
+    </div>
+
+    <!-- Max Remaining Life (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernw d-flex align-items-center">
+            <label for="maxRemainingLife" class="form-label">Max Remaining Life:</label>
+            <input id="maxRemainingLife" formControlName="maxRemainingLife" type="number" step="0.01" class="form-control form-control-nb" placeholder="Enter Max Remaining Life" />
+            <input type="checkbox" class="form-check-input ms-2" [checked]="selectedRLOption === 'maxRemainingLife'" (change)="selectRLOption('maxRemainingLife')" />
+        </div>
+    </div>
+
+    <!-- Min (Above 2) (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernw d-flex align-items-center">
+            <label for="minAbove2" class="form-label">Min (Above 2):</label>
+            <input id="minAbove2" formControlName="minAbove2" type="number" step="0.0001" class="form-control form-control-nb" placeholder="Auto-calculated" readonly />
+            <input type="checkbox" class="form-check-input ms-2" [checked]="selectedRLOption === 'minAbove2'" (change)="selectRLOption('minAbove2')" />
+        </div>
+    </div>
+
+    <!-- Remaining Life (Decimal) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="remainingLife" class="form-label">Remaining Life:</label>
+            <input id="remainingLife" formControlName="remainingLife" type="number" step="0.0001" class="form-control form-control-nb" placeholder="Select a value above" readonly />
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Inspection interval -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showInspectionInterval')">
             Inspection interval
             <span class="arrow" [class.open]="showInspectionInterval"></span>
@@ -2061,8 +2027,101 @@
 
         </div>
     </div>
+</div>
 
-<!-- Inspection Access -->    <div class="accordion-item">
+<!-- Thickness Inspection Schedule -->
+<div class="col-md-6">
+    <div class="accordion-item">
+        <div class="accordion-header" (click)="toggle('showThicknessInspectionSchedule')">
+            Thickness Inspection Schedule
+            <span class="arrow" [class.open]="showThicknessInspectionSchedule"></span>
+        </div>
+        <div class="accordion-wrapper" [class.open]="showThicknessInspectionSchedule">
+            <!-- Content for Thickness Inspection Schedule -->
+             <div class="row">
+    <!-- TM Inspection (Datetime) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="tmInspection" class="form-label">TM Inspection:</label>
+            <input id="tmInspection" formControlName="tmInspection" type="datetime-local" class="form-control form-control-nb" placeholder="Enter TM Inspection Date" />
+        </div>
+    </div>
+
+    <!-- Next Shutdown (Datetime) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="nextShutdown" class="form-label">Next Shutdown:</label>
+            <input id="nextShutdown" formControlName="nextShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Next Shutdown Date" />
+        </div>
+    </div>
+
+    <!-- Subsequent Shutdown (Datetime) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="subsequentShutdown" class="form-label">Subsequent Shutdown:</label>
+            <input id="subsequentShutdown" formControlName="subsequentShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Subsequent Shutdown Date" />
+        </div>
+    </div>
+
+    <!-- Prev TM Inspection (Datetime) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="prevTmInspection" class="form-label">Prev TM Inspection:</label>
+            <input id="prevTmInspection" formControlName="prevTmInspection" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous TM Inspection Date" />
+        </div>
+    </div>
+
+    <!-- Prev Next Shutdown (Datetime) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="prevNextShutdown" class="form-label">Prev Next Shutdown:</label>
+            <input id="prevNextShutdown" formControlName="prevNextShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous Next Shutdown Date" />
+        </div>
+    </div>
+
+    <!-- Prev Subsequent Shutdown (Datetime) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="prevSubsequentShutdown" class="form-label">Prev Subsequent Shutdown:</label>
+            <input id="prevSubsequentShutdown" formControlName="prevSubsequentShutdown" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Previous Subsequent Shutdown Date" />
+        </div>
+    </div>
+
+    <!-- Scheduled Repair/ Replacement (Integer) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="scheduledRepairReplacement" class="form-label">Scheduled Repair/ Replacement:</label>
+            <select id="scheduledRepairReplacement" formControlName="scheduledRepairReplacement" class="form-control form-control-nb">
+                <option value=""  >-- Select Option --</option>
+                <option *ngFor="let option of repairReplacementOptions" [value]="option.id">{{ option.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Scheduled Repair/ Replacement Date (Datetime) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="scheduledRepairReplacementDate" class="form-label">Scheduled Repair/ Replacement Date:</label>
+            <input id="scheduledRepairReplacementDate" formControlName="scheduledRepairReplacementDate" type="datetime-local" class="form-control form-control-nb" placeholder="Enter Scheduled Repair/ Replacement Date" />
+        </div>
+    </div>
+
+    <!-- Repair/ Replacement during next shutdown (Boolean) -->
+    <div class="col-md-6">
+        <div class="m-1 field-containernwsm">
+            <label for="repairDuringNextShutdown" class="form-label">Repair/ Replacement during next shutdown:</label>
+            <input id="repairDuringNextShutdown" formControlName="repairDuringNextShutdown" type="checkbox" class="form-check-input" />
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Inspection Access -->
+<div class="col-md-6">
+    <div class="accordion-item">
         <div class="accordion-header" (click)="toggle('showInspectionAccess')">
             Inspection Access
             <span class="arrow" [class.open]="showInspectionAccess"></span>

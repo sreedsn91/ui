@@ -642,13 +642,26 @@ html {
 }
 
 body {
-  transform: scale(var(--scale-value));
-  transform-origin: top left;
-  width: calc(100% / var(--scale-value));
   overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: var(--text-primary);
   background: var(--bg-tertiary);
+}
+
+// Scale the Angular app root instead of body so that document.body remains
+// in the viewport coordinate space. This lets AG Grid (and any other library)
+// append popups to body and position them correctly without coordinate offsets.
+app-root {
+  display: block;
+  transform: scale(var(--scale-value));
+  transform-origin: top left;
+  width: calc(100% / var(--scale-value));
+  overflow-x: hidden;
+}
+
+// Popups appended to unscaled body need to be zoomed to match the app scale.
+.ag-popup {
+  zoom: var(--scale-value);
 }
 
 // ==========================================
@@ -1002,26 +1015,26 @@ max-width: 180px;
 .ag-theme-alpine {
   height: 100%;
   width: 100%;
-  
-  .ag-header {
-    height: 30px !important;
-  }
-  
-  .ag-row {
-    height: 30px !important;
-  }
-  
+
   .ag-header-cell,
   .ag-cell {
     font-size: 12px !important;
   }
-  
+
   .ag-header-cell {
-    padding: 4px !important;
+    padding: 4px 8px !important;
   }
-  
+
   .ag-cell {
-    padding: 2px !important;
+    padding: 2px 4px !important;
+  }
+
+  // Prevent global ::before/::after reset from breaking AG Grid icon font rendering
+  *::before,
+  *::after {
+    margin: revert;
+    padding: revert;
+    box-sizing: revert;
   }
 }
 
@@ -1656,7 +1669,7 @@ input[type="number"] {
   align-items: center;
   user-select: none;
   transition: all var(--transition-base);
-  
+
   &:hover {
     background: #e9ecef !important;
   }
@@ -1684,18 +1697,19 @@ input[type="number"] {
   overflow: hidden;
   padding: 0 20px;
   transition: max-height 0.4s var(--ease), padding 0.4s var(--ease);
-  
+
   &.open {
     max-height: 2000px;
     padding: 20px;
   }
-  
+
   .accordion-content {
     background: var(--bg-primary);
     padding: var(--space-sm) 0;
     color: #444;
   }
 }
+
 
 // ==========================================
 // MODALS
@@ -2899,8 +2913,11 @@ hr {
 // SWEETALERT MODAL FIX
 // ==========================================
 div:where(.swal2-container) {
+  // Body is now unscaled — no height compensation needed.
+  // Zoom to match the app's 0.75 scale so the dialog doesn't appear oversized.
+  zoom: var(--scale-value);
   height: calc(100% / var(--scale-value)) !important;
-  
+
   div:where(.swal2-popup) {
     padding: 0 0 5em;
   }

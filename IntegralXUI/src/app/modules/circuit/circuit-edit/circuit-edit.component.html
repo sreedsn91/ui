@@ -1,4 +1,4 @@
-<div class="rowp">
+﻿<div class="rowp">
     <!-- [ tabs ] start -->
 
     <div class="col-sm-12">
@@ -77,7 +77,10 @@
                                                         *ngIf="this.canDelete" class="btn-deleteIcon"> <i class="bi  feather icon-trash"></i></button></div>
                                                 </div>
                                             <div class="row">
-                                                <div class="col-md-4">
+
+                                                <div class="col-md-6">
+                                                <!-- odd -->
+
                                                     <!-- General -->
                                                     <div class="accordion-item">
                                                         <div class="accordion-header" (click)="toggle('showGeneral')">
@@ -167,151 +170,9 @@
                                                         </div>
                                                     </div>
                             
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <!-- Location -->
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header" (click)="toggle('showLocation')">
-                                                            Location
-                                                            <span class="arrow" [class.open]="showLocation"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showLocation">
-                                                            <div class="row">
-                                                                <!-- Location fields go here -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="plantID" class="form-label">Plant ID: <span
-                                                                                class="text-danger">*</span></label>
-                                                                        <select id="plantID" formControlName="plantID"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Plant --</option>
-                                                                            <option *ngFor="let plant of plants" [value]="plant.id">{{ plant.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                        <div *ngIf="circuitForm.controls['plantID'].invalid && circuitForm.controls['plantID'].touched"
-                                                                            class="text-danger">
-                                                                            <div *ngIf="circuitForm.controls['plantID'].errors?.['required']">Plant
-                                                                                ID is
-                                                                                required.</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Area ID (Dropdown) -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="areaID" class="form-label">Area ID:</label>
-                                                                        <select id="areaID" formControlName="areaID"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Area --</option>
-                                                                            <option *ngFor="let area of areas" [value]="area.id">{{ area.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Unit ID (Dropdown) -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="unitID" class="form-label">Unit ID:</label>
-                                                                        <select id="unitID" formControlName="unitID"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Unit --</option>
-                                                                            <option *ngFor="let unit of units" [value]="unit.id">{{ unit.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- System ID (Dropdown) -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="systemID" class="form-label">System ID:</label>
-                                                                        <select id="systemID" formControlName="systemID"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select System --</option>
-                                                                            <option *ngFor="let system of systems" [value]="system.id">{{
-                                                                                system.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                            
-                                                                 <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="cLId" class="form-label">Corrosion Loop:</label>
-                                            <select id="cLId" formControlName="cLId"
-                                                class="form-control form-control-nb">
-                                                <option value="">-- Select CorrossionLoop --</option>
-                                                <option *ngFor="let cl of cls" [value]="cl.id">{{
-                                                    cl.name }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                                
 
-                            
-                                                                <!-- Specific Location -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="specificLocation" class="form-label">Specific Location:</label>
-                                                                        <input id="specificLocation" formControlName="specificLocation"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter Specific Location" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Circuit From -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="circuitFrom" class="form-label">Circuit From:</label>
-                                                                        <input id="circuitFrom" formControlName="circuitFrom"
-                                                                            class="form-control form-control-nb" placeholder="Enter Circuit From" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Circuit To -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="circuitTo" class="form-label">Circuit To:</label>
-                                                                        <input id="circuitTo" formControlName="circuitTo"
-                                                                            class="form-control form-control-nb" placeholder="Enter Circuit To" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- PFD -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="pfd" class="form-label">PFD:</label>
-                                                                        <input id="pfd" formControlName="pfd" class="form-control form-control-nb"
-                                                                            placeholder="Enter PFD" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- P&ID -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="pnID" class="form-label">P&ID:</label>
-                                                                        <input id="pnID" formControlName="pnID" class="form-control form-control-nb"
-                                                                            placeholder="Enter P&ID" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Isometric Drawing -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="isometricDrawing" class="form-label">Isometric Drawing:</label>
-                                                                        <input id="isometricDrawing" formControlName="isometricDrawing"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter Isometric Drawing" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
+
                                                     <!-- Design -->
                                                     <div class="accordion-item">
                                                         <div class="accordion-header" (click)="toggle('showDesign')">
@@ -460,335 +321,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                            
-                                                    <!-- Operation and Process -->
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header" (click)="toggle('showOperation')">
-                                                            Operation and Process
-                                                            <span class="arrow" [class.open]="showOperation"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showOperation">
-                            
-                                                            <!-- Operation and Process fields go here -->
-                            
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernw">
-                                                                        <label for="operatingPressureMax" class="form-label">Operating Pressure
-                                                                            -Max(Psi):</label>
-                                                                        <input id="operatingPressureMax" type="number"
-                                                                            formControlName="operatingPressureMax"
-                                                                            class="form-control form-control-nb" placeholder="Enter max pressure" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Operating Pressure Avg -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernw">
-                                                                        <label for="operatingPressureAvg" class="form-label">Operating Pressure
-                                                                            -Avg(Psi):</label>
-                                                                        <input id="operatingPressureAvg" type="number"
-                                                                            formControlName="operatingPressureAvg"
-                                                                            class="form-control form-control-nb" placeholder="Enter avg pressure" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Operating Temperature Max -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernw">
-                                                                        <label for="operatingTempMax" class="form-label">Operating Temperature
-                                                                            -Max(°C):</label>
-                                                                        <input id="operatingTempMax" type="number"
-                                                                            formControlName="operatingTempMax" class="form-control form-control-nb"
-                                                                            placeholder="Enter max temp" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Operating Temperature Min -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernw">
-                                                                        <label for="operatingTempMin" class="form-label">Operating Temperature
-                                                                            -Min(°C):</label>
-                                                                        <input id="operatingTempMin" type="number"
-                                                                            formControlName="operatingTempMin" class="form-control form-control-nb"
-                                                                            placeholder="Enter min temp" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Process Fluid -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="processFluid" class="form-label">Process Fluid:</label>
-                                                                        <input id="processFluid" formControlName="processFluid"
-                                                                            class="form-control form-control-nb" placeholder="Enter fluid name" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Fluid Composition -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="fluidComposition" class="form-label">Fluid Composition:</label>
-                                                                        <input id="fluidComposition" formControlName="fluidComposition"
-                                                                            class="form-control form-control-nb" placeholder="Enter composition" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Fluid Phase (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="fluidPhaseId" class="form-label">Fluid Phase:</label>
-                                                                        <select id="fluidPhaseId" formControlName="fluidPhaseId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Phase --</option>
-                                                                            <option *ngFor="let item of fluidPhaseList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Inventory Volume -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="inventoryVolume" class="form-label">Inventory Volume(M3):</label>
-                                                                        <input id="inventoryVolume" type="number" formControlName="inventoryVolume"
-                                                                            class="form-control form-control-nb" placeholder="Enter volume" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Density -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="density" class="form-label">Density()Kg/M3:</label>
-                                                                        <input id="density" type="number" formControlName="density"
-                                                                            class="form-control form-control-nb" placeholder="Enter density" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Viscosity -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="viscosity" class="form-label">Viscosity:</label>
-                                                                        <input id="viscosity" type="number" formControlName="viscosity"
-                                                                            class="form-control form-control-nb" placeholder="Enter viscosity" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Specific Gravity -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="specificGravity" class="form-label">Specific Gravity:</label>
-                                                                        <input id="specificGravity" type="number" formControlName="specificGravity"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter specific gravity" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Flow Rate -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="flowRate" class="form-label">Flow Rate(M3/s):</label>
-                                                                        <input id="flowRate" type="number" formControlName="flowRate"
-                                                                            class="form-control form-control-nb" placeholder="Enter flow rate" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Velocity -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="velocity" class="form-label">Velocity(m/s):</label>
-                                                                        <input id="velocity" type="number" formControlName="velocity"
-                                                                            class="form-control form-control-nb" placeholder="Enter velocity" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Corrosivity (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="corrosivityId" class="form-label">Corrosivity:</label>
-                                                                        <select id="corrosivityId" formControlName="corrosivityId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Corrosivity --</option>
-                                                                            <option *ngFor="let item of corrosivityList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- pH -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="ph" class="form-label">pH:</label>
-                                                                        <input id="ph" type="number" formControlName="ph"
-                                                                            class="form-control form-control-nb" placeholder="Enter pH" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Process Environment (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="processEnvironmentId" class="form-label">Process
-                                                                            Environment:</label>
-                                                                        <select id="processEnvironmentId" formControlName="processEnvironmentId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Environment --</option>
-                                                                            <option *ngFor="let item of environmentList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Toxic Mixture (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="toxicMixtureId" class="form-label">Toxic Mixture:</label>
-                                                                        <select id="toxicMixtureId" formControlName="toxicMixtureId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Mixture --</option>
-                                                                            <option *ngFor="let item of toxicMixtureList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Toxic Fluid (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="toxicFluidId" class="form-label">Toxic Fluid:</label>
-                                                                        <select id="toxicFluidId" formControlName="toxicFluidId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Fluid --</option>
-                                                                            <option *ngFor="let item of toxicFluidList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Flammability (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="flammabilityId" class="form-label">Flammability:</label>
-                                                                        <select id="flammabilityId" formControlName="flammabilityId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Flammability --</option>
-                                                                            <option *ngFor="let item of flammabilityList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Operating Weight -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="operatingWeight" class="form-label">Operating Weight(Kg):</label>
-                                                                        <input id="operatingWeight" type="number" formControlName="operatingWeight"
-                                                                            class="form-control form-control-nb" placeholder="Enter weight" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Criticality (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="criticalityId" class="form-label">Criticality:</label>
-                                                                        <select id="criticalityId" formControlName="criticalityId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Criticality --</option>
-                                                                            <option *ngFor="let item of criticalityList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Humidity Level -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="humidityLevel" class="form-label">Humidity Level(%):</label>
-                                                                        <input id="humidityLevel" type="number" formControlName="humidityLevel"
-                                                                            class="form-control form-control-nb" placeholder="Enter humidity %" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Seismic Zone Classification (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="seismicZoneClassificationId" class="form-label">Seismic
-                                                                            Zone:</label>
-                                                                        <select id="seismicZoneClassificationId"
-                                                                            formControlName="seismicZoneClassificationId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Zone --</option>
-                                                                            <option *ngFor="let item of seismicZoneList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Fire and Explosion Risk (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="fireAndExplosionRiskId" class="form-label">Fire/Explosion
-                                                                            Risk:</label>
-                                                                        <select id="fireAndExplosionRiskId" formControlName="fireAndExplosionRiskId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Risk --</option>
-                                                                            <option *ngFor="let item of fireExplosionRiskList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Toxic Risk (Dropdown) -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="toxicRiskId" class="form-label">Toxic Risk:</label>
-                                                                        <select id="toxicRiskId" formControlName="toxicRiskId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">-- Select Toxic Risk --</option>
-                                                                            <option *ngFor="let item of toxicRiskList" [value]="item.id">{{
-                                                                                item.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Total Population -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="totalPopulation" class="form-label">Total Population:</label>
-                                                                        <input id="totalPopulation" type="number" formControlName="totalPopulation"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter total population" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Population Density -->
-                                                                <div class="col-md-4">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="populationDensity" class="form-label">Population
-                                                                            Density(/M2):</label>
-                                                                        <input id="populationDensity" type="number"
-                                                                            formControlName="populationDensity" class="form-control form-control-nb"
-                                                                            placeholder="Enter population density" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                            </div>
-                                                            <!-- Operating Pressure Max -->
-                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
+                                                
+
+
                                                     <!-- Geometry -->
                                                     <div class="accordion-item">
                                                         <div class="accordion-header" (click)="toggle('showGeometry')">
@@ -894,215 +429,9 @@
                                                         </div>
                                                     </div>
                             
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <!-- External -->
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header" (click)="toggle('showExternal')">
-                                                            External
-                                                            <span class="arrow" [class.open]="showExternal"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showExternal">
-                                                            <div class=" row">
-                                                                <!-- External fields go here -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="externalCoatingId" class="form-label">External Coating:</label>
-                                                                        <select id="externalCoatingId" formControlName="externalCoatingId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of externalCoatingList" [value]="option.id">
-                                                                                {{
-                                                                                option.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="externalCoatingTypeId" class="form-label">External Coating
-                                                                            Type:</label>
-                                                                        <select id="externalCoatingTypeId" formControlName="externalCoatingTypeId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of externalCoatingTypeList"
-                                                                                [value]="option.id">{{
-                                                                                option.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="externalCoatingThickness" class="form-label">External Coating
-                                                                            Thickness(mm):</label>
-                                                                        <input id="externalCoatingThickness" type="number"
-                                                                            formControlName="externalCoatingThickness"
-                                                                            class="form-control form-control-nb" placeholder="Enter thickness" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="externalCoatingAge" class="form-label">External Coating
-                                                                            Age(Years):</label>
-                                                                        <input id="externalCoatingAge" type="number"
-                                                                            formControlName="externalCoatingAge"
-                                                                            class="form-control form-control-nb" placeholder="Enter age in years" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Insulation -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="insulationId" class="form-label">Insulation:</label>
-                                                                        <select id="insulationId" formControlName="insulationId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of insulationList" [value]="option.id">{{
-                                                                                option.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="insulationTypeId" class="form-label">Insulation Type:</label>
-                                                                        <select id="insulationTypeId" formControlName="insulationTypeId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of insulationTypeList" [value]="option.id">{{
-                                                                                option.name
-                                                                                }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="insulationMaterialId" class="form-label">Insulation
-                                                                            Material:</label>
-                                                                        <select id="insulationMaterialId" formControlName="insulationMaterialId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of insulationMaterialList"
-                                                                                [value]="option.id">{{
-                                                                                option.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="insulationThickness" class="form-label">Insulation
-                                                                            Thickness:</label>
-                                                                        <input id="insulationThickness" type="text"
-                                                                            formControlName="insulationThickness"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter insulation thickness" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Additional Dropdowns -->
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="cuiPotentialId" class="form-label">CUI Potential:</label>
-                                                                        <select id="cuiPotentialId" formControlName="cuiPotentialId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of cuiPotentialList" [value]="option.id">{{
-                                                                                option.name
-                                                                                }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="externalEnvironmentId" class="form-label">External
-                                                                            Environment:</label>
-                                                                        <select id="externalEnvironmentId" formControlName="externalEnvironmentId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of externalEnvironmentList"
-                                                                                [value]="option.id">{{
-                                                                                option.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="supportTypeId" class="form-label">Support Type:</label>
-                                                                        <select id="supportTypeId" formControlName="supportTypeId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of supportTypeList" [value]="option.id">{{
-                                                                                option.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="heatTracingId" class="form-label">Heat Tracing:</label>
-                                                                        <select id="heatTracingId" formControlName="heatTracingId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of heatTracingList" [value]="option.id">{{
-                                                                                option.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="fireProofingId" class="form-label">Fire Proofing:</label>
-                                                                        <select id="fireProofingId" formControlName="fireProofingId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of fireProofingList" [value]="option.id">{{
-                                                                                option.name
-                                                                                }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="buriedId" class="form-label">Buried:</label>
-                                                                        <select id="buriedId" formControlName="buriedId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of buriedList" [value]="option.id">{{
-                                                                                option.name }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <div class="col-md-6">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="cathodicProtectionId" class="form-label">Cathodic
-                                                                            Protection:</label>
-                                                                        <select id="cathodicProtectionId" formControlName="cathodicProtectionId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of cathodicProtectionList"
-                                                                                [value]="option.id">{{
-                                                                                option.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                            
-                                                </div>
-                                                <div class="col-md-4">
+                                                
+
+
                             
                                                     <!-- Fabrication -->
                                                     <div class="accordion-item">
@@ -1432,8 +761,972 @@
                                                         </div>
                                                     </div>
                             
+                                                
+
+
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showInspectionSchedule')">
+                                                            Inspection Schedule
+                                                            <span class="arrow" [class.open]="showInspectionSchedule"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showInspectionSchedule">
+                                                            <div class="row">
+                            
+                                                                <table class="inspection-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Inspection Type</th>
+                                                                            <th>Next Inspection Date</th>
+                                                                            <th>Previous Inspection Date</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Internal Inspection</td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="internalInspectionDate" type="date"
+                                                                                        formControlName="internalInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="prevInternalInspectionDate" type="date"
+                                                                                        formControlName="internalInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>External Inspection</td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="externalInspectionDate" type="date"
+                                                                                        formControlName="externalInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="prevExternalInspectionDate" type="date"
+                                                                                        formControlName="externalInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>On-stream Inspection</td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="onStreamInspectionDate" type="date"
+                                                                                        formControlName="onStreamInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="prevOnStreamInspectionDate" type="date"
+                                                                                        formControlName="onStreamInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>TM Inspection</td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="tmInspectionDate" type="date"
+                                                                                        formControlName="tmInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="m-1 field-containernwsm">
+                            
+                                                                                    <input id="prevTmInspectionDate" type="date"
+                                                                                        formControlName="tmInspectionDate"
+                                                                                        class="form-control form-control-nb" />
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                            
+                                                                <!-- Inspection Schedule fields go here -->
+                            
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Maintenance Schedule -->
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showMaintenance')">
+                                                            Maintenance Schedule
+                                                            <span class="arrow" [class.open]="showMaintenance"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showMaintenance">
+                                                            <div class="row">
+                                                                <!-- Maintenance Schedule fields go here -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="scheduledRepairOrReplacementId" class="form-label">
+                                                                            Repair/Replacement:</label>
+                                                                        <select id="scheduledRepairOrReplacementId"
+                                                                            formControlName="scheduledRepairOrReplacementId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of scheduledRepairList" [value]="option.id">
+                                                                                {{
+                                                                                option.name }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Scheduled Repair or Replacement Date -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="scheduledRepairOrReplacementDate" class="form-label">
+                                                                            Repair/Replacement Date:</label>
+                                                                        <input id="scheduledRepairOrReplacementDate" type="date"
+                                                                            formControlName="scheduledRepairOrReplacementDate"
+                                                                            class="form-control form-control-nb" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Repair During Next Shutdown (Checkbox) -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 form-check field-containernw">   <label for="repairDuringNextShutdown" class="form-check-label">Repair During
+                                                                        Next
+                                                                        Shutdown</label>
+                                                                        <div style="margin-left:5%;"> <input id="repairDuringNextShutdown"
+                                                                                type="checkbox" style="width: 25px !important;height: 25px !important;"
+                                                                                formControlName="repairDuringNextShutdown"
+                                                                                class="form-check-input" /></div>
+                                                                     
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                            
+                            
+                            
+                                                    <!-- Integration & Metadata -->
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showMetadata')">
+                                                            Integration & Metadata
+                                                            <span class="arrow" [class.open]="showMetadata"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showMetadata">
+                                                            <div class="row">
+                                                                <!-- Integration & Metadata fields go here -->
+                                                                <!-- ERP Circuit Code -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="erpCircuitCode" class="form-label">ERP Circuit Code:</label>
+                                                                        <input id="erpCircuitCode" type="text" formControlName="erpCircuitCode"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter ERP Circuit Code" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- ERP System -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="erpSystem" class="form-label">ERP System:</label>
+                                                                        <input id="erpSystem" type="text" formControlName="erpSystem"
+                                                                            class="form-control form-control-nb" placeholder="Enter ERP System" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Functional Location -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="functionalLocation" class="form-label">Functional
+                                                                            Location:</label>
+                                                                        <input id="functionalLocation" type="text"
+                                                                            formControlName="functionalLocation"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter Functional Location" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- External System ID -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="externalSystemID" class="form-label">External System ID:</label>
+                                                                        <input id="externalSystemID" type="text" formControlName="externalSystemID"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter External System ID" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Sync Status -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="syncStatus" class="form-label">Sync Status:</label>
+                                                                        <input id="syncStatus" type="text" formControlName="syncStatus"
+                                                                            class="form-control form-control-nb" placeholder="Enter Sync Status" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+
+
+                                                    <div class="accordion-item col-md-12">
+                                                        <div class="accordion-header" (click)="toggle('showDocument')">
+                                                            Documents
+                                                            <span class="arrow" [class.open]="showDocument"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showDocument">
+                                                            <div class="accordion-content row">
+                                                                <div class="mb-2 field-containernwsm">
+                                                                    <label for="documents" class="form-label">Select Files:</label>
+                                                                    <input id="documents" type="file" multiple
+                                                                        class="form-control form-control-nb"
+                                                                        style="margin: -6px -6px;"
+                                                                        (change)="onFileSelect($event)" />
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <ul *ngIf="documentPreviews.length > 0" class="list-group"
+                                                                        style="border-radius: 0px;">
+                                                                        <li *ngFor="let file of documentPreviews; let i = index"
+                                                                            class="list-group-item d-flex justify-content-between align-items-center">
+                                                                            <span>{{ file.name }}</span>
+                                                                            <div>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                                                                    (click)="downloadFile(file);$event.preventDefault();">
+                                                                                    <i class="feather icon-download"></i>
+                                                                                </button>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-outline-danger docbutton"
+                                                                                    (click)="deleteFile(i);$event.preventDefault();">
+                                                                                    <i class="feather icon-trash"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <ul *ngIf="documents.length > 0" class="list-group"
+                                                                        style="border-radius: 0px;">
+                                                                        <li *ngFor="let doc of documents; let i = index"
+                                                                            class="list-group-item d-flex justify-content-between align-items-center">
+                                                                            <span>{{ doc.docName }}</span>
+                                                                            <div>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-outline-success mx-1 docbutton"
+                                                                                    (click)="downloadFileExisting(doc.id!, doc.docName);$event.preventDefault();$event.preventDefault();">
+                                                                                    <i class="feather icon-download"></i>
+                                                                                </button>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-outline-danger docbutton"
+                                                                                    (click)="deleteFileExisting(doc.id!);$event.preventDefault();">
+                                                                                    <i class="feather icon-trash"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
-                                                <div class="col-md-4">
+
+                                                <div class="col-md-6">
+                                                <!-- even -->
+
+                                                    <!-- Location -->
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showLocation')">
+                                                            Location
+                                                            <span class="arrow" [class.open]="showLocation"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showLocation">
+                                                            <div class="row">
+                                                                <!-- Location fields go here -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="plantID" class="form-label">Plant ID: <span
+                                                                                class="text-danger">*</span></label>
+                                                                        <select id="plantID" formControlName="plantID"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Plant --</option>
+                                                                            <option *ngFor="let plant of plants" [value]="plant.id">{{ plant.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                        <div *ngIf="circuitForm.controls['plantID'].invalid && circuitForm.controls['plantID'].touched"
+                                                                            class="text-danger">
+                                                                            <div *ngIf="circuitForm.controls['plantID'].errors?.['required']">Plant
+                                                                                ID is
+                                                                                required.</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Area ID (Dropdown) -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="areaID" class="form-label">Area ID:</label>
+                                                                        <select id="areaID" formControlName="areaID"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Area --</option>
+                                                                            <option *ngFor="let area of areas" [value]="area.id">{{ area.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Unit ID (Dropdown) -->
+                                                                <div class="col-md-12">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="unitID" class="form-label">Unit ID:</label>
+                                                                        <select id="unitID" formControlName="unitID"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Unit --</option>
+                                                                            <option *ngFor="let unit of units" [value]="unit.id">{{ unit.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- System ID (Dropdown) -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="systemID" class="form-label">System ID:</label>
+                                                                        <select id="systemID" formControlName="systemID"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select System --</option>
+                                                                            <option *ngFor="let system of systems" [value]="system.id">{{
+                                                                                system.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                            
+                                                                 <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="cLId" class="form-label">Corrosion Loop:</label>
+                                            <select id="cLId" formControlName="cLId"
+                                                class="form-control form-control-nb">
+                                                <option value="">-- Select CorrossionLoop --</option>
+                                                <option *ngFor="let cl of cls" [value]="cl.id">{{
+                                                    cl.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                            
+                                                                <!-- Specific Location -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="specificLocation" class="form-label">Specific Location:</label>
+                                                                        <input id="specificLocation" formControlName="specificLocation"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter Specific Location" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Circuit From -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="circuitFrom" class="form-label">Circuit From:</label>
+                                                                        <input id="circuitFrom" formControlName="circuitFrom"
+                                                                            class="form-control form-control-nb" placeholder="Enter Circuit From" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Circuit To -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="circuitTo" class="form-label">Circuit To:</label>
+                                                                        <input id="circuitTo" formControlName="circuitTo"
+                                                                            class="form-control form-control-nb" placeholder="Enter Circuit To" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- PFD -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="pfd" class="form-label">PFD:</label>
+                                                                        <input id="pfd" formControlName="pfd" class="form-control form-control-nb"
+                                                                            placeholder="Enter PFD" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- P&ID -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="pnID" class="form-label">P&ID:</label>
+                                                                        <input id="pnID" formControlName="pnID" class="form-control form-control-nb"
+                                                                            placeholder="Enter P&ID" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Isometric Drawing -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="isometricDrawing" class="form-label">Isometric Drawing:</label>
+                                                                        <input id="isometricDrawing" formControlName="isometricDrawing"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter Isometric Drawing" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+
+
+                            
+                                                    <!-- Operation and Process -->
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showOperation')">
+                                                            Operation and Process
+                                                            <span class="arrow" [class.open]="showOperation"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showOperation">
+                            
+                                                            <!-- Operation and Process fields go here -->
+                            
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="operatingPressureMax" class="form-label">Operating Pressure
+                                                                            -Max(Psi):</label>
+                                                                        <input id="operatingPressureMax" type="number"
+                                                                            formControlName="operatingPressureMax"
+                                                                            class="form-control form-control-nb" placeholder="Enter max pressure" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Operating Pressure Avg -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="operatingPressureAvg" class="form-label">Operating Pressure
+                                                                            -Avg(Psi):</label>
+                                                                        <input id="operatingPressureAvg" type="number"
+                                                                            formControlName="operatingPressureAvg"
+                                                                            class="form-control form-control-nb" placeholder="Enter avg pressure" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Operating Temperature Max -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="operatingTempMax" class="form-label">Operating Temperature
+                                                                            -Max(°C):</label>
+                                                                        <input id="operatingTempMax" type="number"
+                                                                            formControlName="operatingTempMax" class="form-control form-control-nb"
+                                                                            placeholder="Enter max temp" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Operating Temperature Min -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernw">
+                                                                        <label for="operatingTempMin" class="form-label">Operating Temperature
+                                                                            -Min(°C):</label>
+                                                                        <input id="operatingTempMin" type="number"
+                                                                            formControlName="operatingTempMin" class="form-control form-control-nb"
+                                                                            placeholder="Enter min temp" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Process Fluid -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="processFluid" class="form-label">Process Fluid:</label>
+                                                                        <input id="processFluid" formControlName="processFluid"
+                                                                            class="form-control form-control-nb" placeholder="Enter fluid name" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Fluid Composition -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="fluidComposition" class="form-label">Fluid Composition:</label>
+                                                                        <input id="fluidComposition" formControlName="fluidComposition"
+                                                                            class="form-control form-control-nb" placeholder="Enter composition" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Fluid Phase (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="fluidPhaseId" class="form-label">Fluid Phase:</label>
+                                                                        <select id="fluidPhaseId" formControlName="fluidPhaseId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Phase --</option>
+                                                                            <option *ngFor="let item of fluidPhaseList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Inventory Volume -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="inventoryVolume" class="form-label">Inventory Volume(M3):</label>
+                                                                        <input id="inventoryVolume" type="number" formControlName="inventoryVolume"
+                                                                            class="form-control form-control-nb" placeholder="Enter volume" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Density -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="density" class="form-label">Density()Kg/M3:</label>
+                                                                        <input id="density" type="number" formControlName="density"
+                                                                            class="form-control form-control-nb" placeholder="Enter density" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Viscosity -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="viscosity" class="form-label">Viscosity:</label>
+                                                                        <input id="viscosity" type="number" formControlName="viscosity"
+                                                                            class="form-control form-control-nb" placeholder="Enter viscosity" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Specific Gravity -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="specificGravity" class="form-label">Specific Gravity:</label>
+                                                                        <input id="specificGravity" type="number" formControlName="specificGravity"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter specific gravity" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Flow Rate -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="flowRate" class="form-label">Flow Rate(M3/s):</label>
+                                                                        <input id="flowRate" type="number" formControlName="flowRate"
+                                                                            class="form-control form-control-nb" placeholder="Enter flow rate" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Velocity -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="velocity" class="form-label">Velocity(m/s):</label>
+                                                                        <input id="velocity" type="number" formControlName="velocity"
+                                                                            class="form-control form-control-nb" placeholder="Enter velocity" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Corrosivity (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="corrosivityId" class="form-label">Corrosivity:</label>
+                                                                        <select id="corrosivityId" formControlName="corrosivityId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Corrosivity --</option>
+                                                                            <option *ngFor="let item of corrosivityList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- pH -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="ph" class="form-label">pH:</label>
+                                                                        <input id="ph" type="number" formControlName="ph"
+                                                                            class="form-control form-control-nb" placeholder="Enter pH" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Process Environment (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="processEnvironmentId" class="form-label">Process
+                                                                            Environment:</label>
+                                                                        <select id="processEnvironmentId" formControlName="processEnvironmentId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Environment --</option>
+                                                                            <option *ngFor="let item of environmentList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Toxic Mixture (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="toxicMixtureId" class="form-label">Toxic Mixture:</label>
+                                                                        <select id="toxicMixtureId" formControlName="toxicMixtureId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Mixture --</option>
+                                                                            <option *ngFor="let item of toxicMixtureList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Toxic Fluid (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="toxicFluidId" class="form-label">Toxic Fluid:</label>
+                                                                        <select id="toxicFluidId" formControlName="toxicFluidId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Fluid --</option>
+                                                                            <option *ngFor="let item of toxicFluidList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Flammability (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="flammabilityId" class="form-label">Flammability:</label>
+                                                                        <select id="flammabilityId" formControlName="flammabilityId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Flammability --</option>
+                                                                            <option *ngFor="let item of flammabilityList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Operating Weight -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="operatingWeight" class="form-label">Operating Weight(Kg):</label>
+                                                                        <input id="operatingWeight" type="number" formControlName="operatingWeight"
+                                                                            class="form-control form-control-nb" placeholder="Enter weight" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Criticality (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="criticalityId" class="form-label">Criticality:</label>
+                                                                        <select id="criticalityId" formControlName="criticalityId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Criticality --</option>
+                                                                            <option *ngFor="let item of criticalityList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Humidity Level -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="humidityLevel" class="form-label">Humidity Level(%):</label>
+                                                                        <input id="humidityLevel" type="number" formControlName="humidityLevel"
+                                                                            class="form-control form-control-nb" placeholder="Enter humidity %" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Seismic Zone Classification (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="seismicZoneClassificationId" class="form-label">Seismic
+                                                                            Zone:</label>
+                                                                        <select id="seismicZoneClassificationId"
+                                                                            formControlName="seismicZoneClassificationId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Zone --</option>
+                                                                            <option *ngFor="let item of seismicZoneList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Fire and Explosion Risk (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="fireAndExplosionRiskId" class="form-label">Fire/Explosion
+                                                                            Risk:</label>
+                                                                        <select id="fireAndExplosionRiskId" formControlName="fireAndExplosionRiskId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Risk --</option>
+                                                                            <option *ngFor="let item of fireExplosionRiskList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Toxic Risk (Dropdown) -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="toxicRiskId" class="form-label">Toxic Risk:</label>
+                                                                        <select id="toxicRiskId" formControlName="toxicRiskId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">-- Select Toxic Risk --</option>
+                                                                            <option *ngFor="let item of toxicRiskList" [value]="item.id">{{
+                                                                                item.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Total Population -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="totalPopulation" class="form-label">Total Population:</label>
+                                                                        <input id="totalPopulation" type="number" formControlName="totalPopulation"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter total population" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Population Density -->
+                                                                <div class="col-md-4">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="populationDensity" class="form-label">Population
+                                                                            Density(/M2):</label>
+                                                                        <input id="populationDensity" type="number"
+                                                                            formControlName="populationDensity" class="form-control form-control-nb"
+                                                                            placeholder="Enter population density" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                            </div>
+                                                            <!-- Operating Pressure Max -->
+                            
+                                                        </div>
+                                                    </div>
+                                                
+
+
+                                                    <!-- External -->
+                                                    <div class="accordion-item">
+                                                        <div class="accordion-header" (click)="toggle('showExternal')">
+                                                            External
+                                                            <span class="arrow" [class.open]="showExternal"></span>
+                                                        </div>
+                                                        <div class="accordion-wrapper" [class.open]="showExternal">
+                                                            <div class=" row">
+                                                                <!-- External fields go here -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="externalCoatingId" class="form-label">External Coating:</label>
+                                                                        <select id="externalCoatingId" formControlName="externalCoatingId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of externalCoatingList" [value]="option.id">
+                                                                                {{
+                                                                                option.name }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="externalCoatingTypeId" class="form-label">External Coating
+                                                                            Type:</label>
+                                                                        <select id="externalCoatingTypeId" formControlName="externalCoatingTypeId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of externalCoatingTypeList"
+                                                                                [value]="option.id">{{
+                                                                                option.name }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="externalCoatingThickness" class="form-label">External Coating
+                                                                            Thickness(mm):</label>
+                                                                        <input id="externalCoatingThickness" type="number"
+                                                                            formControlName="externalCoatingThickness"
+                                                                            class="form-control form-control-nb" placeholder="Enter thickness" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="externalCoatingAge" class="form-label">External Coating
+                                                                            Age(Years):</label>
+                                                                        <input id="externalCoatingAge" type="number"
+                                                                            formControlName="externalCoatingAge"
+                                                                            class="form-control form-control-nb" placeholder="Enter age in years" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Insulation -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="insulationId" class="form-label">Insulation:</label>
+                                                                        <select id="insulationId" formControlName="insulationId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of insulationList" [value]="option.id">{{
+                                                                                option.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="insulationTypeId" class="form-label">Insulation Type:</label>
+                                                                        <select id="insulationTypeId" formControlName="insulationTypeId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of insulationTypeList" [value]="option.id">{{
+                                                                                option.name
+                                                                                }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="insulationMaterialId" class="form-label">Insulation
+                                                                            Material:</label>
+                                                                        <select id="insulationMaterialId" formControlName="insulationMaterialId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of insulationMaterialList"
+                                                                                [value]="option.id">{{
+                                                                                option.name }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="insulationThickness" class="form-label">Insulation
+                                                                            Thickness:</label>
+                                                                        <input id="insulationThickness" type="text"
+                                                                            formControlName="insulationThickness"
+                                                                            class="form-control form-control-nb"
+                                                                            placeholder="Enter insulation thickness" />
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <!-- Additional Dropdowns -->
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="cuiPotentialId" class="form-label">CUI Potential:</label>
+                                                                        <select id="cuiPotentialId" formControlName="cuiPotentialId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of cuiPotentialList" [value]="option.id">{{
+                                                                                option.name
+                                                                                }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="externalEnvironmentId" class="form-label">External
+                                                                            Environment:</label>
+                                                                        <select id="externalEnvironmentId" formControlName="externalEnvironmentId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of externalEnvironmentList"
+                                                                                [value]="option.id">{{
+                                                                                option.name }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="supportTypeId" class="form-label">Support Type:</label>
+                                                                        <select id="supportTypeId" formControlName="supportTypeId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of supportTypeList" [value]="option.id">{{
+                                                                                option.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="heatTracingId" class="form-label">Heat Tracing:</label>
+                                                                        <select id="heatTracingId" formControlName="heatTracingId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of heatTracingList" [value]="option.id">{{
+                                                                                option.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="fireProofingId" class="form-label">Fire Proofing:</label>
+                                                                        <select id="fireProofingId" formControlName="fireProofingId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of fireProofingList" [value]="option.id">{{
+                                                                                option.name
+                                                                                }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="buriedId" class="form-label">Buried:</label>
+                                                                        <select id="buriedId" formControlName="buriedId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of buriedList" [value]="option.id">{{
+                                                                                option.name }}
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                            
+                                                                <div class="col-md-6">
+                                                                    <div class="m-1 field-containernwsm">
+                                                                        <label for="cathodicProtectionId" class="form-label">Cathodic
+                                                                            Protection:</label>
+                                                                        <select id="cathodicProtectionId" formControlName="cathodicProtectionId"
+                                                                            class="form-control form-control-nb">
+                                                                            <option value="">--Select--</option>
+                                                                            <option *ngFor="let option of cathodicProtectionList"
+                                                                                [value]="option.id">{{
+                                                                                option.name }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                                                
+
+
                                                     <!-- Safety and Process Control -->
                                                     <div class="accordion-item">
                                                         <div class="accordion-header" (click)="toggle('showSafety')">
@@ -1758,228 +2051,9 @@
                             
                                                     <!-- Inspection Schedule -->
                             
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header" (click)="toggle('showInspectionSchedule')">
-                                                            Inspection Schedule
-                                                            <span class="arrow" [class.open]="showInspectionSchedule"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showInspectionSchedule">
-                                                            <div class="row">
-                            
-                                                                <table class="inspection-table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Inspection Type</th>
-                                                                            <th>Next Inspection Date</th>
-                                                                            <th>Previous Inspection Date</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>Internal Inspection</td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="internalInspectionDate" type="date"
-                                                                                        formControlName="internalInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="prevInternalInspectionDate" type="date"
-                                                                                        formControlName="internalInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>External Inspection</td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="externalInspectionDate" type="date"
-                                                                                        formControlName="externalInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="prevExternalInspectionDate" type="date"
-                                                                                        formControlName="externalInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>On-stream Inspection</td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="onStreamInspectionDate" type="date"
-                                                                                        formControlName="onStreamInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="prevOnStreamInspectionDate" type="date"
-                                                                                        formControlName="onStreamInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>TM Inspection</td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="tmInspectionDate" type="date"
-                                                                                        formControlName="tmInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="m-1 field-containernwsm">
-                            
-                                                                                    <input id="prevTmInspectionDate" type="date"
-                                                                                        formControlName="tmInspectionDate"
-                                                                                        class="form-control form-control-nb" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                            
-                                                                <!-- Inspection Schedule fields go here -->
-                            
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Maintenance Schedule -->
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header" (click)="toggle('showMaintenance')">
-                                                            Maintenance Schedule
-                                                            <span class="arrow" [class.open]="showMaintenance"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showMaintenance">
-                                                            <div class="row">
-                                                                <!-- Maintenance Schedule fields go here -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="scheduledRepairOrReplacementId" class="form-label">
-                                                                            Repair/Replacement:</label>
-                                                                        <select id="scheduledRepairOrReplacementId"
-                                                                            formControlName="scheduledRepairOrReplacementId"
-                                                                            class="form-control form-control-nb">
-                                                                            <option value="">--Select--</option>
-                                                                            <option *ngFor="let option of scheduledRepairList" [value]="option.id">
-                                                                                {{
-                                                                                option.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Scheduled Repair or Replacement Date -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernw">
-                                                                        <label for="scheduledRepairOrReplacementDate" class="form-label">
-                                                                            Repair/Replacement Date:</label>
-                                                                        <input id="scheduledRepairOrReplacementDate" type="date"
-                                                                            formControlName="scheduledRepairOrReplacementDate"
-                                                                            class="form-control form-control-nb" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Repair During Next Shutdown (Checkbox) -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 form-check field-containernw">   <label for="repairDuringNextShutdown" class="form-check-label">Repair During
-                                                                        Next
-                                                                        Shutdown</label>
-                                                                        <div style="margin-left:5%;"> <input id="repairDuringNextShutdown"
-                                                                                type="checkbox" style="width: 25px !important;height: 25px !important;"
-                                                                                formControlName="repairDuringNextShutdown"
-                                                                                class="form-check-input" /></div>
-                                                                     
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                            
-                            
-                            
-                            
-                                                    <!-- Integration & Metadata -->
-                                                    <div class="accordion-item">
-                                                        <div class="accordion-header" (click)="toggle('showMetadata')">
-                                                            Integration & Metadata
-                                                            <span class="arrow" [class.open]="showMetadata"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showMetadata">
-                                                            <div class="row">
-                                                                <!-- Integration & Metadata fields go here -->
-                                                                <!-- ERP Circuit Code -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="erpCircuitCode" class="form-label">ERP Circuit Code:</label>
-                                                                        <input id="erpCircuitCode" type="text" formControlName="erpCircuitCode"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter ERP Circuit Code" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- ERP System -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="erpSystem" class="form-label">ERP System:</label>
-                                                                        <input id="erpSystem" type="text" formControlName="erpSystem"
-                                                                            class="form-control form-control-nb" placeholder="Enter ERP System" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Functional Location -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="functionalLocation" class="form-label">Functional
-                                                                            Location:</label>
-                                                                        <input id="functionalLocation" type="text"
-                                                                            formControlName="functionalLocation"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter Functional Location" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- External System ID -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="externalSystemID" class="form-label">External System ID:</label>
-                                                                        <input id="externalSystemID" type="text" formControlName="externalSystemID"
-                                                                            class="form-control form-control-nb"
-                                                                            placeholder="Enter External System ID" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                                <!-- Sync Status -->
-                                                                <div class="col-md-12">
-                                                                    <div class="m-1 field-containernwsm">
-                                                                        <label for="syncStatus" class="form-label">Sync Status:</label>
-                                                                        <input id="syncStatus" type="text" formControlName="syncStatus"
-                                                                            class="form-control form-control-nb" placeholder="Enter Sync Status" />
-                                                                    </div>
-                                                                </div>
-                            
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
 
-                                                 <div class="col-md-6">
+
                                                     
               
                 <div class="accordion-item">
@@ -2028,65 +2102,7 @@
                         </div>
                     </div>
                 </div>
-                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="accordion-item col-md-12">
-                                                        <div class="accordion-header" (click)="toggle('showDocument')">
-                                                            Documents
-                                                            <span class="arrow" [class.open]="showDocument"></span>
-                                                        </div>
-                                                        <div class="accordion-wrapper" [class.open]="showDocument">
-                                                            <div class="accordion-content row">
-                                                                <div class="mb-2 field-containernwsm">
-                                                                    <label for="documents" class="form-label">Select Files:</label>
-                                                                    <input id="documents" type="file" multiple
-                                                                        class="form-control form-control-nb"
-                                                                        style="margin: -6px -6px;"
-                                                                        (change)="onFileSelect($event)" />
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <ul *ngIf="documentPreviews.length > 0" class="list-group"
-                                                                        style="border-radius: 0px;">
-                                                                        <li *ngFor="let file of documentPreviews; let i = index"
-                                                                            class="list-group-item d-flex justify-content-between align-items-center">
-                                                                            <span>{{ file.name }}</span>
-                                                                            <div>
-                                                                                <button
-                                                                                    class="btn btn-sm btn-outline-success mx-1 docbutton"
-                                                                                    (click)="downloadFile(file);$event.preventDefault();">
-                                                                                    <i class="feather icon-download"></i>
-                                                                                </button>
-                                                                                <button
-                                                                                    class="btn btn-sm btn-outline-danger docbutton"
-                                                                                    (click)="deleteFile(i);$event.preventDefault();">
-                                                                                    <i class="feather icon-trash"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <ul *ngIf="documents.length > 0" class="list-group"
-                                                                        style="border-radius: 0px;">
-                                                                        <li *ngFor="let doc of documents; let i = index"
-                                                                            class="list-group-item d-flex justify-content-between align-items-center">
-                                                                            <span>{{ doc.docName }}</span>
-                                                                            <div>
-                                                                                <button
-                                                                                    class="btn btn-sm btn-outline-success mx-1 docbutton"
-                                                                                    (click)="downloadFileExisting(doc.id!, doc.docName);$event.preventDefault();$event.preventDefault();">
-                                                                                    <i class="feather icon-download"></i>
-                                                                                </button>
-                                                                                <button
-                                                                                    class="btn btn-sm btn-outline-danger docbutton"
-                                                                                    (click)="deleteFileExisting(doc.id!);$event.preventDefault();">
-                                                                                    <i class="feather icon-trash"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                 
                                                 </div>
                                             </div>
                             

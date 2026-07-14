@@ -1,0 +1,35 @@
+// Required Inspection Method checkbox styling
+.field-containernwsm {
+  .inspection-checkbox {
+    max-width: 15px !important;
+    max-height: 15px !important;
+    border: 2px solid #667eea;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    flex-shrink: 0;
+
+    &:hover {
+      border-color: #764ba2;
+      box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+    }
+
+    &:checked {
+      background-color: #667eea;
+      border-color: #667eea;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+
+      &:hover {
+        background-color: #764ba2;
+        border-color: #764ba2;
+        box-shadow: 0 0 12px rgba(118, 75, 162, 0.4);
+      }
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+      outline: none;
+    }
+  }
+}

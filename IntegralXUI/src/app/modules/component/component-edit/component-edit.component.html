@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <div class="card">
         <div class="card-body "  *ngIf="dataLoaded">
             <div class="d-flex justify-content-between align-items-center mt-2">
@@ -37,7 +37,7 @@
 
   <input id="id" formControlName="id" hidden />
                     <!-- General -->
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showGeneral')">
                                 General Information
@@ -50,7 +50,7 @@
 
                                     <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="componentID" class="form-label">Component ID:</label>
+                                            <label for="componentID" class="form-label">Component ID: <span class="text-danger">*</span></label>
                                             <input type="text" id="componentID" formControlName="componentID"
                                                 class="form-control form-control-nb" placeholder="Enter Component ID" />
                                         </div>
@@ -60,7 +60,7 @@
                                     <div class="col-md-6">
                                         <div class="m-1 field-containernwsm">
                                             <label for="componentDescription" class="form-label">Component
-                                                Description:</label>
+                                                Description: <span class="text-danger">*</span></label>
                                             <input type="text" id="componentDescription"
                                                 formControlName="componentDescription"
                                                 class="form-control form-control-nb"
@@ -131,6 +131,16 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <!-- In-service Start Date (Date) -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="inserviceStartDate" class="form-label">In-service Start Date:</label>
+                                            <input type="date" id="inserviceStartDate"
+                                                formControlName="inserviceStartDate"
+                                                class="form-control form-control-nb" />
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -138,8 +148,9 @@
                         </div>
                     </div>
 
+                <div class="col-md-6">
+                <!-- odd -->
                     <!-- Location -->
-                    <div class="col-md-8">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showLocation')">
                                 Location
@@ -150,7 +161,7 @@
                                     <!-- Plant ID Drop down -->
                                     <div class="col-md-3">
                                         <div class="m-1 field-containernwsm">
-                                            <label for="plantID" class="form-label">Plant ID:</label>
+                                            <label for="plantID" class="form-label">Plant ID: <span class="text-danger">*</span></label>
                                             <select id="plantID" formControlName="plantID"
                                                 class="form-select form-control-nb">
                                                 <option value="" disabled selected></option>
@@ -315,10 +326,834 @@ bindLabel="name"
 
                             </div>
                         </div>
-                    </div>
 
+                    <!-- Geometry -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showGeometry')">
+                                Geometry
+                                <span class="arrow" [class.open]="showGeometry"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showGeometry">
+                                <div class="row">
+                                    <!-- Geometry Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="geometry" class="form-label">Geometry:</label>
+                                            <select id="geometry" formControlName="geometry"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected>-- Select Orientation --</option>
+                                                <option *ngFor="let item of ddlcomponentGeometry" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- NPS Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="nps" class="form-label">NPS:</label>
+                                            <input type="text" id="nps" formControlName="nps"
+                                                class="form-control form-control-nb" placeholder="Enter NPS" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Inside Diameter (ID) Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="insideDiameter" class="form-label">Inside Diameter (ID):</label>
+                                            <input type="text" id="insideDiameter" formControlName="insideDiameter"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter inside diameter" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Outside Diameter (OD) Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="outsideDiameter" class="form-label">Outside Diameter
+                                                (OD):</label>
+                                            <input type="text" id="outsideDiameter" formControlName="outsideDiameter"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter outside diameter" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Length / Height Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="lengthHeight" class="form-label">Length / Height:</label>
+                                            <input type="text" id="lengthHeight" formControlName="lengthHeight"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter length / height" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Fill Height Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="fillHeight" class="form-label">Fill Height:</label>
+                                            <input type="text" id="fillHeight" formControlName="fillHeight"
+                                                class="form-control form-control-nb" placeholder="Enter fill height" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Orientation Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="orientation" class="form-label">Orientation:</label>
+                                            <select id="orientation" formControlName="orientation"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected>-- Select Fluid Phase --</option>
+                                                <option *ngFor="let item of ddlcomponentOrientation" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Empty Weight Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="emptyWeight" class="form-label">Empty Weight:</label>
+                                            <input type="text" id="emptyWeight" formControlName="emptyWeight"
+                                                class="form-control form-control-nb" placeholder="Enter empty weight" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Capacity Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="capacity" class="form-label">Capacity:</label>
+                                            <input type="text" id="capacity" formControlName="capacity"
+                                                class="form-control form-control-nb" placeholder="Enter capacity" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Head Type Dropdown -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="headType" class="form-label">Head Type:</label>
+                                            <select id="headType" formControlName="headType"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected>-- Select Head Type --</option>
+                                                <option *ngFor="let h of headTypeOptions" [value]="h">{{ h }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <!-- Fabrication -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showFabrication')">
+                                Fabrication
+                                <span class="arrow" [class.open]="showFabrication"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showFabrication">
+                                <div class="row">
+                                    <!-- Manufacturer Manual entry -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="manufacturer" class="form-label">Manufacturer:</label>
+                                            <input type="text" id="manufacturer" formControlName="manufacturer"
+                                                class="form-control form-control-nb" placeholder="Enter manufacturer" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Serial Number Manual entry -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="serialNumber" class="form-label">Serial Number:</label>
+                                            <input type="text" id="serialNumber" formControlName="serialNumber"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter serial number" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Warranty Date Manual entry -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="warrantyDate" class="form-label">Warranty Date:</label>
+                                            <input type="text" id="warrantyDate" formControlName="warrantyDate"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter warranty date" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Heat Treatment Drop down -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="heatTreatment" class="form-label">Heat Treatment:</label>
+                                            <select id="heatTreatment" formControlName="heatTreatment"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected>-- Select Manufacturer --</option>
+                                                <option *ngFor="let item of ddlcomponentHeatTreatment" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Heat Treatment Type Drop down -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="heatTreatmentType" class="form-label">Heat Treatment
+                                                Type:</label>
+                                            <select id="heatTreatmentType" formControlName="heatTreatmentType"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected>-- Select Model --</option>
+                                                <option *ngFor="let item of ddlcomponentHeatTreatmentType" [value]="item.id">
+                                                    {{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Impact Test Drop down -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="impactTest" class="form-label">Impact Test:</label>
+                                            <select id="impactTest" formControlName="impactTest"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected>-- Select Location --</option>
+                                                <option *ngFor="let item of ddlcomponentImpactTest" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pressure Test Drop down -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="pressureTest" class="form-label">Pressure Test:</label>
+                                            <select id="pressureTest" formControlName="pressureTest"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentPressureTest" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pressure Test Type Drop down -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="pressureTestType" class="form-label">Pressure Test Type:</label>
+                                            <select id="pressureTestType" formControlName="pressureTestType"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentPressureTestType" [value]="item.id">
+                                                    {{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Test Pressure Manual entry -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="testPressure" class="form-label">Test Pressure:</label>
+                                            <input type="text" id="testPressure" formControlName="testPressure"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter test pressure" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Radiography Drop down -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="radiography" class="form-label">Radiography:</label>
+                                            <select id="radiography" formControlName="radiography"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentRadiography" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Radiography Category Drop down -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="radiographyCategory" class="form-label">Radiography
+                                                Category:</label>
+                                            <select id="radiographyCategory" formControlName="radiographyCategory"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentRadiographyCategory"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Joint Efficiency Manual entry -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="jointEfficiency" class="form-label">Joint Efficiency:</label>
+                                            <input type="text" id="jointEfficiency" formControlName="jointEfficiency"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter joint efficiency" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Other NDE Manual entry -->
+                                    <div class="col-md-6">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="otherNDE" class="form-label">Other NDE:</label>
+                                            <input type="text" id="otherNDE" formControlName="otherNDE"
+                                                class="form-control form-control-nb" placeholder="Enter other NDE" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <!-- External -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showExternal')">
+                                External
+                                <span class="arrow" [class.open]="showExternal"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showExternal">
+                                <div class="row">
+                                    <!-- External Coating Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalCoating" class="form-label">External Coating:</label>
+                                            <select id="externalCoating" formControlName="externalCoating"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentExternalCoating" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- External Coating Type Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalCoatingType" class="form-label">External Coating
+                                                Type:</label>
+                                            <select id="externalCoatingType" formControlName="externalCoatingType"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentExternalCoatingType"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- External Coating Thickness Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalCoatingThickness" class="form-label">External Coating
+                                                Thickness:</label>
+                                            <input type="text" id="externalCoatingThickness"
+                                                formControlName="externalCoatingThickness"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter external coating thickness" />
+                                        </div>
+                                    </div>
+
+                                    <!-- External Coating Age Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalCoatingAge" class="form-label">External Coating
+                                                Age:</label>
+                                            <input type="text" id="externalCoatingAge"
+                                                formControlName="externalCoatingAge"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter external coating age" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Insulation Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="insulation" class="form-label">Insulation:</label>
+                                            <select id="insulation" formControlName="insulation"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentInsulation" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Insulation Type Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="insulationType" class="form-label">Insulation Type:</label>
+                                            <select id="insulationType" formControlName="insulationType"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentInsulationType" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Insulation Material Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="insulationMaterial" class="form-label">Insulation
+                                                Material:</label>
+                                            <select id="insulationMaterial" formControlName="insulationMaterial"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentInsulationMaterial"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Insulation Thickness Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="insulationThickness" class="form-label">Insulation
+                                                Thickness:</label>
+                                            <input type="text" id="insulationThickness"
+                                                formControlName="insulationThickness"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter insulation thickness" />
+                                        </div>
+                                    </div>
+
+                                    <!-- CUI Potential Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="cuiPotential" class="form-label">CUI Potential:</label>
+                                            <select id="cuiPotential" formControlName="cuiPotential"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentCUIPotential" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- External Environment Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalEnvironment" class="form-label">External
+                                                Environment:</label>
+                                            <select id="externalEnvironment" formControlName="externalEnvironment"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentExternalEnvironment"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Support Type Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="supportType" class="form-label">Support Type:</label>
+                                            <select id="supportType" formControlName="supportType"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentSupportType" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Heat Tracing Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="heatTracing" class="form-label">Heat Tracing:</label>
+                                            <select id="heatTracing" formControlName="heatTracing"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentHeatTracing" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Fire Proofing Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="fireProofing" class="form-label">Fire Proofing:</label>
+                                            <select id="fireProofing" formControlName="fireProofing"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentFireProofing" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Buried Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="buried" class="form-label">Buried:</label>
+                                            <select id="buried" formControlName="buried"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentBuried" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cathodic Protection Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="cathodicProtection" class="form-label">Cathodic
+                                                Protection:</label>
+                                            <select id="cathodicProtection" formControlName="cathodicProtection"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentCathodicProtection"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <!-- Safety and Process Control -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showSafety')">
+                                Safety and Process Control
+                                <span class="arrow" [class.open]="showSafety"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showSafety">
+
+                                <div class="row">
+                                    <!-- Pressure Relief Devices Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="pressureReliefDevices" class="form-label">Pressure Relief
+                                                Devices:</label>
+                                            <select id="pressureReliefDevices" formControlName="pressureReliefDevices"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentPressureReliefDevices"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- PRD ID Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="prdID" class="form-label">PRD ID:</label>
+                                            <input type="text" id="prdID" formControlName="prdID"
+                                                class="form-control form-control-nb" placeholder="Enter PRD ID" />
+                                        </div>
+                                    </div>
+
+                                    <!-- PRD Set Pressure Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="prdSetPressure" class="form-label">PRD Set Pressure:</label>
+                                            <input type="text" id="prdSetPressure" formControlName="prdSetPressure"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter PRD set pressure" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Chemical Injection Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="chemicalInjection" class="form-label">Chemical
+                                                Injection:</label>
+                                            <select id="chemicalInjection" formControlName="chemicalInjection"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentChemicalInjection" [value]="item.id">
+                                                    {{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Detection System Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="detectionSystem" class="form-label">Detection System:</label>
+                                            <select id="detectionSystem" formControlName="detectionSystem"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentDetectionSystem" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Isolation System Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="isolationSystem" class="form-label">Isolation System:</label>
+                                            <select id="isolationSystem" formControlName="isolationSystem"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentIsolationSystem" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mitigation System Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="mitigationSystem" class="form-label">Mitigation System:</label>
+                                            <select id="mitigationSystem" formControlName="mitigationSystem"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentMitigationSystem" [value]="item.id">
+                                                    {{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Online Corrosion Monitoring Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="onlineCorrosionMonitoring" class="form-label">Online Corrosion
+                                                Monitoring:</label>
+                                            <select id="onlineCorrosionMonitoring"
+                                                formControlName="onlineCorrosionMonitoring"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentOnlineCorrosionMonitoring"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Corrosion Monitoring Type Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="corrosionMonitoringType" class="form-label">Corrosion Monitoring
+                                                Type:</label>
+                                            <select id="corrosionMonitoringType"
+                                                formControlName="corrosionMonitoringType"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentCorrosionMonitoringType"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hazard Classification Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="hazardClassification" class="form-label">Hazard
+                                                Classification:</label>
+                                            <select id="hazardClassification" formControlName="hazardClassification"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentHazardClassification"
+                                                    [value]="item.id">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Safety & Environmental Permits Manual entry -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernw">
+                                            <label for="safetyEnvironmentalPermits" class="form-label">Safety &
+                                                Environmental Permits:</label>
+                                            <input type="text" id="safetyEnvironmentalPermits"
+                                                formControlName="safetyEnvironmentalPermits"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter safety & environmental permits" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Incident History (If Any) Drop down -->
+                                    <div class="col-md-3">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="incidentHistory" class="form-label">Incident History (If
+                                                Any):</label>
+                                            <select id="incidentHistory" formControlName="incidentHistory"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentIncidentHistory" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <!-- Inspection Schedule -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showInspectionSchedule')">
+                                Inspection Schedule
+                                <span class="arrow" [class.open]="showInspectionSchedule"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showInspectionSchedule">
+                                <div class="row">
+                                    <!-- Internal Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="internalInspection" class="form-label">Internal Inspection
+                                                Date:</label>
+                                            <input type="date" id="internalInspection"
+                                                formControlName="internalInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+
+                                    <!-- External Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalInspection" class="form-label">External Inspection
+                                                Date:</label>
+                                            <input type="date" id="externalInspection"
+                                                formControlName="externalInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+
+                                    <!-- On-stream Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="onStreamInspection" class="form-label">On-stream Inspection
+                                                Date:</label>
+                                            <input type="date" id="onStreamInspection"
+                                                formControlName="onStreamInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+
+                                    <!-- TM Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="tmInspection" class="form-label">TM Inspection Date:</label>
+                                            <input type="date" id="tmInspection" formControlName="tmInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Previous Internal Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="prevInternalInspection" class="form-label">Previous Internal
+                                                Inspection Date:</label>
+                                            <input type="date" id="prevInternalInspection"
+                                                formControlName="prevInternalInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Previous External Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="prevExternalInspection" class="form-label">Previous External
+                                                Inspection Date:</label>
+                                            <input type="date" id="prevExternalInspection"
+                                                formControlName="prevExternalInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Previous On-stream Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="prevOnStreamInspection" class="form-label">Previous
+                                                On-stream Inspection Date:</label>
+                                            <input type="date" id="prevOnStreamInspection"
+                                                formControlName="prevOnStreamInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Previous TM Inspection Date -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="prevTMInspection" class="form-label">Previous TM Inspection
+                                                Date:</label>
+                                            <input type="date" id="prevTMInspection"
+                                                formControlName="prevTMInspection"
+                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    <!-- Integration & Metadata -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" (click)="toggle('showMetadata')">
+                                Integration & Metadata
+                                <span class="arrow" [class.open]="showMetadata"></span>
+                            </div>
+                            <div class="accordion-wrapper" [class.open]="showMetadata">
+                                <div class="row">
+                                    <!-- ERP/CMMS Circuit Code Manual entry -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="erpCircuitCode" class="form-label">ERP/CMMS Circuit
+                                                Code:</label>
+                                            <input type="text" id="erpCircuitCode"
+                                                formControlName="erpCircuitCode"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter ERP/CMMS circuit code" />
+                                        </div>
+                                    </div>
+
+                                    <!-- ERP/CMMS System Manual entry -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="erpSystem" class="form-label">ERP/CMMS System:</label>
+                                            <input type="text" id="erpSystem" formControlName="erpSystem"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter ERP/CMMS system" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Functional Location Manual entry -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="functionalLocation" class="form-label">Functional
+                                                Location:</label>
+                                            <input type="text" id="functionalLocation"
+                                                formControlName="functionalLocation"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter functional location" />
+                                        </div>
+                                    </div>
+
+                                    <!-- External System ID Manual entry -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="externalSystemID" class="form-label">External System ID:</label>
+                                            <input type="text" id="externalSystemID" formControlName="externalSystemID"
+                                                class="form-control form-control-nb"
+                                                placeholder="Enter external system ID" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Sync Status Drop down -->
+                                    <div class="col-md-4">
+                                        <div class="m-1 field-containernwsm">
+                                            <label for="syncStatus" class="form-label">Sync Status:</label>
+                                            <select id="syncStatus" formControlName="syncStatus"
+                                                class="form-select form-control-nb">
+                                                <option value="" disabled selected></option>
+                                                <option *ngFor="let item of ddlcomponentSyncStatus" [value]="item.id">{{
+                                                    item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-md-6">
+                <!-- even -->
                     <!-- Design -->
-                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showDesign')">
                                 Design
@@ -468,117 +1303,8 @@ bindLabel="name"
 
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Geometry -->
-                    <div class="col-md-6">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showGeometry')">
-                                Geometry
-                                <span class="arrow" [class.open]="showGeometry"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showGeometry">
-                                <div class="row">
-                                    <!-- Geometry Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="geometry" class="form-label">Geometry:</label>
-                                            <select id="geometry" formControlName="geometry"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected>-- Select Orientation --</option>
-                                                <option *ngFor="let item of ddlcomponentGeometry" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- NPS Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="nps" class="form-label">NPS:</label>
-                                            <input type="text" id="nps" formControlName="nps"
-                                                class="form-control form-control-nb" placeholder="Enter NPS" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Inside Diameter (ID) Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="insideDiameter" class="form-label">Inside Diameter (ID):</label>
-                                            <input type="text" id="insideDiameter" formControlName="insideDiameter"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter inside diameter" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Outside Diameter (OD) Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="outsideDiameter" class="form-label">Outside Diameter
-                                                (OD):</label>
-                                            <input type="text" id="outsideDiameter" formControlName="outsideDiameter"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter outside diameter" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Length / Height Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="lengthHeight" class="form-label">Length / Height:</label>
-                                            <input type="text" id="lengthHeight" formControlName="lengthHeight"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter length / height" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Fill Height Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="fillHeight" class="form-label">Fill Height:</label>
-                                            <input type="text" id="fillHeight" formControlName="fillHeight"
-                                                class="form-control form-control-nb" placeholder="Enter fill height" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Orientation Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="orientation" class="form-label">Orientation:</label>
-                                            <select id="orientation" formControlName="orientation"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected>-- Select Fluid Phase --</option>
-                                                <option *ngFor="let item of ddlcomponentOrientation" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Empty Weight Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="emptyWeight" class="form-label">Empty Weight:</label>
-                                            <input type="text" id="emptyWeight" formControlName="emptyWeight"
-                                                class="form-control form-control-nb" placeholder="Enter empty weight" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Capacity Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="capacity" class="form-label">Capacity:</label>
-                                            <input type="text" id="capacity" formControlName="capacity"
-                                                class="form-control form-control-nb" placeholder="Enter capacity" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Operation and Process -->
-                    <div class="col-md-8">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showOperation')">
                                 Operation and Process
@@ -895,175 +1621,8 @@ bindLabel="name"
 
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Fabrication -->
-                    <div class="col-md-4">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showFabrication')">
-                                Fabrication
-                                <span class="arrow" [class.open]="showFabrication"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showFabrication">
-                                <div class="row">
-                                    <!-- Manufacturer Manual entry -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="manufacturer" class="form-label">Manufacturer:</label>
-                                            <input type="text" id="manufacturer" formControlName="manufacturer"
-                                                class="form-control form-control-nb" placeholder="Enter manufacturer" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Serial Number Manual entry -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="serialNumber" class="form-label">Serial Number:</label>
-                                            <input type="text" id="serialNumber" formControlName="serialNumber"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter serial number" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Warranty Date Manual entry -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="warrantyDate" class="form-label">Warranty Date:</label>
-                                            <input type="text" id="warrantyDate" formControlName="warrantyDate"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter warranty date" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Heat Treatment Drop down -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="heatTreatment" class="form-label">Heat Treatment:</label>
-                                            <select id="heatTreatment" formControlName="heatTreatment"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected>-- Select Manufacturer --</option>
-                                                <option *ngFor="let item of ddlcomponentHeatTreatment" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Heat Treatment Type Drop down -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="heatTreatmentType" class="form-label">Heat Treatment
-                                                Type:</label>
-                                            <select id="heatTreatmentType" formControlName="heatTreatmentType"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected>-- Select Model --</option>
-                                                <option *ngFor="let item of ddlcomponentHeatTreatmentType" [value]="item.id">
-                                                    {{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Impact Test Drop down -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="impactTest" class="form-label">Impact Test:</label>
-                                            <select id="impactTest" formControlName="impactTest"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected>-- Select Location --</option>
-                                                <option *ngFor="let item of ddlcomponentImpactTest" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Pressure Test Drop down -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="pressureTest" class="form-label">Pressure Test:</label>
-                                            <select id="pressureTest" formControlName="pressureTest"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentPressureTest" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Pressure Test Type Drop down -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="pressureTestType" class="form-label">Pressure Test Type:</label>
-                                            <select id="pressureTestType" formControlName="pressureTestType"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentPressureTestType" [value]="item.id">
-                                                    {{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Test Pressure Manual entry -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="testPressure" class="form-label">Test Pressure:</label>
-                                            <input type="text" id="testPressure" formControlName="testPressure"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter test pressure" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Radiography Drop down -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="radiography" class="form-label">Radiography:</label>
-                                            <select id="radiography" formControlName="radiography"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentRadiography" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Radiography Category Drop down -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="radiographyCategory" class="form-label">Radiography
-                                                Category:</label>
-                                            <select id="radiographyCategory" formControlName="radiographyCategory"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentRadiographyCategory"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Joint Efficiency Manual entry -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="jointEfficiency" class="form-label">Joint Efficiency:</label>
-                                            <input type="text" id="jointEfficiency" formControlName="jointEfficiency"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter joint efficiency" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Other NDE Manual entry -->
-                                    <div class="col-md-6">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="otherNDE" class="form-label">Other NDE:</label>
-                                            <input type="text" id="otherNDE" formControlName="otherNDE"
-                                                class="form-control form-control-nb" placeholder="Enter other NDE" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Material -->
-                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showMaterial')">
                                 Material
@@ -1221,220 +1780,8 @@ bindLabel="name"
 
                             </div>
                         </div>
-                    </div>
-
-                    <!-- External -->
-                    <div class="col-md-6">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showExternal')">
-                                External
-                                <span class="arrow" [class.open]="showExternal"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showExternal">
-                                <div class="row">
-                                    <!-- External Coating Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="externalCoating" class="form-label">External Coating:</label>
-                                            <select id="externalCoating" formControlName="externalCoating"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentExternalCoating" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- External Coating Type Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="externalCoatingType" class="form-label">External Coating
-                                                Type:</label>
-                                            <select id="externalCoatingType" formControlName="externalCoatingType"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentExternalCoatingType"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- External Coating Thickness Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="externalCoatingThickness" class="form-label">External Coating
-                                                Thickness:</label>
-                                            <input type="text" id="externalCoatingThickness"
-                                                formControlName="externalCoatingThickness"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter external coating thickness" />
-                                        </div>
-                                    </div>
-
-                                    <!-- External Coating Age Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="externalCoatingAge" class="form-label">External Coating
-                                                Age:</label>
-                                            <input type="text" id="externalCoatingAge"
-                                                formControlName="externalCoatingAge"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter external coating age" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Insulation Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="insulation" class="form-label">Insulation:</label>
-                                            <select id="insulation" formControlName="insulation"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentInsulation" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Insulation Type Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="insulationType" class="form-label">Insulation Type:</label>
-                                            <select id="insulationType" formControlName="insulationType"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentInsulationType" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Insulation Material Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="insulationMaterial" class="form-label">Insulation
-                                                Material:</label>
-                                            <select id="insulationMaterial" formControlName="insulationMaterial"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentInsulationMaterial"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Insulation Thickness Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="insulationThickness" class="form-label">Insulation
-                                                Thickness:</label>
-                                            <input type="text" id="insulationThickness"
-                                                formControlName="insulationThickness"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter insulation thickness" />
-                                        </div>
-                                    </div>
-
-                                    <!-- CUI Potential Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="cuiPotential" class="form-label">CUI Potential:</label>
-                                            <select id="cuiPotential" formControlName="cuiPotential"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentCUIPotential" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- External Environment Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="externalEnvironment" class="form-label">External
-                                                Environment:</label>
-                                            <select id="externalEnvironment" formControlName="externalEnvironment"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentExternalEnvironment"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Support Type Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="supportType" class="form-label">Support Type:</label>
-                                            <select id="supportType" formControlName="supportType"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentSupportType" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Heat Tracing Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="heatTracing" class="form-label">Heat Tracing:</label>
-                                            <select id="heatTracing" formControlName="heatTracing"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentHeatTracing" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Fire Proofing Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="fireProofing" class="form-label">Fire Proofing:</label>
-                                            <select id="fireProofing" formControlName="fireProofing"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentFireProofing" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Buried Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="buried" class="form-label">Buried:</label>
-                                            <select id="buried" formControlName="buried"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentBuried" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Cathodic Protection Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="cathodicProtection" class="form-label">Cathodic
-                                                Protection:</label>
-                                            <select id="cathodicProtection" formControlName="cathodicProtection"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentCathodicProtection"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Deadleg -->
-                    <div class="col-md-4">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showDeadleg')">
                                 Deadleg
@@ -1506,181 +1853,8 @@ bindLabel="name"
 
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Safety and Process Control -->
-                    <div class="col-md-8">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showSafety')">
-                                Safety and Process Control
-                                <span class="arrow" [class.open]="showSafety"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showSafety">
-
-                                <div class="row">
-                                    <!-- Pressure Relief Devices Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="pressureReliefDevices" class="form-label">Pressure Relief
-                                                Devices:</label>
-                                            <select id="pressureReliefDevices" formControlName="pressureReliefDevices"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentPressureReliefDevices"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- PRD ID Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="prdID" class="form-label">PRD ID:</label>
-                                            <input type="text" id="prdID" formControlName="prdID"
-                                                class="form-control form-control-nb" placeholder="Enter PRD ID" />
-                                        </div>
-                                    </div>
-
-                                    <!-- PRD Set Pressure Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="prdSetPressure" class="form-label">PRD Set Pressure:</label>
-                                            <input type="text" id="prdSetPressure" formControlName="prdSetPressure"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter PRD set pressure" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Chemical Injection Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="chemicalInjection" class="form-label">Chemical
-                                                Injection:</label>
-                                            <select id="chemicalInjection" formControlName="chemicalInjection"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentChemicalInjection" [value]="item.id">
-                                                    {{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Detection System Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="detectionSystem" class="form-label">Detection System:</label>
-                                            <select id="detectionSystem" formControlName="detectionSystem"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentDetectionSystem" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Isolation System Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="isolationSystem" class="form-label">Isolation System:</label>
-                                            <select id="isolationSystem" formControlName="isolationSystem"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentIsolationSystem" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Mitigation System Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="mitigationSystem" class="form-label">Mitigation System:</label>
-                                            <select id="mitigationSystem" formControlName="mitigationSystem"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentMitigationSystem" [value]="item.id">
-                                                    {{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Online Corrosion Monitoring Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="onlineCorrosionMonitoring" class="form-label">Online Corrosion
-                                                Monitoring:</label>
-                                            <select id="onlineCorrosionMonitoring"
-                                                formControlName="onlineCorrosionMonitoring"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentOnlineCorrosionMonitoring"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Corrosion Monitoring Type Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="corrosionMonitoringType" class="form-label">Corrosion Monitoring
-                                                Type:</label>
-                                            <select id="corrosionMonitoringType"
-                                                formControlName="corrosionMonitoringType"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentCorrosionMonitoringType"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Hazard Classification Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="hazardClassification" class="form-label">Hazard
-                                                Classification:</label>
-                                            <select id="hazardClassification" formControlName="hazardClassification"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentHazardClassification"
-                                                    [value]="item.id">{{ item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Safety & Environmental Permits Manual entry -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernw">
-                                            <label for="safetyEnvironmentalPermits" class="form-label">Safety &
-                                                Environmental Permits:</label>
-                                            <input type="text" id="safetyEnvironmentalPermits"
-                                                formControlName="safetyEnvironmentalPermits"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter safety & environmental permits" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Incident History (If Any) Drop down -->
-                                    <div class="col-md-3">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="incidentHistory" class="form-label">Incident History (If
-                                                Any):</label>
-                                            <select id="incidentHistory" formControlName="incidentHistory"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentIncidentHistory" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Integrity & Inspection -->
-                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showIntegrity')">
                                 Integrity & Inspection
@@ -1826,109 +2000,8 @@ bindLabel="name"
 
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Inspection Schedule -->
-                    <div class="col-md-6">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showInspectionSchedule')">
-                                Inspection Schedule
-                                <span class="arrow" [class.open]="showInspectionSchedule"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showInspectionSchedule">
-                                <div class="row">
-                                    <!-- Internal Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="internalInspection" class="form-label">Internal Inspection
-                                                Date:</label>
-                                            <input type="date" id="internalInspection"
-                                                formControlName="internalInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-
-                                    <!-- External Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="externalInspection" class="form-label">External Inspection
-                                                Date:</label>
-                                            <input type="date" id="externalInspection"
-                                                formControlName="externalInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-
-                                    <!-- On-stream Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="onStreamInspection" class="form-label">On-stream Inspection
-                                                Date:</label>
-                                            <input type="date" id="onStreamInspection"
-                                                formControlName="onStreamInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-
-                                    <!-- TM Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="tmInspection" class="form-label">TM Inspection Date:</label>
-                                            <input type="date" id="tmInspection" formControlName="tmInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Previous Internal Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="prevInternalInspection" class="form-label">Previous Internal
-                                                Inspection Date:</label>
-                                            <input type="date" id="prevInternalInspection"
-                                                formControlName="prevInternalInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Previous External Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="prevExternalInspection" class="form-label">Previous External
-                                                Inspection Date:</label>
-                                            <input type="date" id="prevExternalInspection"
-                                                formControlName="prevExternalInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Previous On-stream Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="prevOnStreamInspection" class="form-label">Previous
-                                                On-stream Inspection Date:</label>
-                                            <input type="date" id="prevOnStreamInspection"
-                                                formControlName="prevOnStreamInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Previous TM Inspection Date -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="prevTMInspection" class="form-label">Previous TM Inspection
-                                                Date:</label>
-                                            <input type="date" id="prevTMInspection"
-                                                formControlName="prevTMInspection"
-                                                class="form-control form-control-nb" placeholder="DD/MM/YYYY" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Maintenance Schedule -->
-                    <div class="col-md-6">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showMaintenanceSchedule')">
                                 Maintenance Schedule
@@ -1981,78 +2054,6 @@ bindLabel="name"
 
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Integration & Metadata -->
-                    <div class="col-md-6">
-                        <div class="accordion-item">
-                            <div class="accordion-header" (click)="toggle('showMetadata')">
-                                Integration & Metadata
-                                <span class="arrow" [class.open]="showMetadata"></span>
-                            </div>
-                            <div class="accordion-wrapper" [class.open]="showMetadata">
-                                <div class="row">
-                                    <!-- ERP/CMMS Circuit Code Manual entry -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="erpCircuitCode" class="form-label">ERP/CMMS Circuit
-                                                Code:</label>
-                                            <input type="text" id="erpCircuitCode"
-                                                formControlName="erpCircuitCode"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter ERP/CMMS circuit code" />
-                                        </div>
-                                    </div>
-
-                                    <!-- ERP/CMMS System Manual entry -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="erpSystem" class="form-label">ERP/CMMS System:</label>
-                                            <input type="text" id="erpSystem" formControlName="erpSystem"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter ERP/CMMS system" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Functional Location Manual entry -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="functionalLocation" class="form-label">Functional
-                                                Location:</label>
-                                            <input type="text" id="functionalLocation"
-                                                formControlName="functionalLocation"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter functional location" />
-                                        </div>
-                                    </div>
-
-                                    <!-- External System ID Manual entry -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="externalSystemID" class="form-label">External System ID:</label>
-                                            <input type="text" id="externalSystemID" formControlName="externalSystemID"
-                                                class="form-control form-control-nb"
-                                                placeholder="Enter external system ID" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Sync Status Drop down -->
-                                    <div class="col-md-4">
-                                        <div class="m-1 field-containernwsm">
-                                            <label for="syncStatus" class="form-label">Sync Status:</label>
-                                            <select id="syncStatus" formControlName="syncStatus"
-                                                class="form-select form-control-nb">
-                                                <option value="" disabled selected></option>
-                                                <option *ngFor="let item of ddlcomponentSyncStatus" [value]="item.id">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Record Audit Information -->
                     <!-- <div class="col-md-3">
@@ -2064,7 +2065,6 @@ bindLabel="name"
                             <div class="accordion-wrapper" [class.open]="showAudit"></div>
                         </div>
                     </div> -->
-                    <div class="col-md-3">
                         <div class="accordion-item">
                             <div class="accordion-header" (click)="toggle('showDocument')">
                                 Documents
@@ -2120,7 +2120,7 @@ bindLabel="name"
                             </div>
                         </div>
 
-                    </div>
+                </div>
                 </div>
             </form>
         </div>

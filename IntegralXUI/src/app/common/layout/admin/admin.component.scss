@@ -277,100 +277,185 @@ body {
 }
 
 
-/* ==================== MODAL STYLES ==================== */
-.modal-content {
-  border: none;
+/* ==================== HIERARCHY FLOATING PANEL ==================== */
+.hierarchy-panel {
+  position: fixed;
+  z-index: 2000;
+  width: 860px;
+  max-width: calc(100vw - 40px);
+  background: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 8px 32px rgba(102, 126, 234, 0.18),
+    0 2px 8px rgba(0, 0, 0, 0.10),
+    0 0 0 1px rgba(102, 126, 234, 0.10);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: panelSlideIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.modal-header {
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: scale(0.94) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);     }
+}
+
+/* ── Header ── */
+.hierarchy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #ffffff;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+
+  &:active { cursor: grabbing; }
+}
+
+.hierarchy-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hierarchy-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    color: #fff;
+    font-size: 15px;
+  }
+}
+
+.hierarchy-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.hierarchy-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drag-hint {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.hierarchy-close-btn {
+  background: rgba(255, 255, 255, 0.15);
   border: none;
-  padding: 1.25rem 1.5rem;
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  transition: background 0.2s;
+
+  &:hover { background: rgba(255, 255, 255, 0.35); }
 }
 
-.modal-title {
-  font-weight: 600;
-  font-size: 1.25rem;
-}
-
-.btn-close {
-  filter: brightness(0) invert(1);
-  opacity: 0.8;
-}
-
-.btn-close:hover {
-  opacity: 1;
-}
-
-.modal-body {
-  padding: 1.5rem;
-  max-height: 70vh;
+/* ── Body ── */
+.hierarchy-body {
+  padding: 18px;
+  max-height: 66vh;
   overflow-y: auto;
+  background: #f8f9fc;
 }
 
-.modal-body-content {
+.hierarchy-body-content {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2rem;
+  grid-template-columns: 1fr 160px;
+  gap: 18px;
+  align-items: start;
 }
 
 /* ==================== TREE VIEW STYLES ==================== */
 .tree-view {
-  flex: 1;
-  min-height: 400px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid #e8edf5;
+  min-height: 300px;
+  box-shadow: 0 1px 4px rgba(102, 126, 234, 0.06);
 }
 
 .tree-node {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
-  margin: 0.25rem 0;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  padding: 5px 6px;
+  margin: 2px 0;
+  border-radius: 7px;
+  transition: background 0.15s, transform 0.15s;
   cursor: pointer;
-}
 
-.tree-node:hover {
-  background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
-  transform: translateX(5px);
+  &:hover {
+    background: linear-gradient(90deg, rgba(102, 126, 234, 0.09) 0%, rgba(118, 75, 162, 0.06) 100%);
+    transform: translateX(3px);
+  }
 }
 
 .tree-arrow {
-  display: inline-block;
-  margin-right: 0.5rem;
-  font-size: 0.7rem;
-  transition: transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  font-size: 9px;
+  transition: transform 0.25s ease;
   color: #667eea;
   cursor: pointer;
-  width: 16px;
-}
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(102, 126, 234, 0.10);
+  flex-shrink: 0;
 
-.tree-arrow.expanded {
-  transform: rotate(90deg);
+  &.expanded { transform: rotate(90deg); }
 }
 
 .tree-label {
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  padding: 3px 8px;
+  border-radius: 5px;
+  transition: background 0.15s, color 0.15s;
+  font-size: 13.5px;
   font-weight: 500;
+  color: #2d3748;
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.12);
+    color: #5a67d8;
+  }
 }
 
-.tree-label:hover {
-  background: rgba(102, 126, 234, 0.15);
-  color: #667eea;
-}
+.plant-label { font-weight: 700; color: #2d3748; }
+.leaf-label  { padding-left: 28px; color: #4a5568; font-weight: 400; }
 
 .tree-view ul {
   list-style: none;
-  padding-left: 1.5rem;
-  border-left: 2px solid #e2e8f0;
-  margin-left: 0.5rem;
+  padding-left: 20px;
+  border-left: 2px solid #e8edf5;
+  margin-left: 8px;
+  margin-top: 2px;
 }
 
 .tree-view > ul {
@@ -381,11 +466,22 @@ body {
 
 /* ==================== ICON LEGEND ==================== */
 .icon-legend {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  min-width: 180px;
+  background: #fff;
+  padding: 14px 12px;
+  border-radius: 10px;
+  border: 1px solid #e8edf5;
+  box-shadow: 0 1px 4px rgba(102, 126, 234, 0.06);
+}
+
+.legend-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #667eea;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #e8edf5;
 }
 
 .icon-legend ul {
@@ -397,25 +493,25 @@ body {
 .icon-legend li {
   display: flex;
   align-items: center;
-  padding: 0.6rem 0;
-  gap: 0.75rem;
-  transition: all 0.2s ease;
+  gap: 8px;
+  padding: 5px 4px;
   border-radius: 6px;
-  padding-left: 0.5rem;
+  transition: background 0.15s, transform 0.15s;
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.08);
+    transform: translateX(3px);
+  }
 }
 
-.icon-legend li:hover {
-  background: rgba(102, 126, 234, 0.1);
-  transform: translateX(5px);
-}
-
-.icon-legend li span:first-child {
-  font-size: 1.5rem;
-  width: 30px;
+.legend-icon {
+  font-size: 17px;
+  width: 26px;
   text-align: center;
 }
 
 .label-text {
+  font-size: 13px;
   font-weight: 500;
   color: #4a5568;
 }
@@ -548,7 +644,7 @@ app-breadcrumb {
     font-size: 0.95rem;
   }
 
-  .modal-body-content {
+  .hierarchy-body-content {
     grid-template-columns: 1fr;
   }
 
